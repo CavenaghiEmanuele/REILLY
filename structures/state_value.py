@@ -7,7 +7,6 @@ class State_value():
     _state_value: pd.Series
 
     def __init__(self, n_states) -> None:
-
         self._state_value = pd.Series(np.zeros(n_states))
 
     
