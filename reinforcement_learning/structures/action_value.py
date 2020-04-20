@@ -11,4 +11,11 @@ class Action_value():
     
     def __repr__(self):
         return str(self._action_value)
+
+    def __getitem__(self, key):
+        return self._action_value.loc[key]
+
+    def __setitem__(self, key, value):
+        self._action_value.loc[key] = value
+
         
