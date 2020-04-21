@@ -9,7 +9,10 @@ class Environment(ABC):
     _env: gym.Env
 
     @abstractmethod
-    def run_step(self, action):
+    def run_step(self, action, mod):
+        pass
+
+    def render(self):
         pass
 
     @abstractmethod

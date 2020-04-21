@@ -8,14 +8,30 @@ class Frozen_Lake4x4(Environment):
         if slippery:
             self._env = gym.make("FrozenLake-v0")
         else:
+            gym.register(
+                id='FrozenLakeNotSlippery4x4-v0',
+                entry_point='gym.envs.toy_text:FrozenLakeEnv',
+                kwargs={'map_name' : '4x4', 'is_slippery': False},
+                max_episode_steps=1000,
+            )
             self._env = gym.make("FrozenLakeNotSlippery4x4-v0")
         self.reset_env()
 
-    def __repr__(self):
+    def render(self):
         return self._env.render()
   
-    def run_step(self, action):
-        return self._env.step(action)
+    # If mod flag is "test" return additional dict with environment tests result
+    def run_step(self, action, mod: str):
+        next_state, reward, done, _ = self._env.step(action)
+        
+        if mod == "test":
+            if done and reward == 1:
+                test_info = {"wins": 1}
+            else:
+                test_info = {"wins": 0}      
+            return next_state, reward, done, test_info
+
+        return next_state, reward, done, _
 
     def reset_env(self):
         return self._env.reset()
@@ -36,14 +52,30 @@ class Frozen_Lake8x8(Environment):
         if slippery:
             self._env = gym.make("FrozenLake8x8-v0")
         else:
+            gym.register(
+                id='FrozenLakeNotSlippery8x8-v0',
+                entry_point='gym.envs.toy_text:FrozenLakeEnv',
+                kwargs={'map_name' : '4x4', 'is_slippery': False},
+                max_episode_steps=1000,
+            )
             self._env = gym.make("FrozenLakeNotSlippery8x8-v0")
         self.reset_env()
 
-    def __repr__(self):
+    def render(self):
         return self._env.render()
   
-    def run_step(self, action):
-        return self._env.step(action)
+    # If mod flag is "test" return additional dict with environment tests result
+    def run_step(self, action, mod: str):
+        next_state, reward, done, _ = self._env.step(action)
+        
+        if mod == "test":
+            if done and reward == 1:
+                test_info = {"wins": 1}
+            else:
+                test_info = {"wins": 0}      
+            return next_state, reward, done, test_info
+
+        return next_state, reward, done, _
 
     def reset_env(self):
         return self._env.reset()
