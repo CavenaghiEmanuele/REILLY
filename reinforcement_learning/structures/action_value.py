@@ -18,4 +18,6 @@ class Action_value():
     def __setitem__(self, key, value):
         self._action_value.loc[key] = value
 
+    def argmax(self):
+        return self._action_value.idxmax(axis=1)
         

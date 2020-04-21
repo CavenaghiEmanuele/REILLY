@@ -11,3 +11,12 @@ class Policy():
     
     def __repr__(self):
         return str(self._policy)
+
+    def __getitem__(self, key):
+        return self._policy.loc[key]
+
+    def __setitem__(self, key, value):
+        self._policy.loc[key] = value
+
+    def get_n_actions(self, state) -> int: 
+        return len(self._policy.loc[state])
