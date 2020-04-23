@@ -112,7 +112,7 @@ class MonteCarloAgent():
         test_results = defaultdict(float)
 
         while not episode_ended:
-            #Select action in according to policy distribution probability
+            #Select action according to policy distribution probability
             action = np.random.choice(range(self._env.get_action_number()), p=self._policy[state])
 
             if mod == "train":
