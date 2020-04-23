@@ -9,8 +9,8 @@ from ..environments.environment import Environment
 
 class MonteCarloAgent():
 
-    _epsilon: int
-    _gamma: int
+    _epsilon: float
+    _gamma: float
     _visit_update: str
     _policy_method: str
     _returns: Dict
@@ -33,22 +33,22 @@ class MonteCarloAgent():
         self._visit_update = visit_update
         self._policy_method = policy_method
 
-    def run_agent(self, n_episodes: int, n_tests: int, test_step: int):
+    def run(self, n_episodes: int, n_tests: int, test_step: int):
         test_results = defaultdict(list)
         for n_episode in tqdm(range(n_episodes)):
             self._MonteCarlo_control()
             if (n_episode % test_step) == 0:
-                test_info = self.test_agent(n_tests)
+                test_info = self.test(n_tests)
                 for test in test_info.keys():
                     test_results[test].append(test_info[test])
         return test_results
 
-    def train_agent(self, n_episodes: int) -> None:
+    def train(self, n_episodes: int) -> None:
         for _ in tqdm(range(n_episodes)):
             self._MonteCarlo_control()
     
     #Repeat test n_tests time to avoid outliers results
-    def test_agent(self, n_tests: int):
+    def test(self, n_tests: int):
         test_results = defaultdict(list)
         for _ in tqdm(range(n_tests)):
             test_info = self._play_episode(mod="test")
