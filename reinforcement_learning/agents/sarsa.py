@@ -38,6 +38,10 @@ class SarsaAgent():
                     test_results[test].append(test_info[test])
         return test_results 
 
+    def train(self, n_episodes: int) -> None:
+        for _ in tqdm(range(n_episodes)):
+            self._sarsa_control()
+
     #Repeat test n_tests time to avoid outliers results
     def test(self, n_tests: int):
         test_results = defaultdict(list)
