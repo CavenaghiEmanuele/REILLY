@@ -2,6 +2,8 @@
 
 ## ToDo
 
+- [ ] speed up agent's training (python __slots__)
+
 - [ ] MonteCarlo
     - [x] on-policy implementation
         - [x] MonteCarlo prediction
@@ -12,4 +14,6 @@
             - [x] update epsilon-policy
             - [x] select action in according to policy
 
-    - [x] Collect tests results
+    -[ ] off-policy implementation
+
+- [x] Sarsa
