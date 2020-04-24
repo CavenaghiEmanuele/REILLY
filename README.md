@@ -2,7 +2,7 @@
 
 ## ToDo
 
-- [ ] speed up agent's training (python __slots__)
+- [x] speed up agent's training (python __slots__ and ndarray)
 
 - [ ] MonteCarlo
     - [x] on-policy implementation
@@ -17,3 +17,7 @@
     -[ ] off-policy implementation
 
 - [x] Sarsa
+
+- [ ] Q-learning
+
+- [ ] Expected Sarsa
