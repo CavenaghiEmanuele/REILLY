@@ -13,6 +13,9 @@ class ExpectedSarsaAgent(TemporalDifferenceAgent, object):
     def __init__(self, alpha, epsilon, gamma, environment):
         super().__init__(alpha, epsilon, gamma, environment)
 
+    def __repr__(self):
+        return "ExpectedSarsa: " + "alpha=" + str(self._alpha) + ", gamma=" + str(self._gamma) + ", epsilon=" + str(self._epsilon)
+
     def _control(self):
         episode_ended = False
         S = self._env.reset_env()

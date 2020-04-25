@@ -26,6 +26,9 @@ class MonteCarloAgent(object):
         self._visit_update = visit_update
         self._policy_method = policy_method
 
+    def __repr__(self):
+        return "MonteCarlo: " + "gamma=" + str(self._gamma) + ", epsilon=" + str(self._epsilon)
+
     def run(self, n_episodes: int, n_tests: int, test_step: int):
         test_results = defaultdict(list)
         for n_episode in tqdm(range(n_episodes)):
