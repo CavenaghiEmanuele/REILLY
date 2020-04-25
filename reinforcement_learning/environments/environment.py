@@ -12,6 +12,7 @@ class Environment(ABC):
     def run_step(self, action, mod):
         pass
 
+    @abstractmethod
     def render(self):
         pass
 
