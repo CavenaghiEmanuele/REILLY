@@ -14,7 +14,7 @@
             - [x] update epsilon-policy
             - [x] select action in according to policy
 
-    -[ ] off-policy implementation
+    - [ ] off-policy implementation
 
 - [x] Sarsa
 
