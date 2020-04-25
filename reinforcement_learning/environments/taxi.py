@@ -32,6 +32,9 @@ class Taxi(Environment):
 
     def get_action_number(self):
         return self._env.action_space.n
+    
+    def get_env_tests(self):
+        return ["return_sum", "wins"]
 
     def probability_distribution(self):
         return self._env.env.P
