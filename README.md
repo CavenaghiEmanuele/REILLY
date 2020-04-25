@@ -18,6 +18,8 @@
 
 - [x] Sarsa
 
-- [ ] Q-learning
+- [x] Q-learning
 
 - [ ] Expected Sarsa
+    - [x] on-policy
+    - [ ] off-policy
