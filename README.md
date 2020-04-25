@@ -14,10 +14,12 @@
             - [x] update epsilon-policy
             - [x] select action in according to policy
 
-    -[ ] off-policy implementation
+    - [ ] off-policy implementation
 
 - [x] Sarsa
 
-- [ ] Q-learning
+- [x] Q-learning
 
 - [ ] Expected Sarsa
+    - [x] on-policy
+    - [ ] off-policy
