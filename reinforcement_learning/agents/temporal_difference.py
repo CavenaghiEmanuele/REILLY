@@ -39,7 +39,7 @@ class TemporalDifferenceAgent(ABC, object):
     #Repeat test n_tests time to avoid outliers results
     def test(self, n_tests: int):
         test_results = defaultdict(list)
-        for _ in tqdm(range(n_tests)):
+        for _ in range(n_tests):
             test_info = self._play_episode()            
             [test_results[test].append(test_info[test]) for test in test_info.keys()]
         return {test : np.average(test_results[test]) for test in test_results.keys()}
