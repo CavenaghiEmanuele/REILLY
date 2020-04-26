@@ -16,3 +16,6 @@ class State_value():
 
     def __setitem__(self, key, value):
         self._state_value[key] = value
+
+    def __add__(self, other):
+        return self._state_value + other._state_value

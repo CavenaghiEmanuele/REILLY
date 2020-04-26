@@ -19,3 +19,6 @@ class Action_value(object):
 
     def argmax(self):
         return self._action_value.argmax(axis=0)
+    
+    def __add__(self, other):
+        return self._action_value + other._action_value

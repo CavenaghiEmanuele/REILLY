@@ -17,5 +17,8 @@ class Policy(object):
     def __setitem__(self, key, value):
         self._policy[key] = value
 
+    def __add__(self, other):
+        return self._policy + other._policy
+
     def get_n_actions(self, state) -> int: 
         return len(self._policy[state])
