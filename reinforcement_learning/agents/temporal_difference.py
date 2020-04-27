@@ -8,7 +8,7 @@ from ..structures import Action_value, Policy
 from ..environments.environment import Environment
 
 
-class TemporalDifferenceAgent(ABC, object):
+class TemporalDifference(ABC, object):
 
     __slots__ = ["_alpha", "_epsilon", "_gamma", "_Q", "_policy", "_env"]
 

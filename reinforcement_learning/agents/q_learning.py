@@ -5,10 +5,10 @@ from tqdm import tqdm
 
 from ..structures import Action_value, Policy
 from ..environments.environment import Environment
-from .temporal_difference import TemporalDifferenceAgent
+from .temporal_difference import TemporalDifference
 
 
-class QLearningAgent(TemporalDifferenceAgent ,object):
+class QLearningAgent(TemporalDifference ,object):
 
     def __init__(self, alpha, epsilon, gamma, environment):
         super().__init__(alpha, epsilon, gamma, environment)
