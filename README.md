@@ -24,9 +24,9 @@
 
 ### Double Temporal Difference
 
-* [ ] **Double Sarsa**
+* [x] **Double Sarsa**
 * [x] **Double Q-Learning**
-* [ ] **Double Expected Sarsa**
+* [x] **Double Expected Sarsa**
 
 ### n-step Bootstrapping
 
