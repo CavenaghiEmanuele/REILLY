@@ -19,29 +19,43 @@ def build_agent(environment):
         epsilon = float(input("Insert the parameter epsilon: "))
         gamma = float(input("Insert the parameter gamma: "))
         visit_update = input("Insert visit type (first, every): ")
-
         return rl.MonteCarloAgent(epsilon, gamma, environment, visit_update)
 
     if agent_type == "Sarsa" or agent_type == "S":
         alpha = float(input("Insert the parameter alpha (learning rate): "))
         epsilon = float(input("Insert the parameter epsilon: "))
         gamma = float(input("Insert the parameter gamma: "))
-
         return rl.SarsaAgent(alpha ,epsilon, gamma, environment)
     
-    if agent_type == "ExpectedSarsa" or agent_type == "ES":
+    if agent_type == "Expected Sarsa" or agent_type == "ES":
         alpha = float(input("Insert the parameter alpha (learning rate): "))
         epsilon = float(input("Insert the parameter epsilon: "))
         gamma = float(input("Insert the parameter gamma: ")) 
-
         return rl.ExpectedSarsaAgent(alpha, epsilon, gamma, environment)
 
     if agent_type == "Q learning" or agent_type == "QL":
         alpha = float(input("Insert the parameter alpha (learning rate): "))
         epsilon = float(input("Insert the parameter epsilon: "))
         gamma = float(input("Insert the parameter gamma: "))
-
         return rl.QLearningAgent(alpha, epsilon, gamma, environment)
+    
+    if agent_type == "Double Sarsa" or agent_type == "DS":
+        alpha = float(input("Insert the parameter alpha (learning rate): "))
+        epsilon = float(input("Insert the parameter epsilon: "))
+        gamma = float(input("Insert the parameter gamma: "))
+        return rl.DoubleSarsaAgent(alpha ,epsilon, gamma, environment)
+    
+    if agent_type == "Double Q learning" or agent_type == "DQL":
+        alpha = float(input("Insert the parameter alpha (learning rate): "))
+        epsilon = float(input("Insert the parameter epsilon: "))
+        gamma = float(input("Insert the parameter gamma: "))
+        return rl.DoubleQLearningAgent(alpha, epsilon, gamma, environment)
+    
+    if agent_type == "Double Expected Sarsa" or agent_type == "DES":
+        alpha = float(input("Insert the parameter alpha (learning rate): "))
+        epsilon = float(input("Insert the parameter epsilon: "))
+        gamma = float(input("Insert the parameter gamma: ")) 
+        return rl.DoubleExpectedSarsaAgent(alpha, epsilon, gamma, environment)
     
     raise Exception("Agent doesn't exist")
 
@@ -49,7 +63,7 @@ def build_environment(env_name) -> rl.Environment:
 
     if env_name == "FrozenLake":
         return rl.Frozen_Lake4x4(slippery=True)
-    if env_name == "FrozenLakeNotSlippery4x4":
+    if env_name == "FrozenLakeNotSlippery":
         return rl.Frozen_Lake4x4(slippery=False)
     if env_name == "FrozenLake8x8":
         return rl.Frozen_Lake8x8(slippery=True)
