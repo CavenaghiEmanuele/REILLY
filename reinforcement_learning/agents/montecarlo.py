@@ -3,13 +3,14 @@ from typing import List, Dict
 from collections import defaultdict
 from tqdm import tqdm
 
+from .agent import Agent
 from ..structures import ActionValue, Policy
 from ..environments.environment import Environment
 
 
-class MonteCarloAgent(object):
+class MonteCarloAgent(Agent):
 
-    __slots__ = ["_epsilon", "_gamma", "_visit_update", "_policy_method", "_returns", "_Q", "_policy", "_env"]
+    __slots__ = ["_visit_update", "_policy_method", "_returns", "_Q", "_policy", "_env"]
 
     def __init__(self, epsilon, gamma, environment, visit_update="first", policy_method="on-policy"):
         #Basic attribute
@@ -32,7 +33,7 @@ class MonteCarloAgent(object):
     def run(self, n_episodes: int, n_tests: int, test_step: int):
         test_results = defaultdict(list)
         for n_episode in tqdm(range(n_episodes)):
-            self._MonteCarlo_control()
+            self._control()
             if (n_episode % test_step) == 0:
                 test_info = self.test(n_tests)
                 [test_results[test].append(test_info[test]) for test in test_info.keys()]
@@ -40,7 +41,7 @@ class MonteCarloAgent(object):
 
     def train(self, n_episodes: int) -> None:
         for _ in tqdm(range(n_episodes)):
-            self._MonteCarlo_control()
+            self._control()
     
     #Repeat test n_tests time to avoid outliers results
     def test(self, n_tests: int):
@@ -50,7 +51,7 @@ class MonteCarloAgent(object):
             [test_results[test].append(test_info[test]) for test in test_info.keys()]
         return {test : np.average(test_results[test]) for test in test_results.keys()}
    
-    def _MonteCarlo_control(self) -> None:
+    def _control(self) -> None:
         episode_trajectory = self._play_episode(mod="train") #Play an entire episode
         G = 0
         for i in reversed(range(len(episode_trajectory))):

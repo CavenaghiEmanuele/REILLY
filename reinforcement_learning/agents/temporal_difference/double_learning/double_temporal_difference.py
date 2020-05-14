@@ -2,14 +2,13 @@ import numpy as np
 from typing import List, Dict
 from collections import defaultdict
 from tqdm import tqdm
-from abc import ABC, abstractmethod
 
 from ....structures import ActionValue, Policy
 from ....environments.environment import Environment
 from ..temporal_difference import TemporalDifference
 
 
-class DoubleTemporalDifference(TemporalDifference, ABC, object):
+class DoubleTemporalDifference(TemporalDifference, object):
 
     __slots__ = ["_Q2", "_policy2"]
 
@@ -17,11 +16,6 @@ class DoubleTemporalDifference(TemporalDifference, ABC, object):
         super().__init__(alpha, epsilon, gamma, environment)
         self._Q2 = ActionValue(environment.get_state_number(), environment.get_action_number())
         self._policy2 = Policy(environment.get_state_number(), environment.get_action_number())
-
-
-    @abstractmethod
-    def _control(self):
-        pass
     
     def _update_policy(self, S, policy, Q) -> None:
         # Avoid choosing always the first move in case policy has the same value

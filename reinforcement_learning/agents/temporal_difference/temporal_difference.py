@@ -4,13 +4,14 @@ from collections import defaultdict
 from tqdm import tqdm
 from abc import ABC, abstractmethod
 
+from ..agent import Agent
 from ...structures import ActionValue, Policy
 from ...environments.environment import Environment
 
 
-class TemporalDifference(ABC, object):
+class TemporalDifference(Agent, object):
 
-    __slots__ = ["_alpha", "_epsilon", "_gamma", "_Q", "_policy", "_env"]
+    __slots__ = ["_Q", "_policy", "_env"]
 
     def __init__(self, alpha, epsilon, gamma, environment):
         self._env = environment
@@ -43,10 +44,6 @@ class TemporalDifference(ABC, object):
             test_info = self._play_episode()            
             [test_results[test].append(test_info[test]) for test in test_info.keys()]
         return {test : np.average(test_results[test]) for test in test_results.keys()}
-    
-    @abstractmethod
-    def _control(self):
-        pass
         
     def _update_policy(self, S) -> None:
         # Avoid choosing always the first move in case policy has the same value
