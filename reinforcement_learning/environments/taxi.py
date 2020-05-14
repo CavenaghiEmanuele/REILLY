@@ -5,7 +5,7 @@ from .environment import Environment
 class Taxi(Environment):
 
     def __init__(self):
-        self._env = gym.make("Taxi-v2")
+        self._env = gym.make("Taxi-v3")
         self.reset_env()
 
     def render(self):
