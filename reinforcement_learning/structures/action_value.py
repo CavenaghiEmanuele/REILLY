@@ -1,7 +1,7 @@
 import numpy as np
   
 
-class Action_value(object):
+class ActionValue(object):
 
     __slots__ = ["_action_value"]
 

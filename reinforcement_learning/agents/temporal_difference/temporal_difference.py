@@ -4,8 +4,8 @@ from collections import defaultdict
 from tqdm import tqdm
 from abc import ABC, abstractmethod
 
-from ..structures import Action_value, Policy
-from ..environments.environment import Environment
+from ...structures import ActionValue, Policy
+from ...environments.environment import Environment
 
 
 class TemporalDifference(ABC, object):
@@ -16,7 +16,7 @@ class TemporalDifference(ABC, object):
         self._env = environment
         n_states = self._env.get_state_number()
         n_actions = self._env.get_action_number()
-        self._Q = Action_value(n_states, n_actions)
+        self._Q = ActionValue(n_states, n_actions)
         self._policy = Policy(n_states, n_actions)
         self._alpha = alpha
         self._epsilon = epsilon

@@ -3,7 +3,7 @@ from typing import List, Dict
 from collections import defaultdict
 from tqdm import tqdm
 
-from ..structures import Action_value, Policy
+from ..structures import ActionValue, Policy
 from ..environments.environment import Environment
 
 
@@ -16,7 +16,7 @@ class MonteCarloAgent(object):
         self._env = environment
         n_states = self._env.get_state_number()
         n_actions = self._env.get_action_number()
-        self._Q = Action_value(n_states, n_actions)
+        self._Q = ActionValue(n_states, n_actions)
         self._policy = Policy(n_states, n_actions)
         self._returns = np.zeros(shape=(n_states, n_actions))
         self._epsilon = epsilon

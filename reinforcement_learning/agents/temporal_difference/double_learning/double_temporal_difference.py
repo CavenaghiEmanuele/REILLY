@@ -4,9 +4,9 @@ from collections import defaultdict
 from tqdm import tqdm
 from abc import ABC, abstractmethod
 
-from ..structures import Action_value, Policy
-from ..environments.environment import Environment
-from .temporal_difference import TemporalDifference
+from ....structures import ActionValue, Policy
+from ....environments.environment import Environment
+from ..temporal_difference import TemporalDifference
 
 
 class DoubleTemporalDifference(TemporalDifference, ABC, object):
@@ -15,7 +15,7 @@ class DoubleTemporalDifference(TemporalDifference, ABC, object):
 
     def __init__(self, alpha, epsilon, gamma, environment):
         super().__init__(alpha, epsilon, gamma, environment)
-        self._Q2 = Action_value(environment.get_state_number(), environment.get_action_number())
+        self._Q2 = ActionValue(environment.get_state_number(), environment.get_action_number())
         self._policy2 = Policy(environment.get_state_number(), environment.get_action_number())
 
 

@@ -3,8 +3,8 @@ from typing import List, Dict
 from collections import defaultdict
 from tqdm import tqdm
 
-from ..structures import Action_value, Policy
-from ..environments.environment import Environment
+from ...structures import ActionValue, Policy
+from ...environments.environment import Environment
 from .temporal_difference import TemporalDifference
 
 

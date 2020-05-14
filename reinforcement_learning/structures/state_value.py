@@ -1,7 +1,7 @@
 import numpy as np
 
 
-class State_value():
+class StateValue():
 
     __slots__=  ["_state_value"]
 

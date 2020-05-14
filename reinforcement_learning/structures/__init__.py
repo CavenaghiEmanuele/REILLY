@@ -1,3 +1,3 @@
-from .state_value import State_value
-from .action_value import Action_value
+from .state_value import StateValue
+from .action_value import ActionValue
 from .policy import Policy
