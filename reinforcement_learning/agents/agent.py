@@ -9,10 +9,10 @@ class Agent(ABC, object):
     def _control(self):
         pass
 
-    # @abstractmethod
+    @abstractmethod
     def reset(self):
         pass
 
-    # @abstractmethod
-    def run_step(self):
+    @abstractmethod
+    def run_step(self, *args, **kwargs):
         pass

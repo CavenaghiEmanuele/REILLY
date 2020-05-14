@@ -17,7 +17,7 @@ class DoubleQLearningAgent(DoubleTemporalDifference ,object):
         self._episode_ended = False
         self._S = self._env.reset_env()
     
-    def run_step(self):
+    def run_step(self, *args, **kwargs):
         policy_average = (self._policy[self._S] + self._policy2[self._S])/2
         A = np.random.choice(range(self._env.get_action_number()), p=policy_average)
         n_S, R, self._episode_ended, _ = self._env.run_step(A, "train")
