@@ -19,7 +19,7 @@ class Taxi(Environment):
             if done and reward == 20:
                 test_info = {"return_sum": reward, "wins": 1}
             else:
-                test_info = {"return_sum": reward, "wins": 0}      
+                test_info = {"return_sum": reward, "wins": 0}
             return next_state, reward, done, test_info
 
         return next_state, reward, done, _
