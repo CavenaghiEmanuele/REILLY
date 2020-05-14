@@ -11,8 +11,6 @@ from ...environments.environment import Environment
 
 class TemporalDifference(Agent, object):
 
-    __slots__ = ["_Q", "_policy", "_env"]
-
     def __init__(self, alpha, epsilon, gamma, environment):
         self._env = environment
         n_states = self._env.get_state_number()
@@ -22,6 +20,11 @@ class TemporalDifference(Agent, object):
         self._alpha = alpha
         self._epsilon = epsilon
         self._gamma = gamma
+    
+    def _control(self):
+        self.reset()
+        while not self._episode_ended:
+            self.run_step()
 
     
     def run(self, n_episodes: int, n_tests: int, test_step: int):

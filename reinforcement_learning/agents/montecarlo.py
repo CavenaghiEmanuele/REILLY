@@ -10,7 +10,7 @@ from ..environments.environment import Environment
 
 class MonteCarloAgent(Agent):
 
-    __slots__ = ["_visit_update", "_policy_method", "_returns", "_Q", "_policy", "_env"]
+    __slots__ = ["_visit_update", "_policy_method", "_returns"]
 
     def __init__(self, epsilon, gamma, environment, visit_update="first", policy_method="on-policy"):
         #Basic attribute
@@ -36,7 +36,8 @@ class MonteCarloAgent(Agent):
             self._control()
             if (n_episode % test_step) == 0:
                 test_info = self.test(n_tests)
-                [test_results[test].append(test_info[test]) for test in test_info.keys()]
+                for test in test_info.keys():
+                    test_results[test].append(test_info[test])
         return test_results
 
     def train(self, n_episodes: int) -> None:
@@ -48,67 +49,71 @@ class MonteCarloAgent(Agent):
         test_results = defaultdict(list)
         for _ in range(n_tests):
             test_info = self._play_episode(mod="test")
-            [test_results[test].append(test_info[test]) for test in test_info.keys()]
+            for test in test_info.keys():
+                test_results[test].append(test_info[test])
         return {test : np.average(test_results[test]) for test in test_results.keys()}
    
     def _control(self) -> None:
         episode_trajectory = self._play_episode(mod="train") #Play an entire episode
         G = 0
         for i in reversed(range(len(episode_trajectory))):
-            s_t, a_t, r_t = episode_trajectory[i]
-            G = (G * self._gamma) + r_t #Update expected return
+            S, A, R = episode_trajectory[i]
+            G = (G * self._gamma) + R #Update expected return
             if self._visit_update == "first":
-                self._first_visit_update(episode_trajectory[0:i], G, s_t, a_t)
+                self._first_visit_update(episode_trajectory[0:i], G, S, A)
             elif self._visit_update == "every":
-                self._every_visit_update(G, s_t, a_t)
+                self._every_visit_update(G, S, A)
 
-    def _first_visit_update(self, episode_trajectory_part, G, s_t, a_t):
-        if not (s_t, a_t) in [(s[0], s[1]) for s in episode_trajectory_part]:
-            self._returns[s_t, a_t] += 1 
+    def _first_visit_update(self, episode_trajectory_part, G, S, A):
+        if not (S, A) in [(s[0], s[1]) for s in episode_trajectory_part]:
+            self._returns[S, A] += 1 
             #Update action-value table
-            self._Q[s_t, a_t] += (1 / self._returns[s_t, a_t]) * (G - self._Q[s_t, a_t])
+            self._Q[S, A] += (1 / self._returns[S, A]) * (G - self._Q[S, A])
             #Update Policy
-            self._update_policy(s_t)
+            self._update_policy(S)
 
-    def _every_visit_update(self, G, s_t, a_t):
-            self._returns[s_t, a_t] += 1
+    def _every_visit_update(self, G, S, A):
+            self._returns[S, A] += 1
             #Update action-value table
-            self._Q[s_t, a_t] += (1 / self._returns[s_t, a_t]) * (G - self._Q[s_t, a_t])
+            self._Q[S, A] += (1 / self._returns[S, A]) * (G - self._Q[S, A])
             #Update Policy
-            self._update_policy(s_t)
+            self._update_policy(S)
 
-    def _update_policy(self, state_t) -> None:
+    def _update_policy(self, S) -> None:
         # Avoid choosing always the first move in case policy has the same value
-        indices = [i for i, x in enumerate(self._Q[state_t]) if x == max(self._Q[state_t])]
-        a_star = np.random.choice(indices)
+        indices = [i for i, x in enumerate(self._Q[S]) if x == max(self._Q[S])]
+        A_star = np.random.choice(indices)
 
-        n_actions = self._policy.get_n_actions(state_t)
-        for action in range(n_actions):
-            if action == a_star:
-                self._policy[state_t, action] = 1 - self._epsilon + (self._epsilon/n_actions)
+        n_actions = self._policy.get_n_actions(S)
+        for A in range(n_actions):
+            if A == A_star:
+                self._policy[S, A] = 1 - self._epsilon + (self._epsilon/n_actions)
             else:
-                self._policy[state_t, action] = self._epsilon/n_actions
+                self._policy[S, A] = self._epsilon/n_actions
 
     #Select mod flag between "test" and "train"
     def _play_episode(self, mod: str) -> List:
-        state = self._env.reset_env()
+        S = self._env.reset_env()
         episode_ended = False
         episode_trajectory = []
         test_results = defaultdict(float)
 
         while not episode_ended:
             #Select action according to policy distribution probability
-            action = np.random.choice(range(self._env.get_action_number()), p=self._policy[state])
-            if mod == "train":
-                next_state, reward, episode_ended, _ = self._env.run_step(action, mod)
-                episode_trajectory.append((state, action, reward))
-            elif mod == "test":
-                next_state, reward, episode_ended, test_info = self._env.run_step(action, mod)
+            A = np.random.choice(range(self._env.get_action_number()), p=self._policy[S])
+            n_S, reward, episode_ended, test_info = self._env.run_step(A, mod)
+            episode_trajectory.append((S, A, reward))
+            if mod == "test":
                 for test in test_info.keys():
                     test_results[test] += test_info[test]    
-            state = next_state
+            S = n_S
         
         if mod == "train":
             return episode_trajectory
-        elif mod == "test":
-            return test_results
+        return test_results
+    
+    def reset(self):
+        pass
+
+    def run_step(self):
+        pass
