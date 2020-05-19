@@ -21,11 +21,6 @@ class TemporalDifference(Agent, object):
         self._epsilon = epsilon
         self._gamma = gamma
     
-    def _control(self):
-        self.reset()
-        while not self._episode_ended:
-            self.run_step()
-
     
     def run(self, n_episodes: int, n_tests: int, test_step: int):
         test_results = defaultdict(list)
@@ -47,6 +42,11 @@ class TemporalDifference(Agent, object):
             test_info = self._play_episode()            
             [test_results[test].append(test_info[test]) for test in test_info.keys()]
         return {test : np.average(test_results[test]) for test in test_results.keys()}
+
+    def _control(self):
+        self.reset()
+        while not self._episode_ended:
+            self.run_step()
         
     def _update_policy(self, S) -> None:
         # Avoid choosing always the first move in case policy has the same value
