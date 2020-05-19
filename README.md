@@ -31,7 +31,7 @@
 ### n-step Bootstrapping
 
 * [ ] **n-step Sarsa**
-    * [ ] on-policy
+    * [x] on-policy
     * [ ] off-policy
 * [ ] **n-step Expected Sarsa**
     * [ ] on-policy
