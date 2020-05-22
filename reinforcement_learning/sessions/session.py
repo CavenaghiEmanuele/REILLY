@@ -1,6 +1,8 @@
 from random import shuffle
 from typing import Dict, List
 
+from tqdm import tqdm
+
 from ..agents import Agent
 from ..environments import Environment
 
@@ -16,7 +18,7 @@ class Session:
 
     def run(self, episodes: int, test_offset: int, test_samples: int):
         results = []
-        for episode in range(episodes):
+        for episode in tqdm(range(episodes)):
             self._run_train()
             if episode % test_offset == 0:
                 result = self._run_test(test_samples)
