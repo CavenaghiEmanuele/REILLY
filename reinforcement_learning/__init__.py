@@ -5,4 +5,5 @@ from .agents import (
     NStep, NStepSarsaAgent
     )
 from .environments import Environment, Taxi, Frozen_Lake4x4, Frozen_Lake8x8
+from .sessions import Session
 from .structures import StateValue, ActionValue, Policy
