@@ -71,7 +71,7 @@ class NStep(Agent, object):
         while not episode_ended:
             #Select action according to policy distribution probability
             action = np.random.choice(range(self._env.actions_size()), p=self._policy[state])
-            next_state, _, episode_ended, test_info = self._env.run_step(action, "test")
+            next_state, _, episode_ended, test_info = self._env.run_step(action, mod="test")
             state = next_state
             for test in test_info.keys():
                 test_results[test] += test_info[test]

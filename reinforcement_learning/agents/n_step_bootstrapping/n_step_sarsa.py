@@ -25,7 +25,7 @@ class NStepSarsaAgent(NStep, object):
     def run_step(self, *args, **kwargs):
         t  = kwargs['t']
         if t < self.T:
-            n_S, R, self._episode_ended, _ = self._env.run_step(self._actions[t], "train")
+            n_S, R, self._episode_ended, _ = self._env.run_step(self._actions[t], mod="train")
             self._states.append(n_S)
             self._rewards.append(R)
             

@@ -22,7 +22,7 @@ class DoubleSarsaAgent(DoubleTemporalDifference ,object):
         self._A = np.random.choice(range(self._env.actions_size()), p=policy_average)
     
     def run_step(self, *args, **kwargs):
-        n_S, R, self._episode_ended, _ = self._env.run_step(self._A, "train")
+        n_S, R, self._episode_ended, _ = self._env.run_step(self._A, mod="train")
         policy_average = (self._policy[n_S] + self._policy2[n_S])/2
         n_A = np.random.choice(range(self._env.actions_size()), p=policy_average)
 

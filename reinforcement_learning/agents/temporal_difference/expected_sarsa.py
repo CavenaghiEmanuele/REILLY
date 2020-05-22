@@ -27,7 +27,7 @@ class ExpectedSarsaAgent(TemporalDifference, object):
         self._A = np.random.choice(range(self._env.actions_size()), p=self._policy[self._S])
     
     def run_step(self, *args, **kwargs):
-        n_S, R, self._episode_ended, _ = self._env.run_step(self._A, "train")
+        n_S, R, self._episode_ended, _ = self._env.run_step(self._A, mod="train")
         n_A = np.random.choice(range(self._env.actions_size()), p=self._policy[n_S])
 
         self._Q[self._S, self._A] += self._alpha * (R + (self._gamma * self._compute_expected_value(n_S)) - self._Q[self._S, self._A]) 

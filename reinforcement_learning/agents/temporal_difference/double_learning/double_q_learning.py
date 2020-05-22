@@ -20,7 +20,7 @@ class DoubleQLearningAgent(DoubleTemporalDifference ,object):
     def run_step(self, *args, **kwargs):
         policy_average = (self._policy[self._S] + self._policy2[self._S])/2
         A = np.random.choice(range(self._env.actions_size()), p=policy_average)
-        n_S, R, self._episode_ended, _ = self._env.run_step(A, "train")
+        n_S, R, self._episode_ended, _ = self._env.run_step(A, mod="train")
         
         if np.random.binomial(1, 0.5) == 0:
             self._Q[self._S, A] += self._alpha * (R + (self._gamma * self._Q2[n_S, np.argmax(self._Q[n_S])]) - self._Q[self._S, A])

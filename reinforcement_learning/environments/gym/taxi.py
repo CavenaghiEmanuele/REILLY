@@ -12,10 +12,10 @@ class Taxi(Environment):
         return self._env.render()
   
     # If mod flag is "test" return additional dict with environment tests result
-    def run_step(self, action, mod: str):
+    def run_step(self, action, *args, **kwargs):
         next_state, reward, done, _ = self._env.step(action)
         
-        if mod == "test":
+        if kwargs['mod'] == "test":
             if done and reward == 20:
                 test_info = {"return_sum": reward, "wins": 1}
             else:
