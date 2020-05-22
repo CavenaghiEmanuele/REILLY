@@ -13,7 +13,7 @@ class Environment(ABC):
         pass
 
     @abstractmethod
-    def reset_env(self):
+    def reset_env(self) -> int:
         pass
 
     @abstractmethod
