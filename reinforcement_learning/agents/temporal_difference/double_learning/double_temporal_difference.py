@@ -1,10 +1,7 @@
 import numpy as np
 from typing import List, Dict
-from collections import defaultdict
-from tqdm import tqdm
 
 from ....structures import ActionValue, Policy
-
 from ..temporal_difference import TemporalDifference
 
 

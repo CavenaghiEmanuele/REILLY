@@ -1,7 +1,6 @@
 import numpy as np
 from typing import List, Dict
 from collections import defaultdict
-from tqdm import tqdm
 
 from .agent import Agent
 from ..structures import ActionValue, Policy
@@ -54,16 +53,6 @@ class MonteCarloAgent(Agent):
                     (self._epsilon/n_actions)
             else:
                 self._policy[S, A] = self._epsilon/n_actions
-
-    # Select mod flag between "test" and "train"
-    def _play_episode(self, mod: str) -> List:
-        self.reset()
-        while not self._episode_ended:
-            self.run_step(mode=mod)
-
-        if mod == "train":
-            return self._episode_trajectory
-        return self._test_results
 
     def _update(self):
         G = 0

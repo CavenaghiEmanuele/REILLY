@@ -1,14 +1,11 @@
 import numpy as np
 from typing import List, Dict
-from collections import defaultdict
-from tqdm import tqdm
 
 from ...structures import ActionValue, Policy
-
 from .temporal_difference import TemporalDifference
 
 
-class QLearningAgent(TemporalDifference ,object):
+class QLearningAgent(TemporalDifference, object):
 
     def __repr__(self):
         return "QLearning: " + "alpha=" + str(self._alpha) + ", gamma=" + str(self._gamma) + ", epsilon=" + str(self._epsilon)

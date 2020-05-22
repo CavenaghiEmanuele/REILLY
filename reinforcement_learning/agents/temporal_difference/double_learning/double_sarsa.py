@@ -1,14 +1,11 @@
 import numpy as np
 from typing import List, Dict
-from collections import defaultdict
-from tqdm import tqdm
 
 from ....structures import ActionValue, Policy
-
 from .double_temporal_difference import DoubleTemporalDifference
 
 
-class DoubleSarsaAgent(DoubleTemporalDifference ,object):
+class DoubleSarsaAgent(DoubleTemporalDifference, object):
 
     __slots__ = ['_A']
 

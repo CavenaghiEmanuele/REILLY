@@ -1,8 +1,5 @@
 import numpy as np
 from typing import List, Dict
-from collections import defaultdict
-from tqdm import tqdm
-import itertools
 
 from ..agent import Agent
 from ...structures import ActionValue, Policy

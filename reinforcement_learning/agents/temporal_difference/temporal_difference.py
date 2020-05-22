@@ -1,7 +1,5 @@
 import numpy as np
 from typing import List, Dict
-from collections import defaultdict
-from tqdm import tqdm
 from abc import ABC, abstractmethod
 
 from ..agent import Agent

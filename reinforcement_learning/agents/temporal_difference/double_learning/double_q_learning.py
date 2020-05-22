@@ -1,14 +1,11 @@
 import numpy as np
 from typing import List, Dict
-from collections import defaultdict
-from tqdm import tqdm
 
 from ....structures import ActionValue, Policy
-
 from .double_temporal_difference import DoubleTemporalDifference
 
 
-class DoubleQLearningAgent(DoubleTemporalDifference ,object):
+class DoubleQLearningAgent(DoubleTemporalDifference, object):
 
     def __repr__(self):
         return "DoubleQLearning: " + "alpha=" + str(self._alpha) + ", gamma=" + str(self._gamma) + ", epsilon=" + str(self._epsilon)
