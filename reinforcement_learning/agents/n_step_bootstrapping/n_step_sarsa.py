@@ -18,7 +18,7 @@ class NStepSarsaAgent(NStep, object):
     def reset(self):
         self._episode_ended = False
         self._states = [self._env.reset_env()]
-        self._actions = [np.random.choice(range(self._env.get_action_number()), p=self._policy[self._states[0]])]
+        self._actions = [np.random.choice(range(self._env.actions_size()), p=self._policy[self._states[0]])]
         self._rewards = [0.0]
         self.T = float('inf')
 
@@ -32,7 +32,7 @@ class NStepSarsaAgent(NStep, object):
             if self._episode_ended == True:
                 self.T = t + 1
             else:
-                self._actions.append(np.random.choice(range(self._env.get_action_number()), p=self._policy[n_S]))
+                self._actions.append(np.random.choice(range(self._env.actions_size()), p=self._policy[n_S]))
 
         pi = t - self._n_step + 1
         if pi >= 0:

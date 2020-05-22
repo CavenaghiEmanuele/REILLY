@@ -13,8 +13,8 @@ class TemporalDifference(Agent, object):
 
     def __init__(self, alpha, epsilon, gamma, environment):
         self._env = environment
-        n_states = self._env.get_state_number()
-        n_actions = self._env.get_action_number()
+        n_states = self._env.states_size()
+        n_actions = self._env.actions_size()
         self._Q = ActionValue(n_states, n_actions)
         self._policy = Policy(n_states, n_actions)
         self._alpha = alpha
@@ -68,7 +68,7 @@ class TemporalDifference(Agent, object):
 
         while not episode_ended:
             #Select action according to policy distribution probability
-            action = np.random.choice(range(self._env.get_action_number()), p=self._policy[state])
+            action = np.random.choice(range(self._env.actions_size()), p=self._policy[state])
             next_state, _, episode_ended, test_info = self._env.run_step(action, "test")
             state = next_state
             for test in test_info.keys():

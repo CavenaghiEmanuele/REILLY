@@ -27,10 +27,10 @@ class Taxi(Environment):
     def reset_env(self):
         return self._env.reset()
 
-    def get_state_number(self):
+    def states_size(self):
         return self._env.observation_space.n
 
-    def get_action_number(self):
+    def actions_size(self):
         return self._env.action_space.n
     
     def get_env_tests(self):

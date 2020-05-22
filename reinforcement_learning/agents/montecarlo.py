@@ -15,8 +15,8 @@ class MonteCarloAgent(Agent):
     def __init__(self, epsilon, gamma, environment, visit_update="first", policy_method="on-policy"):
         #Basic attribute
         self._env = environment
-        n_states = self._env.get_state_number()
-        n_actions = self._env.get_action_number()
+        n_states = self._env.states_size()
+        n_actions = self._env.actions_size()
         self._Q = ActionValue(n_states, n_actions)
         self._policy = Policy(n_states, n_actions)
         self._returns = np.zeros(shape=(n_states, n_actions))
@@ -113,7 +113,7 @@ class MonteCarloAgent(Agent):
 
     def run_step(self, *args, **kwargs):
         #Select action according to policy distribution probability
-        A = np.random.choice(range(self._env.get_action_number()), p=self._policy[self._S])
+        A = np.random.choice(range(self._env.actions_size()), p=self._policy[self._S])
         n_S, R, self._episode_ended, test_info = self._env.run_step(A, kwargs['mod'])
         self._episode_trajectory.append((self._S, A, R))
         if kwargs['mod'] == "test":

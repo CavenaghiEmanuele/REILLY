@@ -14,8 +14,8 @@ class DoubleTemporalDifference(TemporalDifference, object):
 
     def __init__(self, alpha, epsilon, gamma, environment):
         super().__init__(alpha, epsilon, gamma, environment)
-        self._Q2 = ActionValue(environment.get_state_number(), environment.get_action_number())
-        self._policy2 = Policy(environment.get_state_number(), environment.get_action_number())
+        self._Q2 = ActionValue(environment.states_size(), environment.actions_size())
+        self._policy2 = Policy(environment.states_size(), environment.actions_size())
     
     def _update_policy(self, S, policy, Q) -> None:
         # Avoid choosing always the first move in case policy has the same value

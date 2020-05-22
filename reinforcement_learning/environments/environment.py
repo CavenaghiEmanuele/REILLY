@@ -21,11 +21,11 @@ class Environment(ABC):
         pass
 
     @abstractmethod
-    def get_state_number(self) -> int:
+    def states_size(self) -> int:
         pass
 
     @abstractmethod
-    def get_action_number(self) -> int:
+    def actions_size(self) -> int:
         pass
 
     @abstractmethod
