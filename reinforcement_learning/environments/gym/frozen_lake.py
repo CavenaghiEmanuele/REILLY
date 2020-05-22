@@ -1,6 +1,6 @@
 import gym
 
-from .environment import Environment
+from ..environment import Environment
 
 class Frozen_Lake4x4(Environment):
 

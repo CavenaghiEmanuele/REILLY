@@ -1,15 +1,11 @@
-import gym
-
 from abc import ABC, abstractmethod
 from typing import List
 
 
 class Environment(ABC):
 
-    _env: gym.Env
-
     @abstractmethod
-    def run_step(self, action, mod):
+    def run_step(self, action, *args, **kwargs):
         pass
 
     @abstractmethod
