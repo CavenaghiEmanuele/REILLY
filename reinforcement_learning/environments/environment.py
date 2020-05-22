@@ -5,7 +5,11 @@ from typing import List
 class Environment(ABC):
 
     @abstractmethod
-    def run_step(self, action, *args, **kwargs):
+    def states_size(self) -> int:
+        pass
+
+    @abstractmethod
+    def actions_size(self) -> int:
         pass
 
     @abstractmethod
@@ -17,11 +21,7 @@ class Environment(ABC):
         pass
 
     @abstractmethod
-    def states_size(self) -> int:
-        pass
-
-    @abstractmethod
-    def actions_size(self) -> int:
+    def run_step(self, action, *args, **kwargs):
         pass
 
     @abstractmethod
