@@ -4,7 +4,7 @@ from collections import defaultdict
 from tqdm import tqdm
 
 from ....structures import ActionValue, Policy
-from ....environments.environment import Environment
+
 from .double_temporal_difference import DoubleTemporalDifference
 
 
@@ -13,14 +13,14 @@ class DoubleQLearningAgent(DoubleTemporalDifference ,object):
     def __repr__(self):
         return "DoubleQLearning: " + "alpha=" + str(self._alpha) + ", gamma=" + str(self._gamma) + ", epsilon=" + str(self._epsilon)
     
-    def reset(self):
+    def reset(self, env):
         self._episode_ended = False
-        self._S = self._env.reset_env()
+        self._S = env.reset_env()
     
-    def run_step(self, *args, **kwargs):
+    def run_step(self, env, *args, **kwargs):
         policy_average = (self._policy[self._S] + self._policy2[self._S])/2
-        A = np.random.choice(range(self._env.actions_size()), p=policy_average)
-        n_S, R, self._episode_ended, _ = self._env.run_step(A, mod="train")
+        A = np.random.choice(range(env.actions_size()), p=policy_average)
+        n_S, R, self._episode_ended, info = env.run_step(A, **kwargs)
         
         if np.random.binomial(1, 0.5) == 0:
             self._Q[self._S, A] += self._alpha * (R + (self._gamma * self._Q2[n_S, np.argmax(self._Q[n_S])]) - self._Q[self._S, A])
@@ -30,3 +30,5 @@ class DoubleQLearningAgent(DoubleTemporalDifference ,object):
             self._update_policy(self._S, self._policy2, self._Q2)
 
         self._S = n_S
+
+        return (n_S, R, self._episode_ended, info)

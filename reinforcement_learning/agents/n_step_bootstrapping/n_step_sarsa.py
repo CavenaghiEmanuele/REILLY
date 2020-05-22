@@ -4,7 +4,7 @@ from collections import defaultdict
 from tqdm import tqdm
 
 from ...structures import ActionValue, Policy
-from ...environments.environment import Environment
+
 from .n_step import NStep
 
 
@@ -15,24 +15,24 @@ class NStepSarsaAgent(NStep, object):
     def __repr__(self):
         return "n-step Sarsa: " + "alpha=" + str(self._alpha) + ", gamma=" + str(self._gamma) + ", epsilon=" + str(self._epsilon) + ", n-step=" + str(self._n_step)
     
-    def reset(self):
+    def reset(self, env):
         self._episode_ended = False
-        self._states = [self._env.reset_env()]
-        self._actions = [np.random.choice(range(self._env.actions_size()), p=self._policy[self._states[0]])]
+        self._states = [env.reset_env()]
+        self._actions = [np.random.choice(range(env.actions_size()), p=self._policy[self._states[0]])]
         self._rewards = [0.0]
         self.T = float('inf')
 
-    def run_step(self, *args, **kwargs):
+    def run_step(self, env, *args, **kwargs):
         t  = kwargs['t']
         if t < self.T:
-            n_S, R, self._episode_ended, _ = self._env.run_step(self._actions[t], mod="train")
+            n_S, R, self._episode_ended, info = env.run_step(self._actions[t], **kwargs)
             self._states.append(n_S)
             self._rewards.append(R)
             
             if self._episode_ended == True:
                 self.T = t + 1
             else:
-                self._actions.append(np.random.choice(range(self._env.actions_size()), p=self._policy[n_S]))
+                self._actions.append(np.random.choice(range(env.actions_size()), p=self._policy[n_S]))
 
         pi = t - self._n_step + 1
         if pi >= 0:
@@ -47,7 +47,4 @@ class NStepSarsaAgent(NStep, object):
             self._Q[self._states[pi], self._actions[pi]] += self._alpha * (G - self._Q[self._states[pi], self._actions[pi]])
             self._update_policy(self._states[pi])
         
-        # Return True if the episod is ended
-        if pi == self.T - 1:
-            return True
-        return False
+        return (n_S, R, self._episode_ended, info)

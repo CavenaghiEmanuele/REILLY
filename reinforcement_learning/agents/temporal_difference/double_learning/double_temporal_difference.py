@@ -4,7 +4,7 @@ from collections import defaultdict
 from tqdm import tqdm
 
 from ....structures import ActionValue, Policy
-from ....environments.environment import Environment
+
 from ..temporal_difference import TemporalDifference
 
 
@@ -12,11 +12,11 @@ class DoubleTemporalDifference(TemporalDifference, object):
 
     __slots__ = ["_Q2", "_policy2"]
 
-    def __init__(self, alpha, epsilon, gamma, environment):
-        super().__init__(alpha, epsilon, gamma, environment)
-        self._Q2 = ActionValue(environment.states_size(), environment.actions_size())
-        self._policy2 = Policy(environment.states_size(), environment.actions_size())
-    
+    def __init__(self, states_size, actions_size, alpha, epsilon, gamma):
+        super().__init__(states_size, actions_size, alpha, epsilon, gamma)
+        self._Q2 = ActionValue(states_size, actions_size)
+        self._policy2 = Policy(states_size, actions_size)
+
     def _update_policy(self, S, policy, Q) -> None:
         # Avoid choosing always the first move in case policy has the same value
         indices = [i for i, x in enumerate(Q[S]) if x == max(Q[S])]
