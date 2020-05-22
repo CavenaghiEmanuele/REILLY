@@ -24,7 +24,7 @@ class Frozen_Lake4x4(Environment):
     def run_step(self, action, *args, **kwargs):
         next_state, reward, done, _ = self._env.step(action)
         
-        if kwargs['mod'] == "test":
+        if kwargs['mode'] == "test":
             if done and reward == 1:
                 test_info = {"wins": 1}
             else:
@@ -71,7 +71,7 @@ class Frozen_Lake8x8(Environment):
     def run_step(self, action, *args, **kwargs):
         next_state, reward, done, _ = self._env.step(action)
         
-        if kwargs['mod'] == "test":
+        if kwargs['mode'] == "test":
             if done and reward == 1:
                 test_info = {"wins": 1}
             else:

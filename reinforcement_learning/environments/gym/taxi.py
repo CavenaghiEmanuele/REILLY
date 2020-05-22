@@ -15,7 +15,7 @@ class Taxi(Environment):
     def run_step(self, action, *args, **kwargs):
         next_state, reward, done, _ = self._env.step(action)
         
-        if kwargs['mod'] == "test":
+        if kwargs['mode'] == "test":
             if done and reward == 20:
                 test_info = {"return_sum": reward, "wins": 1}
             else:
