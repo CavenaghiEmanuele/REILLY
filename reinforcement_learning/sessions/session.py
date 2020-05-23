@@ -1,6 +1,8 @@
 from random import shuffle
 from typing import Dict, List
 
+import pandas as pd
+
 from tqdm import tqdm
 
 from ..agents import Agent
@@ -21,9 +23,8 @@ class Session:
         for episode in tqdm(range(episodes)):
             self._run_train()
             if episode % test_offset == 0:
-                result = self._run_test(test_samples)
-                results.append(result)
-        return results
+                results.append(self._run_test(test_samples))
+        return self._format_results(results)
 
     def _run_train(self):
         step = 0
@@ -37,38 +38,35 @@ class Session:
                 agents.remove(agent)
             step += 1
         self.reset_env()
-    
+
     def _run_test(self, test_samples: int):
-        tests = self._env.get_env_tests()
-        results = {
-            agent: {test: [] for test in tests}
-            for agent in self._agents.keys()
-        }
+        outs = []
         for sample in range(test_samples):
+            out = []
             step = 0
-            result = {
-                agent: {test: 0 for test in tests}
-                for agent in self._agents.keys()
-            }
             agents = list(self._agents.keys())
             while len(agents) > 0:
                 shuffle(agents)
                 for agent in agents:
                     S, R, done, info = self._agents[agent].\
                         run_step(self._env, t=step, mode='test')
-                    for i, value in info.items():
-                        result[agent][i] += value
+                    out.append((agent, S, R, done, info))
+                outs.append(out)
                 if done:
                     agents.remove(agent)
                 step += 1
             self.reset_env()
-            for key, res in result.items():
-                for k, v in res.items():
-                    results[key][k].append(v)
-        for key, res in results.items():
-            for k in res.keys():
-                results[key][k] = sum(results[key][k]) / len(results[key][k])
-        return results
+        return outs
+
+    def _format_results(self, results):
+        out = [
+            {'test': i, 'sample': j, 'step': k, 'agent': agent, **info}
+            for i, test in enumerate(results)
+            for j, sample in enumerate(test)
+            for k, (agent, state, reward, done, info) in enumerate(sample)
+        ]
+        out = pd.DataFrame(out)
+        return out
 
     def reset_env(self):
         for agent in self._agents.values():
