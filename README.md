@@ -34,7 +34,7 @@
     * [x] on-policy
     * [ ] off-policy
 * [ ] **n-step Expected Sarsa**
-    * [ ] on-policy
+    * [x] on-policy
     * [ ] off-policy
 * [ ] **n-step Tree Backup Algorithm**
 * [ ] **n-step Q(sigma)**
