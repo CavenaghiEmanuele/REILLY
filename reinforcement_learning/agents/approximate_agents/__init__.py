@@ -1,1 +1,2 @@
-from .tile_coding import IndexHashTable, tiles
+from .index_hash_table import IndexHashTable
+from .tile_coding import TileCoding, Tiling
