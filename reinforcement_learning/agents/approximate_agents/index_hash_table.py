@@ -1,5 +1,3 @@
-from itertools import zip_longest
-from math import floor
 from typing import Dict
 
 
@@ -38,41 +36,3 @@ class IndexHashTable:
             self._dictionary[obj] = self.count_elements()
             return
         self._overfull = True
-
-
-def tiles(iht, numtilings, floats, ints=[]):
-    """returns num-tilings tile indices corresponding to the floats and ints"""
-    qfloats = [floor(f*numtilings) for f in floats]
-    Tiles = []
-    for tiling in range(numtilings):
-        tilingX2 = tiling*2
-        coords = [tiling]
-        b = tiling
-        for q in qfloats:
-            coords.append((q + b) // numtilings)
-            b += tilingX2
-        coords.extend(ints)
-        
-        iht.add_element(tuple(coords))
-        Tiles.append(iht.get_index(tuple(coords)))
-    return Tiles
-
-
-def tileswrap(iht, numtilings, floats, wrapwidths, ints=[]):
-    """returns num-tilings tile indices corresponding to the floats and ints,
-    wrapping some floats"""
-    qfloats = [floor(f*numtilings) for f in floats]
-    Tiles = []
-    for tiling in range(numtilings):
-        tilingX2 = tiling*2
-        coords = [tiling]
-        b = tiling
-        for q, width in zip_longest(qfloats, wrapwidths):
-            c = (q + b % numtilings) // numtilings
-            coords.append(c % width if width else c)
-            b += tilingX2
-        coords.extend(ints)
-        
-        iht.add_element(tuple(coords))
-        Tiles.append(iht.get_index(tuple(coords)))
-    return Tiles
