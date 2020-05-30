@@ -5,20 +5,23 @@ from math import floor
 
 class Tiling:
 
-    # _start_point = [0, 0, ..., 0]
+    _start_point = List[float]
     _tiles: Dict
     _tiles_dims: List[float]
 
-    def __init__(self, tiles_dims: List[float]):
+    def __init__(self, tiles_dims: List[float], start_point: List[int]):
+        self._start_point = start_point
         self._tiles_dims = tiles_dims
         self._tiles = {}
 
     def __str__(self):
-        return "Tiles dims: " + str(self._tiles_dims) + " - " + \
-            "Tiles: " + str(self._tiles)
+        return "Tiling start point: " + str(self._start_point) + " - \n" + \
+            "Tiles dims: " + str(self._tiles_dims) + " - \n" + \
+            "Tiles: " + str(self._tiles) + "\n"
 
     def __repr__(self):
-        return "Tiles dims: " + str(self._tiles_dims) + " - " + \
+        return "Tiling start point: " + str(self._start_point) + " - \n" + \
+            "Tiles dims: " + str(self._tiles_dims) + " - \n" + \
             "Tiles: " + str(self._tiles) + "\n"
 
     def add_tiles(self, start_point: List[float]):
@@ -29,16 +32,30 @@ class Tiling:
             self._tiles.update(
                 {str((start_point, end_point)): len(self._tiles)})
 
-    def get_tile_index(self, feature: List[float]):
-        '''
-        Prendo le feature in ingresso e ritorno l'indice delle tile che 
-        contiene quelle feature
-        
-        Se non c'è nel dizionario quella tile la creo al momento e la aggiungo 
-        al dizionario. Il suo start_point sarà l'intero più vicino secondo la
-        dimensione delle tile partendo a contare dalla coordinata [0, 0, ..., 0]
-        '''
-        pass
+    def get_tile_index(self, features: List[float]):
+
+        start_point = self.get_lower_bound(features)
+        end_point = [start_point[i] + self._tiles_dims[i]
+                     for i in range(len(features))]
+        if not str((start_point, end_point)) in self._tiles:
+            self.add_tiles(start_point)
+        return self._tiles[str((start_point, end_point))]
+
+    def get_lower_bound(self, features: List[float]) -> int:
+        lower_bound = []
+        for i in range(len(features)):
+            feature = abs(features[i] - self._start_point[i])
+            j = self._start_point[i]
+            while feature > self._tiles_dims[i]:
+                feature -= self._tiles_dims[i]
+                j += self._tiles_dims[i]
+
+            if features[i] > 0:
+                lower_bound.append(j)
+            else:
+                lower_bound.append(-j)
+
+        return lower_bound
 
 
 class TileCoding():
@@ -48,22 +65,14 @@ class TileCoding():
 
     def __init__(self, n_tilings: int, tilings_offset: List[float], tiles_dims: List[float]):
         self._tiling_offset = tilings_offset
-        self._tilings = [Tiling(tiles_dims=tiles_dims)
+        self._tilings = [Tiling(tiles_dims=tiles_dims, start_point=[-i * offset for offset in tilings_offset])
                          for i in range(n_tilings)]
 
     def __str__(self):
-        return "Tilings:\n" + str(self._tilings)
-    
-    
-    def get_coordinates(self, features: List[float]):
-        
-        '''
-        Per ogni tiling passo le feature e ogni tiling mi restituirà l'indice 
-        della tile che contiene quelle feature (solo una le può contenere)
-        
-        Restituirò una lista con gli indici di ogni tile, 
-        una lista di n_tiling indici (uno per tiling)
-        
-        Devo semplicemente passare ad ogni tiling le feature e aspettare risposta
-        '''
-        pass
+        s = ""
+        for tiling in self._tilings:
+            s += "----------------------\n" + str(tiling)
+        return "Tilings: \n" + s
+
+    def get_coordinates(self, features: List[float]) -> List[int]:
+        return [tiling.get_tile_index(features) for tiling in self._tilings]
