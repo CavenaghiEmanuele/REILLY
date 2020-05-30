@@ -1,9 +1,6 @@
 # Reinforcement Learning Library
 
-## ToDo
-
-* [x] speed up agent's training (python __slots__ and ndarray)
-
+## TABULAR AGENTS
 
 ### MonteCarlo
 
@@ -44,3 +41,13 @@
 * [ ] **Random-sample one-step tabular Q-planning**
 * [ ] **Tabular Dyna-Q**
 * [ ] **Prioritized sweeping**
+
+## APPROXIMATE AGENTS
+
+### Tile coding
+* [x] 1-D tilings
+* [x] n-D tilings
+* [x] tiling offset
+* [x] different tiling dimensions
+* [ ] test of tiling
+
