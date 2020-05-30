@@ -1,6 +1,4 @@
 from typing import List, Dict
-from itertools import zip_longest
-from math import floor
 
 
 class Tiling:
@@ -24,22 +22,22 @@ class Tiling:
             "Tiles dims: " + str(self._tiles_dims) + " - \n" + \
             "Tiles: " + str(self._tiles) + "\n"
 
-    def add_tiles(self, start_point: List[float]):
+    def add_tiles(self, start_point: List[float], action: int):
         end_point = [start_point[i] + self._tiles_dims[i]
                      for i in range(len(self._tiles_dims))]
 
-        if not str((start_point, end_point)) in self._tiles:
+        if not str((start_point, end_point, action)) in self._tiles:
             self._tiles.update(
-                {str((start_point, end_point)): len(self._tiles)})
+                {str((start_point, end_point, action)): len(self._tiles)})
 
-    def get_tile_index(self, features: List[float]):
+    def get_tile_index(self, features: List[float], action: int):
 
         start_point = self.get_lower_bound(features)
         end_point = [start_point[i] + self._tiles_dims[i]
                      for i in range(len(features))]
-        if not str((start_point, end_point)) in self._tiles:
-            self.add_tiles(start_point)
-        return self._tiles[str((start_point, end_point))]
+        if not str((start_point, end_point, action)) in self._tiles:
+            self.add_tiles(start_point, action)
+        return self._tiles[str((start_point, end_point, action))]
 
     def get_lower_bound(self, features: List[float]) -> int:
         lower_bound = []
@@ -74,5 +72,5 @@ class TileCoding():
             s += "----------------------\n" + str(tiling)
         return "Tilings: \n" + s
 
-    def get_coordinates(self, features: List[float]) -> List[int]:
-        return [tiling.get_tile_index(features) for tiling in self._tilings]
+    def get_coordinates(self, features: List[float], action: int) -> List[int]:
+        return [tiling.get_tile_index(features, action) for tiling in self._tilings]
