@@ -10,7 +10,10 @@ class NStepSarsaAgent(NStep, object):
     __slots__ = ['_states', '_actions', '_rewards', 'T']
 
     def __repr__(self):
-        return "n-step Sarsa: " + "alpha=" + str(self._alpha) + ", gamma=" + str(self._gamma) + ", epsilon=" + str(self._epsilon) + ", n-step=" + str(self._n_step)
+        return "n-step Sarsa: " + "alpha=" + str(self._alpha) + \
+            ", gamma=" + str(self._gamma) + \
+            ", epsilon=" + str(self._epsilon) + \
+            ", n-step=" + str(self._n_step)
 
     def reset(self, env):
         self._episode_ended = False
