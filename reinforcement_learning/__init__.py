@@ -4,7 +4,8 @@ from .agents import (
     DoubleTemporalDifference, DoubleSarsaAgent, DoubleQLearningAgent, DoubleExpectedSarsaAgent,
     NStep, NStepSarsaAgent, NStepExpectedSarsaAgent,
     
-    TileCoding, Tiling
+    TileCoding, Tiling, QEstimator,
+    NStepApprox, NStepSarsaApproximateAgent
     )
 from .environments import Environment, Taxi, Frozen_Lake4x4, Frozen_Lake8x8
 from .sessions import Session
