@@ -51,3 +51,17 @@
 * [x] different tiling dimensions
 * [ ] test of tiling
 
+### Q Estimator
+* [x] Base implementation
+* [ ] With trace
+
+
+### ### n-step Bootstrapping
+* [ ] **n-step Sarsa**
+    * [x] on-policy
+    * [ ] off-policy
+    * [ ] test
+* [ ] **n-step Expected Sarsa**
+    * [ ] on-policy
+    * [ ] off-policy
+    * [ ] test
