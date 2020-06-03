@@ -4,8 +4,8 @@ if __name__ == "__main__":
     env = rl.Taxi()
     sess = rl.Session(env)
     agent = rl.DoubleQLearningAgent(
-        states_size=env.states_size(),
-        actions_size=env.actions_size(),
+        states_size=env.states_size,
+        actions_size=env.actions_size,
         alpha=0.1,
         epsilon=0.05,
         gamma=0.99

@@ -15,7 +15,7 @@ class QLearningAgent(TemporalDifference, object):
         self._S = env.reset()
     
     def run_step(self, env, *args, **kwargs):
-        A = np.random.choice(range(env.actions_size()), p=self._policy[self._S])
+        A = np.random.choice(range(env.actions_size), p=self._policy[self._S])
         n_S, R, self._episode_ended, info = env.run_step(A, **kwargs)
         self._Q[self._S, A] += self._alpha * (R + (self._gamma * np.max(self._Q[n_S])) - self._Q[self._S, A])
         self._update_policy(self._S)

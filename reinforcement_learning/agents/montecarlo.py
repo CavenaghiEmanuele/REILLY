@@ -73,7 +73,7 @@ class MonteCarloAgent(Agent):
 
     def run_step(self, env, *args, **kwargs):
         # Select action according to policy distribution probability
-        A = np.random.choice(range(env.actions_size()),
+        A = np.random.choice(range(env.actions_size),
                              p=self._policy[self._S])
         n_S, R, self._episode_ended, info = env.run_step(A, **kwargs)
         self._episode_trajectory.append((self._S, A, R))

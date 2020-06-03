@@ -16,12 +16,12 @@ class DoubleSarsaAgent(DoubleTemporalDifference, object):
         self._episode_ended = False
         self._S = env.reset()
         policy_average = (self._policy[self._S] + self._policy2[self._S])/2
-        self._A = np.random.choice(range(env.actions_size()), p=policy_average)
+        self._A = np.random.choice(range(env.actions_size), p=policy_average)
     
     def run_step(self, env, *args, **kwargs):
         n_S, R, self._episode_ended, info = env.run_step(self._A, **kwargs)
         policy_average = (self._policy[n_S] + self._policy2[n_S])/2
-        n_A = np.random.choice(range(env.actions_size()), p=policy_average)
+        n_A = np.random.choice(range(env.actions_size), p=policy_average)
 
         if np.random.binomial(1, 0.5) == 0:
             self._Q[self._S, self._A] += self._alpha * (R + (self._gamma * self._Q2[n_S, n_A]) - self._Q[self._S, self._A])
