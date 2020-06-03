@@ -1,27 +1,13 @@
 import gym
 
-from ..environment import Environment
+from .abstract_gym import GymEnvironment
 
 
-class Taxi(Environment):
+class Taxi(GymEnvironment):
 
     def __init__(self):
         self._env = gym.make("Taxi-v3")
         self.reset()
-
-    @property
-    def states_size(self) -> int:
-        return self._env.observation_space.n
-
-    @property
-    def actions_size(self) -> int:
-        return self._env.action_space.n
-
-    def render(self):
-        return self._env.render()
-
-    def reset(self) -> int:
-        return self._env.reset()
 
     # If mod flag is "test" return additional dict with environment tests result
     def run_step(self, action, *args, **kwargs):
@@ -35,7 +21,3 @@ class Taxi(Environment):
             return next_state, reward, done, info
 
         return next_state, reward, done, _
-
-    @property
-    def probability_distribution(self):
-        return self._env.env.P

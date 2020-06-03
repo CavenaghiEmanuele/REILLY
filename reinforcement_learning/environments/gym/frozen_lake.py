@@ -1,9 +1,9 @@
 import gym
 
-from ..environment import Environment
+from .abstract_gym import GymEnvironment
 
 
-class Frozen_Lake4x4(Environment):
+class Frozen_Lake4x4(GymEnvironment):
 
     def __init__(self, slippery=True):
         if slippery:
@@ -18,20 +18,6 @@ class Frozen_Lake4x4(Environment):
             self._env = gym.make("FrozenLakeNotSlippery4x4-v0")
         self.reset()
 
-    @property
-    def states_size(self) -> int:
-        return self._env.observation_space.n
-
-    @property
-    def actions_size(self) -> int:
-        return self._env.action_space.n
-
-    def render(self):
-        return self._env.render()
-
-    def reset(self) -> int:
-        return self._env.reset()
-
     # If mod flag is "test" return additional dict with environment tests result
     def run_step(self, action, *args, **kwargs):
         next_state, reward, done, _ = self._env.step(action)
@@ -44,12 +30,8 @@ class Frozen_Lake4x4(Environment):
 
         return next_state, reward, done, _
 
-    @property
-    def probability_distribution(self):
-        return self._env.env.P
 
-
-class Frozen_Lake8x8(Environment):
+class Frozen_Lake8x8(GymEnvironment):
 
     def __init__(self, slippery=True):
         if slippery:
@@ -64,20 +46,6 @@ class Frozen_Lake8x8(Environment):
             self._env = gym.make("FrozenLakeNotSlippery8x8-v0")
         self.reset()
 
-    @property
-    def states_size(self) -> int:
-        return self._env.observation_space.n
-
-    @property
-    def actions_size(self) -> int:
-        return self._env.action_space.n
-
-    def render(self):
-        return self._env.render()
-
-    def reset(self) -> int:
-        return self._env.reset()
-
     # If mod flag is "test" return additional dict with environment tests result
     def run_step(self, action, *args, **kwargs):
         next_state, reward, done, _ = self._env.step(action)
@@ -89,7 +57,3 @@ class Frozen_Lake8x8(Environment):
             return next_state, reward, done, info
 
         return next_state, reward, done, _
-
-    @property
-    def probability_distribution(self):
-        return self._env.env.P
