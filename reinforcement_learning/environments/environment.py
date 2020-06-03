@@ -25,9 +25,5 @@ class Environment(ABC):
         pass
 
     @abstractmethod
-    def get_env_tests(self) -> list:
-        pass
-
-    @abstractmethod
     def probability_distribution(self):
         pass

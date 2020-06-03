@@ -42,9 +42,6 @@ class Frozen_Lake4x4(Environment):
     def actions_size(self):
         return self._env.action_space.n
 
-    def get_env_tests(self):
-        return ["wins"]
-
     def probability_distribution(self):
         return self._env.env.P
 
@@ -88,9 +85,6 @@ class Frozen_Lake8x8(Environment):
 
     def actions_size(self):
         return self._env.action_space.n
-    
-    def get_env_tests(self):
-        return ["wins"]
 
     def probability_distribution(self):
         return self._env.env.P
