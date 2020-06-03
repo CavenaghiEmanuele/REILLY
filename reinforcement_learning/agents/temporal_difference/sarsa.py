@@ -15,7 +15,7 @@ class SarsaAgent(TemporalDifference, object):
     
     def reset(self, env):
         self._episode_ended = False
-        self._S = env.reset_env()
+        self._S = env.reset()
         self._A = np.random.choice(range(env.actions_size()), p=self._policy[self._S])
   
     def run_step(self, env, *args, **kwargs):

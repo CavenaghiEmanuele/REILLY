@@ -67,7 +67,7 @@ class MonteCarloAgent(Agent):
 
     def reset(self, env):
         self._episode_ended = False
-        self._S = env.reset_env()
+        self._S = env.reset()
         self._episode_trajectory = []
         self._test_results = defaultdict(float)
 
@@ -75,15 +75,15 @@ class MonteCarloAgent(Agent):
         # Select action according to policy distribution probability
         A = np.random.choice(range(env.actions_size()),
                              p=self._policy[self._S])
-        n_S, R, self._episode_ended, test_info = env.run_step(A, **kwargs)
+        n_S, R, self._episode_ended, info = env.run_step(A, **kwargs)
         self._episode_trajectory.append((self._S, A, R))
         if kwargs['mode'] == "test":
-            for test in test_info.keys():
-                self._test_results[test] += test_info[test]
+            for test in info.keys():
+                self._test_results[test] += info[test]
 
         if self._episode_ended:
             self._update()
 
         self._S = n_S
 
-        return (n_S, R, self._episode_ended, test_info)
+        return (n_S, R, self._episode_ended, info)

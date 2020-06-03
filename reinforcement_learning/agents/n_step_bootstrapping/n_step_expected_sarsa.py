@@ -14,7 +14,7 @@ class NStepExpectedSarsaAgent(NStep, object):
 
     def reset(self, env):
         self._episode_ended = False
-        self._states = [env.reset_env()]
+        self._states = [env.reset()]
         self._actions = [np.random.choice(
             range(env.actions_size()), p=self._policy[self._states[0]])]
         self._rewards = [0.0]

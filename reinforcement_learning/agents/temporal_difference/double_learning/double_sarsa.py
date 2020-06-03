@@ -14,7 +14,7 @@ class DoubleSarsaAgent(DoubleTemporalDifference, object):
 
     def reset(self, env):
         self._episode_ended = False
-        self._S = env.reset_env()
+        self._S = env.reset()
         policy_average = (self._policy[self._S] + self._policy2[self._S])/2
         self._A = np.random.choice(range(env.actions_size()), p=policy_average)
     

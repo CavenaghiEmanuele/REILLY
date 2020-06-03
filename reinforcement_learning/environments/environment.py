@@ -13,11 +13,11 @@ class Environment(ABC):
         pass
 
     @abstractmethod
-    def render(self):
+    def render(self) -> None:
         pass
 
     @abstractmethod
-    def reset_env(self) -> int:
+    def reset(self) -> int:
         pass
 
     @abstractmethod
