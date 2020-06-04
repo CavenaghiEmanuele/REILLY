@@ -38,13 +38,13 @@ class NStepSarsaApproximateAgent(NStepApprox, object):
         pi = t - self._n_step + 1
         if pi >= 0:
             G = 0
-            for i in range(pi + 1, min(self.T, pi + self._n_step) + 1):
+            for i in range(pi + 1, min(self.T, pi + self._n_step)):
                 G += np.power(self._gamma, i - pi - 1) * self._rewards[i]
 
             if pi + self._n_step < self.T:
                 q_values = self._Q_estimator.predict(
                     self._states[pi + self._n_step], self._actions[pi + self._n_step])
-                G += q_values
+                G += np.power(self._gamma, self._n_step) * q_values
 
             self._Q_estimator.update(self._states[pi], self._actions[pi], G)
 
