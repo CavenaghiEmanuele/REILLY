@@ -38,7 +38,9 @@ class QEstimator():
         for single state-action pair (s, a). Otherwise returns predictions for all actions
         in environment paired with s.
         """
-        if not isinstance(state, List):
+        if isinstance(state, np.ndarray):
+            state.tolist()
+        if isinstance(state, np.int64) or isinstance(state, int):
             state = [state]
         if action == None and number_action == None:
             raise "ERROR: one of action and number_action must be set"
@@ -60,7 +62,9 @@ class QEstimator():
         Updates the estimator parameters for a given state and action towards
         the target using the gradient update rule (and the eligibility trace if one has been set).
         """
-        if not isinstance(state, List):
+        if isinstance(state, np.ndarray):
+            state.tolist()
+        if isinstance(state, np.int64) or isinstance(state, int):
             state = [state]
 
         features = self._tile_coding.get_coordinates(state, action)
