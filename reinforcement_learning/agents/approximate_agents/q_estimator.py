@@ -1,6 +1,7 @@
 import numpy as np
 
 from typing import List, Dict
+from collections import defaultdict
 
 from .tile_coding import TileCoding
 
@@ -14,7 +15,7 @@ class QEstimator():
     _tile_coding: TileCoding
     _num_tilings: int
     _alpha: float
-    _weights: List[List]  # Every tiling have a separated list with its weights
+    _weights: List[defaultdict]  # Every tiling have a separated list with its weights
     _max_size: int
     _have_trace: bool
     _traces: np.array
@@ -25,7 +26,7 @@ class QEstimator():
         self._num_tilings = num_tilings
         # The learning rate alpha is scaled by number of tilings
         self._alpha = alpha / num_tilings
-        self._weights = [np.zeros(max_size) for _ in range(num_tilings)]
+        self._weights = [defaultdict(lambda:0) for _ in range(num_tilings)]
         self._max_size = max_size
         self._have_trace = trace  # If trace is True initialize traces
         if self._have_trace:
@@ -69,7 +70,7 @@ class QEstimator():
             self.weights += self.alpha * delta * self.z
         else:
             for i in range(self._num_tilings):
-                self._weights[i][features[i]] += self._alpha * delta
+                self._weights[i][features[i]] = self._weights[i][features[i]] + self._alpha * delta
 
     def reset(self, traces_only=False):
         """

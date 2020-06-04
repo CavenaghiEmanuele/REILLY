@@ -10,7 +10,7 @@ class NStepApprox(Agent, object):
 
     __slots__ = ["_Q_estimator"]
 
-    def __init__(self, alpha, epsilon, gamma, n_step, num_tilings, tiling_offset, tiles_dims, max_size=4096):
+    def __init__(self, alpha, epsilon, gamma, n_step, num_tilings, tiling_offset, tiles_dims):
         # self._policy  -> Approximante agents don't have policy but approximate it
         self._alpha = alpha
         self._epsilon = epsilon
@@ -19,8 +19,7 @@ class NStepApprox(Agent, object):
         self._Q_estimator = QEstimator(alpha=alpha,
                                        num_tilings=num_tilings,
                                        tiling_offset=tiling_offset,
-                                       tiles_dims=tiles_dims,
-                                       max_size=max_size
+                                       tiles_dims=tiles_dims
                                        )
 
     def _e_greedy_policy(self, env, state):
