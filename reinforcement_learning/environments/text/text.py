@@ -1,7 +1,8 @@
 import numpy as np
 
 from enum import IntEnum, auto, unique
-from typing import Dict, Tuple
+from random import choice
+from typing import Dict, List
 
 from ..environment import Environment
 
@@ -23,7 +24,7 @@ class TextEnvironment(Environment):
 
     _env: np.ndarray
     _init: np.ndarray
-    _agent: Tuple
+    _agent: List[int]
     _neighbor: int
     _mapper: Dict = {
         ' ': TextStatesType.EMPTY,          # Empty space
@@ -62,19 +63,50 @@ class TextEnvironment(Environment):
     def actions_size(self) -> int:
         return self._neighbor
 
-    @abstractmethod
     def render(self) -> None:
-        pass
+        return None
 
-    @abstractmethod
     def reset(self) -> int:
-        pass
+        self._env = self._init.copy()
+        spawn = np.argwhere(self._env == TextStatesType.SPAWN)
+        spawn = list(choice(spawn))
+        self._agent = spawn
+        spawn = spawn[0] * self._env.shape[0] + spawn[1]
+        return spawn
 
-    @abstractmethod
     def run_step(self, action, *args, **kwargs):
-        pass
+        # Initialize reward as -1 done as False
+        reward = -1
+        done = False
+        # Copy the list
+        next_state = self._agent[::]
+        if self._neighbor == TextNeighborhoodType.NEUMANN:
+            # Compute action mod
+            i = (action % 2)
+            j = (action < 2) ^ i
+            # Update next state (-1, 1, 1, -1)
+            next_state[i] += (-1) ** j
+            # Set pointer to env location
+            pointer = tuple(next_state)
+            # Check if next state is valid
+            if next_state[i] >= 0 and next_state[i] < self._env.shape[i]:
+                # Check if next state is not a WALL
+                if self._env[pointer] != TextStatesType.WALL:
+                    # Check if next state is GOAL
+                    if self._env[pointer] == TextStatesType.GOAL:
+                        # Set GOAL reward value and done flag
+                        reward = 10
+                        done = True
+                    # Update agent loaction
+                    self._agent = next_state
+                    # Compute linear value of next state
+                    next_state = next_state[0] * self._env.shape[0] + next_state[1]
+                    # Return S, R, done, info
+                    return next_state, reward, done, None
+        if self._neighbor == TextNeighborhoodType.MOORE:
+            raise NotImplementedError
+        return (self._agent[0] * self._env.shape[0] + self._agent[1]), reward, done, None
 
     @property
-    @abstractmethod
     def probability_distribution(self):
-        pass
+        return None
