@@ -42,6 +42,8 @@
 * [ ] **Tabular Dyna-Q**
 * [ ] **Prioritized sweeping**
 
+
+
 ## APPROXIMATE AGENTS
 
 ### Tile coding
@@ -55,13 +57,47 @@
 * [x] Base implementation
 * [ ] With trace
 
+### Temporal difference
+* [ ] **Semi-gradient Sarsa**
+    * [ ] on-policy 
+        * [ ] test
+    * [ ] off-policy
+        * [ ] test
+    * [ ] differential
+        * [ ] test    
 
-### ### n-step Bootstrapping
-* [ ] **n-step Sarsa**
-    * [x] on-policy
-    * [ ] off-policy
-    * [ ] test
-* [ ] **n-step Expected Sarsa**
+* [ ] **Semi-gradient n-step Expected Sarsa**
     * [ ] on-policy
+        * [ ] test
     * [ ] off-policy
-    * [ ] test
+        * [ ] test
+    * [ ] differential
+        * [ ] test
+
+### n-step Bootstrapping
+* [ ] **Semi-gradient n-step Sarsa**
+    * [x] on-policy
+        * [x] test
+    * [ ] off-policy
+        * [ ] test
+    * [ ] differential
+        * [ ] test
+
+* [ ] **Semi-gradient n-step Expected Sarsa**
+    * [ ] on-policy
+        * [ ] test
+    * [ ] off-policy
+        * [ ] test
+    * [ ] differential
+        * [ ] test
+
+    
+## ENVIRONMENTS
+
+* [ ] **GYM environments**
+    * [x] FrozenLake4x4
+    * [x] FrozenLake8x8
+    * [x] Taxi
+    * [x] MountainCar
+    * [ ] ...
+
