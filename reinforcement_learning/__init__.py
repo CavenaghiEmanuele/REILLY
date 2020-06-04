@@ -7,7 +7,7 @@ from .agents import (
     TileCoding, Tiling, QEstimator,
     NStepApprox, NStepSarsaApproximateAgent
     )
-from .environments import Environment, Taxi, Frozen_Lake4x4, Frozen_Lake8x8
+from .environments import Environment, Taxi, Frozen_Lake4x4, Frozen_Lake8x8, MountainCar
 from .sessions import Session
 from .structures import StateValue, ActionValue, Policy
 from .utils import plot
