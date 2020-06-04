@@ -49,7 +49,11 @@ class QEstimator():
         else:
             features = [self._tile_coding.get_coordinates(state, action)]
 
-        return [sum([self._weights[i][feature[i]] for i in range(self._num_tilings)]) for feature in features]
+        value = 0
+        for feature in features:
+            for i in range(self._num_tilings):
+                value += self._weights[i][feature[i]]
+        return value
 
     def update(self, state, action, target):
         """
@@ -70,7 +74,7 @@ class QEstimator():
             self.weights += self.alpha * delta * self.z
         else:
             for i in range(self._num_tilings):
-                self._weights[i][features[i]] = self._weights[i][features[i]] + self._alpha * delta
+                self._weights[i][features[i]] += self._alpha * delta
 
     def reset(self, traces_only=False):
         """
