@@ -24,12 +24,12 @@ class NStepApprox(Agent, object):
                                        )
 
     def _e_greedy_policy(self, env, state):
-
         n_actions = env.actions_size()
         action_probs = np.zeros(n_actions)
         q_values = [self._Q_estimator.predict(state, action)
                     for action in range(n_actions)]
-        best_action = np.argmax(q_values)
+        indices = [i for i, x in enumerate(q_values) if x == max(q_values)]
+        best_action = np.random.choice(indices)
 
         for action in range(n_actions):
             if action == best_action:
@@ -37,5 +37,4 @@ class NStepApprox(Agent, object):
                     (self._epsilon/n_actions)
             else:
                 action_probs[action] = self._epsilon/n_actions
-
         return action_probs
