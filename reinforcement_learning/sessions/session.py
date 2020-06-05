@@ -11,6 +11,11 @@ from ..environments import Environment
 
 class Session:
 
+    __slots__ = ['_env', '_agents']
+
+    _env: Environment
+    _agents: List[Agent]
+
     def __init__(self, env: Environment):
         self._env: Environment = env
         self._agents: Dict[int, Agent] = {}
