@@ -7,6 +7,7 @@ from typing import Dict, List
 from ..environment import Environment
 
 
+@unique
 class TextStates(IntEnum):
     EMPTY = 0
     SPAWN = auto()
@@ -15,6 +16,7 @@ class TextStates(IntEnum):
     WALL = auto()
 
 
+@unique
 class TextNeighbor(IntEnum):
     NEUMANN = 4     # North, East, South, West
     MOORE = 8       # N, NE, E, SE, S, SW, W, NW
