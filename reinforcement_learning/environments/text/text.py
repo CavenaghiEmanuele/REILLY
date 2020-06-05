@@ -28,6 +28,7 @@ class TextEnvironment(Environment):
     _init: np.ndarray
     _agent: List[int]
     _neighbor: int
+    _max_steps: int
     _mapper: Dict = {
         ' ': TextStates.EMPTY,          # Empty space
         'S': TextStates.SPAWN,          # Spawn zones
@@ -36,9 +37,11 @@ class TextEnvironment(Environment):
         '#': TextStates.WALL,           # Walls
     }
 
-    def __init__(self, text: str, neighborhood: int = TextNeighbor.MOORE):
+    def __init__(self, text: str, neighbor: int = TextNeighbor.MOORE, max_steps: int = 50):
         # Set neighborhood type
-        self._neighbor = neighborhood
+        self._neighbor = neighbor
+        # Set maximun steps for agent exploration
+        self._max_steps = max_steps
         # Remove formatting chars at beginning or end of text
         text = text.strip('\n\r\t').split('\n')
         # Check if all lines have equal length
@@ -77,9 +80,10 @@ class TextEnvironment(Environment):
         return spawn
 
     def run_step(self, action, *args, **kwargs):
-        # Initialize reward as -1 done as False
+        # Initialize reward as -1, done as False and wins as 0
         reward = -1
         done = False
+        info = {'return_sum': reward, 'wins': 0}
         # Copy the list
         next_state = self._agent[::]
         if self._neighbor == TextNeighbor.NEUMANN:
@@ -99,15 +103,16 @@ class TextEnvironment(Environment):
                         # Set GOAL reward value and done flag
                         reward = 10
                         done = True
+                        info = {'return_sum': reward, 'wins': 1}
                     # Update agent loaction
                     self._agent = next_state
                     # Compute linear value of next state
                     next_state = next_state[0] * self._env.shape[0] + next_state[1]
                     # Return S, R, done, info
-                    return next_state, reward, done, None
+                    return next_state, reward, done, info
         if self._neighbor == TextNeighbor.MOORE:
             raise NotImplementedError
-        return (self._agent[0] * self._env.shape[0] + self._agent[1]), reward, done, None
+        return (self._agent[0] * self._env.shape[0] + self._agent[1]), reward, done, info
 
     @property
     def probability_distribution(self):
