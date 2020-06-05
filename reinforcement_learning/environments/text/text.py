@@ -30,23 +30,28 @@ class TextEnvironment(Environment):
     ]
 
     _env: np.ndarray
-    _init: np.ndarray
     _agent: List[int]
+    _render: bool
+    _counter: int
     _neighbor: int
     _max_steps: int
-    _mapper: Dict = {
-        ' ': TextStates.EMPTY,          # Empty space
-        'S': TextStates.SPAWN,          # Spawn zones
-        'A': TextStates.AGENT,          # Agent pointers
-        'X': TextStates.GOAL,           # Goal pointers
-        '#': TextStates.WALL,           # Walls
-    }
+    _mapper: Dict
 
     def __init__(self, text: str, neighbor: int = TextNeighbor.MOORE, max_steps: int = 50):
+        # Set default render to False
+        self._render = False
         # Set neighborhood type
         self._neighbor = neighbor
         # Set maximun steps for agent exploration
         self._max_steps = max_steps
+        # Define text mapper values
+        self._mapper = {
+            ' ': TextStates.EMPTY,          # Empty space
+            'S': TextStates.SPAWN,          # Spawn zones
+            'A': TextStates.AGENT,          # Agent pointers
+            'X': TextStates.GOAL,           # Goal pointers
+            '#': TextStates.WALL,           # Walls
+        }
         # Remove formatting chars at beginning or end of text
         text = text.strip('\n\r\t').split('\n')
         # Check if all lines have equal length
@@ -55,29 +60,36 @@ class TextEnvironment(Environment):
             raise ValueError
         # Compute env shape
         shape = (len(text), shape[0])
-        self._init = np.zeros(shape, dtype=np.int8)
+        self._env = np.zeros(shape, dtype=np.int8)
         for i, line in enumerate(text):
             for j, char in enumerate(line):
                 try:
-                    self._init[i, j] = self._mapper[char]
+                    self._env[i, j] = self._mapper[char]
                 except ValueError:
                     # If value not in list
                     # consider as empty space
-                    self._init[i, j] = TextStates.EMPTY
+                    self._env[i, j] = TextStates.EMPTY
 
     @property
     def states_size(self) -> int:
-        return np.prod(self._init.shape)
+        return np.prod(self._env.shape)
 
     @property
     def actions_size(self) -> int:
         return self._neighbor
 
+    def _show(self) -> None:
+        # TODO: Update Qt gui
+        data = self._env.copy()
+        data[tuple(self._agent)] = TextStates.AGENT
+        print(data)
+
     def render(self) -> None:
-        return None
+        # TODO: Init Qt gui
+        self._render = True
 
     def reset(self) -> int:
-        self._env = self._init.copy()
+        self._counter = 0
         spawn = np.argwhere(self._env == TextStates.SPAWN)
         spawn = list(choice(spawn))
         self._agent = spawn
@@ -92,6 +104,10 @@ class TextEnvironment(Environment):
         reward = -1
         done = False
         info = {'return_sum': reward, 'wins': 0}
+        # Update and check max_steps
+        self._counter += 1
+        if self._counter == self._max_steps:
+            return self._location_to_state(self._agent), reward, True, info
         # Copy the list
         next_state = self._agent[::]
         if self._neighbor == TextNeighbor.NEUMANN:
@@ -109,18 +125,19 @@ class TextEnvironment(Environment):
                     # Check if next state is GOAL
                     if self._env[pointer] == TextStates.GOAL:
                         # Set GOAL reward value and done flag
-                        reward = 10
+                        reward = 20
                         done = True
                         info = {'return_sum': reward, 'wins': 1}
                     # Update agent loaction
                     self._agent = next_state
-                    # Compute linear value of next state
-                    next_state = next_state[0] * self._env.shape[0] + next_state[1]
+                    # Check if render
+                    if self._render:
+                        self._show()
                     # Return S, R, done, info
-                    return next_state, reward, done, info
+                    return self._location_to_state(next_state), reward, done, info
         if self._neighbor == TextNeighbor.MOORE:
             raise NotImplementedError
-        return (self._agent[0] * self._env.shape[0] + self._agent[1]), reward, done, info
+        return self._location_to_state(self._agent), reward, done, info
 
     @property
     def probability_distribution(self):
