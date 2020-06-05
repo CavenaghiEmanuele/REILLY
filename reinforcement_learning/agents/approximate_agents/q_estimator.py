@@ -60,10 +60,8 @@ class QEstimator():
         Updates the estimator parameters for a given state and action towards
         the target using the gradient update rule (and the eligibility trace if one has been set).
         """
-        if isinstance(state, np.ndarray):
-            state.tolist()
         if isinstance(state, np.int64) or isinstance(state, int):
-            state = [state]
+            state = np.asarray(state)
 
         features = self._tile_coding.get_coordinates(state, action)
         estimation = sum([self._weights[i][features[i]]
@@ -89,4 +87,4 @@ class QEstimator():
         else:
             if self._have_trace:
                 self._traces = np.zeros(self._max_size)
-            self._weights = []
+            self._weights = [defaultdict(lambda:0) for _ in range(self._num_tilings)]

@@ -5,12 +5,12 @@ from typing import List, Dict
 
 class Tiling:
 
-    _start_point = np.array
+    _start_point = np.ndarray
     _tiles: Dict
-    _tiles_dims: np.array
+    _tiles_dims: np.ndarray
     _feature_dims: int
 
-    def __init__(self, feature_dims: int, tiles_dims: np.array, start_point: np.array):
+    def __init__(self, feature_dims: int, tiles_dims: np.ndarray, start_point: np.ndarray):
         self._start_point = start_point
         self._tiles_dims = tiles_dims
         self._tiles = {}
@@ -26,21 +26,29 @@ class Tiling:
             "Tiles dims: " + str(self._tiles_dims) + " - \n" + \
             "Tiles: " + str(self._tiles) + "\n"
 
-    def add_tiles(self, start_point: np.array, action: int):
+    def add_tiles(self, start_point: np.ndarray, action: int):
         end_point = start_point + self._tiles_dims
 
         if not str((start_point, end_point, action)) in self._tiles:
             self._tiles.update(
                 {str((start_point, end_point, action)): len(self._tiles)})
 
-    def get_tile_index(self, features: List[float], action: int):
+    def get_tile_index(self, features: np.ndarray, action: int):
         start_point = self.get_lower_bound(features)
         end_point = start_point + self._tiles_dims
         
-        if not str((start_point, end_point, action)) in self._tiles:
+        try:
+            return self._tiles[str((start_point, end_point, action))]
+        except:
             self.add_tiles(start_point, action)
-        return self._tiles[str((start_point, end_point, action))]
+            return len(self._tiles)
 
+    def get_lower_bound(self, features: np.ndarray) -> int:
+        lower_bound = []
+        features= np.absolute(features - self._start_point)       
+        return np.floor(features / self._tiles_dims) * np.sign(features)
+
+'''
     def get_lower_bound(self, features: List[float]) -> int:
         lower_bound = []
         features= np.absolute(features - self._start_point)
@@ -56,12 +64,12 @@ class Tiling:
                 lower_bound.append(-j)
 
         return lower_bound
-
+'''
 
 class TileCoding():
 
     _tilings: List[Tiling]
-    _tiling_offset: np.array
+    _tiling_offset: np.ndarray
 
     def __init__(self, feature_dims: int, tilings_offset: List[float], tiles_dims: List[float], n_tilings: int = 8):
         
