@@ -84,6 +84,9 @@ class TextEnvironment(Environment):
         spawn = spawn[0] * self._env.shape[0] + spawn[1]
         return spawn
 
+    def _location_to_state(self, location: List[int]) -> int:
+        return location[0] * self._env.shape[0] + location[1]
+
     def run_step(self, action, *args, **kwargs):
         # Initialize reward as -1, done as False and wins as 0
         reward = -1
