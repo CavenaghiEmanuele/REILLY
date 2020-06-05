@@ -1,1 +1,1 @@
-from .text import TextEnvironment, TextNeighborhoodType
+from .text import TextEnvironment, TextNeighbor
