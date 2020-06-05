@@ -23,6 +23,8 @@ class NStepSarsaApproximateAgent(NStepAppr, object):
 
     def run_step(self, env, *args, **kwargs):
         t = kwargs['t']
+        n_S = R = 0
+        info = {}
         if t < self.T:
             n_S, R, self._episode_ended, info = env.run_step(
                 self._actions[t], **kwargs)
