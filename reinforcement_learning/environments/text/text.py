@@ -24,6 +24,11 @@ class TextNeighbor(IntEnum):
 
 class TextEnvironment(Environment):
 
+    __slots__ = [
+        '_env', '_agent', '_render', '_counter',
+        '_neighbor', '_max_steps', '_mapper'
+    ]
+
     _env: np.ndarray
     _init: np.ndarray
     _agent: List[int]
