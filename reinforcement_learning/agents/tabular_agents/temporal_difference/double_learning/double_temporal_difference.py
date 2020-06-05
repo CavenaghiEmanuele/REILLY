@@ -1,8 +1,8 @@
 import numpy as np
 from typing import List, Dict
 
-from ....structures import ActionValue, Policy
-from ..temporal_difference import TemporalDifference
+from .....structures import ActionValue, Policy
+from ...temporal_difference import TemporalDifference
 
 
 class DoubleTemporalDifference(TemporalDifference, object):

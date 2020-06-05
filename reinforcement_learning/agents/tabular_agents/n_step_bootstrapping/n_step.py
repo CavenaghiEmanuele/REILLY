@@ -1,8 +1,8 @@
 import numpy as np
 from typing import List, Dict
 
-from ..agent import Agent
-from ...structures import ActionValue, Policy
+from ...agent import Agent
+from ....structures import ActionValue, Policy
 
 
 class NStep(Agent, object):

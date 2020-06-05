@@ -2,8 +2,8 @@ import numpy as np
 from typing import List, Dict
 from abc import ABC, abstractmethod
 
-from ..agent import Agent
-from ...structures import ActionValue, Policy
+from ...agent import Agent
+from ....structures import ActionValue, Policy
 
 
 class TemporalDifference(Agent, object):

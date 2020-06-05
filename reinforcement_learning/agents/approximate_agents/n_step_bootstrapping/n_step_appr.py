@@ -1,12 +1,12 @@
 import numpy as np
 from typing import List, Dict
 
-from ..agent import Agent
-from ...structures import ActionValue, Policy
-from .q_estimator import QEstimator
+from ...agent import Agent
+from ....structures import ActionValue, Policy
+from ..q_estimator import QEstimator
 
 
-class NStepApprox(Agent, object):
+class NStepAppr(Agent, object):
 
     __slots__ = ["_Q_estimator"]
 

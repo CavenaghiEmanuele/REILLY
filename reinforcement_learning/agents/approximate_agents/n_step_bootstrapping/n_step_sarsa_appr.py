@@ -1,14 +1,14 @@
 import numpy as np
 
-from .n_step_approx import NStepApprox
+from .n_step_appr import NStepAppr
 
 
-class NStepSarsaApproximateAgent(NStepApprox, object):
+class NStepSarsaApproximateAgent(NStepAppr, object):
 
     __slots__ = ['_states', '_actions', '_rewards', 'T']
 
     def __repr__(self):
-        return "n-step Sarsa Approx: " + "alpha=" + str(self._alpha) + \
+        return "n-step Sarsa Appr: " + "alpha=" + str(self._alpha) + \
             ", gamma=" + str(self._gamma) + \
             ", epsilon=" + str(self._epsilon) + \
             ", n-step=" + str(self._n_step)

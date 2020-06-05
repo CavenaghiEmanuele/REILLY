@@ -5,7 +5,7 @@ from .agents import (
     NStep, NStepSarsaAgent, NStepExpectedSarsaAgent,
     
     TileCoding, Tiling, QEstimator,
-    NStepApprox, NStepSarsaApproximateAgent
+    NStepAppr, NStepSarsaApproximateAgent
     )
 from .environments import Environment, Taxi, Frozen_Lake4x4, Frozen_Lake8x8, MountainCar
 from .sessions import Session

@@ -1,7 +1,7 @@
 import numpy as np
 from typing import List, Dict
 
-from ...structures import ActionValue, Policy
+from ....structures import ActionValue, Policy
 from .temporal_difference import TemporalDifference
 
 
