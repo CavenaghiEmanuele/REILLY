@@ -82,6 +82,8 @@ class TextEnvironment(Environment):
         # TODO: Update Qt gui
         data = self._env.copy()
         data[tuple(self._agent)] = TextStates.AGENT
+        enum = [e.value for e in TextStates]
+        data = np.interp(data, (min(enum), max(enum)), (255, 0))
         print(data)
 
     def render(self) -> None:
