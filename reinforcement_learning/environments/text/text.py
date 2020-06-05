@@ -5,6 +5,7 @@ from random import choice
 from typing import Dict, List
 
 from ..environment import Environment
+from ...utils import Screen
 
 
 @unique
@@ -25,21 +26,21 @@ class TextNeighbor(IntEnum):
 class TextEnvironment(Environment):
 
     __slots__ = [
-        '_env', '_agent', '_render', '_counter',
+        '_gui', '_env', '_agent', '_counter',
         '_neighbor', '_max_steps', '_mapper'
     ]
 
+    _gui: Screen
     _env: np.ndarray
     _agent: List[int]
-    _render: bool
     _counter: int
     _neighbor: int
     _max_steps: int
     _mapper: Dict
 
     def __init__(self, text: str, neighbor: int = TextNeighbor.MOORE, max_steps: int = 50):
-        # Set default render to False
-        self._render = False
+        # Set default GUI to None
+        self._gui = None
         # Set neighborhood type
         self._neighbor = neighbor
         # Set maximun steps for agent exploration
@@ -78,17 +79,15 @@ class TextEnvironment(Environment):
     def actions_size(self) -> int:
         return self._neighbor
 
-    def _show(self) -> None:
-        # TODO: Update Qt gui
-        data = self._env.copy()
-        data[tuple(self._agent)] = TextStates.AGENT
-        enum = [e.value for e in TextStates]
-        data = np.interp(data, (min(enum), max(enum)), (255, 0))
-        print(data)
+    def _render(self) -> None:
+        if self._gui:
+            data = self._env.copy()
+            data[tuple(self._agent)] = TextStates.AGENT
+            data = np.interp(data, (data.min(), data.max()), (255, 0))
+            self._gui.update(data)
 
     def render(self) -> None:
-        # TODO: Init Qt gui
-        self._render = True
+        self._gui = Screen(title=self.__class__.__name__)
 
     def reset(self) -> int:
         self._counter = 0
@@ -132,9 +131,8 @@ class TextEnvironment(Environment):
                         info = {'return_sum': reward, 'wins': 1}
                     # Update agent loaction
                     self._agent = next_state
-                    # Check if render
-                    if self._render:
-                        self._show()
+                    # Render image
+                    self._render()
                     # Return S, R, done, info
                     return self._location_to_state(next_state), reward, done, info
         if self._neighbor == TextNeighbor.MOORE:
