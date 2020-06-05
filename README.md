@@ -59,14 +59,14 @@
 
 ### Temporal difference
 * [ ] **Semi-gradient Sarsa**
-    * [ ] on-policy 
-        * [ ] test
+    * [x] on-policy 
+        * [x] test
     * [ ] off-policy
         * [ ] test
     * [ ] differential
         * [ ] test    
 
-* [ ] **Semi-gradient n-step Expected Sarsa**
+* [ ] **Semi-gradient Expected Sarsa**
     * [ ] on-policy
         * [ ] test
     * [ ] off-policy
