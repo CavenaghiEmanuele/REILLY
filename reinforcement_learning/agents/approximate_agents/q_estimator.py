@@ -20,9 +20,9 @@ class QEstimator():
     _have_trace: bool
     _traces: np.array
 
-    def __init__(self, alpha: float, num_tilings: int, tiling_offset: List[float], tiles_dims: List[float], max_size: int = 4096, trace: bool = False):
+    def __init__(self, alpha: float, feature_dims: int, num_tilings: int, tiling_offset: List[float], tiles_dims: List[float], max_size: int = 4096, trace: bool = False):
 
-        self._tile_coding = TileCoding(num_tilings, tiling_offset, tiles_dims)
+        self._tile_coding = TileCoding(feature_dims, tiling_offset, tiles_dims, num_tilings)
         self._num_tilings = num_tilings
         # The learning rate alpha is scaled by number of tilings
         self._alpha = alpha / num_tilings
@@ -38,10 +38,8 @@ class QEstimator():
         for single state-action pair (s, a). Otherwise returns predictions for all actions
         in environment paired with s.
         """
-        if isinstance(state, np.ndarray):
-            state.tolist()
         if isinstance(state, np.int64) or isinstance(state, int):
-            state = [state]
+            state = np.asarray(state)
         if action == None and number_action == None:
             raise "ERROR: one of action and number_action must be set"
 

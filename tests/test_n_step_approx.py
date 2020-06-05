@@ -9,6 +9,7 @@ def test_n_step_sarsa_appr_agent():
         epsilon=0.03,
         gamma=0.99,
         n_step=5,
+        feature_dims=1,
         num_tilings=2,
         tiling_offset=[1],
         tiles_dims=[1]

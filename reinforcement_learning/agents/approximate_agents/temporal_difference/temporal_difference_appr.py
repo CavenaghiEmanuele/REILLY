@@ -10,12 +10,13 @@ class TemporalDiffernceAppr(Agent, object):
 
     __slots__ = ["_Q_estimator"]
 
-    def __init__(self, alpha, epsilon, gamma, num_tilings, tiling_offset, tiles_dims):
+    def __init__(self, alpha, epsilon, gamma, feature_dims, num_tilings, tiling_offset, tiles_dims):
         # self._policy  -> Approximante agents don't have policy but approximate it
         self._alpha = alpha
         self._epsilon = epsilon
         self._gamma = gamma
         self._Q_estimator = QEstimator(alpha=alpha,
+                                       feature_dims=feature_dims,
                                        num_tilings=num_tilings,
                                        tiling_offset=tiling_offset,
                                        tiles_dims=tiles_dims

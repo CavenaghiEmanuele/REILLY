@@ -8,6 +8,7 @@ def test_sarsa_appr_agent():
         alpha=0.1,
         epsilon=0.03,
         gamma=0.99,
+        feature_dims = 1,
         num_tilings=2,
         tiling_offset=[1],
         tiles_dims=[1]
