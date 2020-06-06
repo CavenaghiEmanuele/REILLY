@@ -1,16 +1,15 @@
-import numpy as np
-
+from math import floor, copysign
 from typing import List, Dict
 
 
 class Tiling:
 
-    _start_point = np.ndarray
+    _start_point = List
     _tiles: Dict
-    _tiles_dims: np.ndarray
+    _tiles_dims: List
     _feature_dims: int
 
-    def __init__(self, feature_dims: int, tiles_dims: np.ndarray, start_point: np.ndarray):
+    def __init__(self, feature_dims: int, tiles_dims: List, start_point: List):
         self._start_point = start_point
         self._tiles_dims = tiles_dims
         self._tiles = {}
@@ -26,69 +25,54 @@ class Tiling:
             "Tiles dims: " + str(self._tiles_dims) + " - \n" + \
             "Tiles: " + str(self._tiles) + "\n"
 
-    def add_tiles(self, start_point: np.ndarray, action: int):
-        end_point = start_point + self._tiles_dims
-
+    def add_tiles(self, start_point: List, action: int):
+        end_point = [start_point[i] + self._tiles_dims[i]
+                     for i in range(self._feature_dims)]
         if not str((start_point, end_point, action)) in self._tiles:
             self._tiles.update(
                 {str((start_point, end_point, action)): len(self._tiles)})
 
-    def get_tile_index(self, features: np.ndarray, action: int):
+    def get_tile_index(self, features: List, action: int):
         start_point = self.get_lower_bound(features)
-        end_point = start_point + self._tiles_dims
-        
+        end_point = [start_point[i] + self._tiles_dims[i]
+                     for i in range(self._feature_dims)]
         try:
             return self._tiles[str((start_point, end_point, action))]
         except:
             self.add_tiles(start_point, action)
             return len(self._tiles)
 
-    def get_lower_bound(self, features: np.ndarray) -> int:
-        lower_bound = []
-        features= np.absolute(features - self._start_point)       
-        return np.floor(features / self._tiles_dims) * np.sign(features)
+    def get_lower_bound(self, features: List) -> int:
+        return [
+            copysign(
+                floor(abs(features[i] - self._start_point[i]
+                          ) / self._tiles_dims[i]),
+                features[i])
+            for i in range(self._feature_dims)]
 
-'''
-    def get_lower_bound(self, features: List[float]) -> int:
-        lower_bound = []
-        features= np.absolute(features - self._start_point)
-        for i in range(len(features)):
-            j = self._start_point[i]
-            while features[i] > self._tiles_dims[i]:
-                features[i] -= self._tiles_dims[i]
-                j += self._tiles_dims[i]
-
-            if features[i] > 0:
-                lower_bound.append(j)
-            else:
-                lower_bound.append(-j)
-
-        return lower_bound
-'''
 
 class TileCoding():
 
     _tilings: List[Tiling]
-    _tiling_offset: np.ndarray
+    _tiling_offset: List
 
     def __init__(self, feature_dims: int, tilings_offset: List[float], tiles_dims: List[float], n_tilings: int = 8):
-        
+
         if tilings_offset == None:
-            tilings_offset = np.ones(feature_dims)
+            tilings_offset = [1 for _ in range(feature_dims)]
         if isinstance(tilings_offset, int):
-            tilings_offset *= np.ones(feature_dims)
+            tilings_offset = [tilings_offset for _ in range(feature_dims)]
         if tiles_dims == None:
-            tiles_dims = np.ones(feature_dims)
+            tiles_dims = [1 for _ in range(feature_dims)]
         if isinstance(tiles_dims, int):
-            tiles_dims *= np.ones(feature_dims)
-        
-        self._tiling_offset = np.asarray(tilings_offset)
+            tiles_dims = [tiles_dims for _ in range(feature_dims)]
+
         self._tilings = [Tiling(
-                            feature_dims=feature_dims, 
-                            tiles_dims= np.asarray(tiles_dims), 
-                            start_point= np.asarray(-i * tilings_offset))
-                                for i in range(n_tilings)
-                        ]
+            feature_dims=feature_dims,
+            tiles_dims=tiles_dims,
+            start_point=[-i * tilings_offset[j] for j in range(feature_dims)])
+            for i in range(n_tilings)
+        ]
 
     def __str__(self):
         s = ""
