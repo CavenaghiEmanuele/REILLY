@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import reinforcement_learning as rl
 
 if __name__ == "__main__":
