@@ -12,11 +12,11 @@ class DoubleQLearningAgent(DoubleTemporalDifference, object):
     
     def reset(self, env):
         self._episode_ended = False
-        self._S = env.reset_env()
+        self._S = env.reset()
     
     def run_step(self, env, *args, **kwargs):
         policy_average = (self._policy[self._S] + self._policy2[self._S])/2
-        A = np.random.choice(range(env.actions_size()), p=policy_average)
+        A = np.random.choice(range(env.actions_size), p=policy_average)
         n_S, R, self._episode_ended, info = env.run_step(A, **kwargs)
         
         if np.random.binomial(1, 0.5) == 0:

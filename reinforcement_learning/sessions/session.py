@@ -11,6 +11,11 @@ from ..environments import Environment
 
 class Session:
 
+    __slots__ = ['_env', '_agents']
+
+    _env: Environment
+    _agents: List[Agent]
+
     def __init__(self, env: Environment):
         self._env: Environment = env
         self._agents: Dict[int, Agent] = {}
@@ -18,7 +23,9 @@ class Session:
     def add_agent(self, agent: Agent):
         self._agents[id(agent)] = agent
 
-    def run(self, episodes: int, test_offset: int, test_samples: int):
+    def run(self, episodes: int, test_offset: int, test_samples: int, render: bool = False):
+        if render:
+            self._env.render()
         results = []
         for episode in tqdm(range(episodes)):
             self._run_train()

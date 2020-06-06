@@ -1,13 +1,13 @@
 import gym
 
-from ..environment import Environment
+from .abstract_gym import GymEnvironment
 
 
-class Frozen_Lake4x4(Environment):
+class Frozen_Lake4x4(GymEnvironment):
 
     def __init__(self, slippery=True):
         if slippery:
-            self._env = gym.make("FrozenLake-v0")
+            self._env = gym.make('FrozenLake-v0')
         else:
             gym.register(
                 id='FrozenLakeNotSlippery4x4-v0',
@@ -15,43 +15,27 @@ class Frozen_Lake4x4(Environment):
                 kwargs={'map_name': '4x4', 'is_slippery': False},
                 max_episode_steps=1000,
             )
-            self._env = gym.make("FrozenLakeNotSlippery4x4-v0")
-        self.reset_env()
+            self._env = gym.make('FrozenLakeNotSlippery4x4-v0')
+        self.reset()
 
-    def render(self):
-        return self._env.render()
-
-    # If mod flag is "test" return additional dict with environment tests result
+    # If mod flag is 'test' return additional dict with environment tests result
     def run_step(self, action, *args, **kwargs):
         next_state, reward, done, _ = self._env.step(action)
 
-        if kwargs['mode'] == "test":
+        if kwargs['mode'] == 'test':
+            info = {'wins': 0}
             if done and reward == 1:
-                test_info = {"wins": 1}
-            else:
-                test_info = {"wins": 0}
-            return next_state, reward, done, test_info
+                info['wins'] = 1
+            return next_state, reward, done, info
 
         return next_state, reward, done, _
 
-    def reset_env(self):
-        return self._env.reset()
 
-    def states_size(self):
-        return self._env.observation_space.n
-
-    def actions_size(self):
-        return self._env.action_space.n
-
-    def probability_distribution(self):
-        return self._env.env.P
-
-
-class Frozen_Lake8x8(Environment):
+class Frozen_Lake8x8(GymEnvironment):
 
     def __init__(self, slippery=True):
         if slippery:
-            self._env = gym.make("FrozenLake8x8-v0")
+            self._env = gym.make('FrozenLake8x8-v0')
         else:
             gym.register(
                 id='FrozenLakeNotSlippery8x8-v0',
@@ -59,33 +43,17 @@ class Frozen_Lake8x8(Environment):
                 kwargs={'map_name': '4x4', 'is_slippery': False},
                 max_episode_steps=1000,
             )
-            self._env = gym.make("FrozenLakeNotSlippery8x8-v0")
-        self.reset_env()
+            self._env = gym.make('FrozenLakeNotSlippery8x8-v0')
+        self.reset()
 
-    def render(self):
-        return self._env.render()
-
-    # If mod flag is "test" return additional dict with environment tests result
+    # If mod flag is 'test' return additional dict with environment tests result
     def run_step(self, action, *args, **kwargs):
         next_state, reward, done, _ = self._env.step(action)
 
-        if kwargs['mode'] == "test":
+        if kwargs['mode'] == 'test':
+            info = {'wins': 0}
             if done and reward == 1:
-                test_info = {"wins": 1}
-            else:
-                test_info = {"wins": 0}
-            return next_state, reward, done, test_info
+                info['wins'] = 1
+            return next_state, reward, done, info
 
         return next_state, reward, done, _
-
-    def reset_env(self):
-        return self._env.reset()
-
-    def states_size(self):
-        return self._env.observation_space.n
-
-    def actions_size(self):
-        return self._env.action_space.n
-
-    def probability_distribution(self):
-        return self._env.env.P

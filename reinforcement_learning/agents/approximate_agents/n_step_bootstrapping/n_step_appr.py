@@ -24,7 +24,7 @@ class NStepAppr(Agent, object):
                                        )
 
     def _e_greedy_policy(self, env, state):
-        n_actions = env.actions_size()
+        n_actions = env.actions_size
         action_probs = np.zeros(n_actions)
         q_values = [self._Q_estimator.predict(state, action)
                     for action in range(n_actions)]
