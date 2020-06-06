@@ -38,7 +38,11 @@ class TextEnvironment(Environment):
     _max_steps: int
     _mapper: Dict
 
-    def __init__(self, text: str, neighbor: int = TextNeighbor.MOORE, max_steps: int = 50):
+    def __init__(self,
+        text: str = '##########\n          \n S        \n          \n        X \n          \n##########',
+        neighbor: int = TextNeighbor.MOORE,
+        max_steps: int = 50
+    ):
         # Set default GUI to None
         self._gui = None
         # Set neighborhood type
