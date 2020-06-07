@@ -5,8 +5,8 @@ from .agents import (
     NStep, NStepSarsaAgent, NStepExpectedSarsaAgent,
 
     TileCoding, Tiling, QEstimator,
-    TemporalDiffernceAppr, SarsaApproximateAgent,
-    NStepAppr, NStepSarsaApproximateAgent
+    TemporalDiffernceAppr, SarsaApproximateAgent, ExpectedSarsaApproximateAgent,
+    NStepAppr, NStepSarsaApproximateAgent, NStepExpectedSarsaApproximateAgent
 )
 from .environments import *
 from .sessions import *
