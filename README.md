@@ -67,8 +67,8 @@
         * [ ] test    
 
 * [ ] **Semi-gradient Expected Sarsa**
-    * [ ] on-policy
-        * [ ] test
+    * [x] on-policy
+        * [x] test
     * [ ] off-policy
         * [ ] test
     * [ ] differential
@@ -84,8 +84,8 @@
         * [ ] test
 
 * [ ] **Semi-gradient n-step Expected Sarsa**
-    * [ ] on-policy
-        * [ ] test
+    * [x] on-policy
+        * [x] test
     * [ ] off-policy
         * [ ] test
     * [ ] differential
