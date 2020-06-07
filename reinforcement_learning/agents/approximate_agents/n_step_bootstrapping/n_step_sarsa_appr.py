@@ -17,7 +17,7 @@ class NStepSarsaApproximateAgent(NStepAppr, object):
         self._episode_ended = False
         self._states = [env.reset()]
         self._actions = [np.random.choice(
-            range(env.actions_size), p=self._e_greedy_policy(env, self._states[0]))]
+            range(env.actions_size), p=self._e_greedy_policy(self._states[0], env.actions_size))]
         self._rewards = [0.0]
         self.T = float('inf')
 
@@ -35,7 +35,7 @@ class NStepSarsaApproximateAgent(NStepAppr, object):
                 self.T = t + 1
             else:
                 self._actions.append(np.random.choice(
-                    range(env.actions_size), p=self._e_greedy_policy(env, n_S)))
+                    range(env.actions_size), p=self._e_greedy_policy(n_S, env.actions_size)))
 
         pi = t - self._n_step + 1
         if pi >= 0:

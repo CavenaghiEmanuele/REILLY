@@ -16,7 +16,7 @@ class SarsaApproximateAgent(TemporalDiffernceAppr, object):
         self._episode_ended = False
         self._S = env.reset()
         self._A = np.random.choice(
-            range(env.actions_size), p=self._e_greedy_policy(env, self._S))
+            range(env.actions_size), p=self._e_greedy_policy(self._S, env.actions_size))
 
     def run_step(self, env, *args, **kwargs):
 
@@ -27,7 +27,7 @@ class SarsaApproximateAgent(TemporalDiffernceAppr, object):
             return (n_S, R, self._episode_ended, info)
 
         n_A = np.random.choice(range(env.actions_size),
-                               p=self._e_greedy_policy(env, n_S))
+                               p=self._e_greedy_policy(n_S, env.actions_size))
 
         G = R + (self._gamma * self._Q_estimator.predict(n_S, n_A))
         self._Q_estimator.update(self._S, self._A, G)
