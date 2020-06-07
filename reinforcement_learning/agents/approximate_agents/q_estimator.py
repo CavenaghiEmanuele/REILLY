@@ -20,9 +20,9 @@ class QEstimator():
     _have_trace: bool
     _traces: np.array
 
-    def __init__(self, alpha: float, feature_dims: int, num_tilings: int, tiling_offset: List[float], tiles_dims: List[float], max_size: int = 4096, trace: bool = False):
+    def __init__(self, alpha: float, feature_dims: int, num_tilings: int, tiling_offset: List[float], tiles_size: List[float], max_size: int = 4096, trace: bool = False):
 
-        self._tile_coding = TileCoding(feature_dims, tiling_offset, tiles_dims, num_tilings)
+        self._tile_coding = TileCoding(feature_dims, tiling_offset, tiles_size, num_tilings)
         self._num_tilings = num_tilings
         # The learning rate alpha is scaled by number of tilings
         self._alpha = alpha / num_tilings
