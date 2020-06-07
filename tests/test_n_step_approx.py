@@ -12,7 +12,7 @@ def test_n_step_sarsa_appr_agent():
         feature_dims=1,
         num_tilings=2,
         tiling_offset=[1],
-        tiles_dims=[1]
+        tiles_size=[1]
     )
     
     agent2 = rl.NStepSarsaApproximateAgent(
@@ -23,7 +23,7 @@ def test_n_step_sarsa_appr_agent():
         feature_dims=1,
         num_tilings=2,
         tiling_offset=1,
-        tiles_dims=1
+        tiles_size=1
     )
     
     agent3 = rl.NStepSarsaApproximateAgent(
