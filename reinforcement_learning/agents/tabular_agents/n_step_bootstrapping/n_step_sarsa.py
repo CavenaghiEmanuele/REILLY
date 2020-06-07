@@ -40,7 +40,7 @@ class NStepSarsaAgent(NStep, object):
         pi = t - self._n_step + 1
         if pi >= 0:
             G = 0
-            for i in range(pi + 1, min(self.T, pi + self._n_step) + 1):
+            for i in range(pi + 1, min(self.T, pi + self._n_step)):
                 G += np.power(self._gamma, i - pi - 1) * self._rewards[i]
 
             if pi + self._n_step < self.T:
