@@ -92,17 +92,16 @@ class TextEnvironment(Environment):
 
     def render(self) -> None:
         self._gui = Screen(title=self.__class__.__name__)
+    
+    def _location_to_state(self, location: List[int]) -> int:
+        return location[0] * self._env.shape[0] + location[1]
 
     def reset(self) -> int:
         self._counter = 0
         spawn = np.argwhere(self._env == TextStates.SPAWN)
         spawn = list(choice(spawn))
         self._agent = spawn
-        spawn = spawn[0] * self._env.shape[0] + spawn[1]
-        return spawn
-
-    def _location_to_state(self, location: List[int]) -> int:
-        return location[0] * self._env.shape[0] + location[1]
+        return self._location_to_state(spawn)
 
     def run_step(self, action, *args, **kwargs):
         # Initialize reward as -1, done as False and wins as 0
@@ -121,26 +120,25 @@ class TextEnvironment(Environment):
             j = (action < 2) ^ i
             # Update next state (-1, 1, 1, -1)
             next_state[i] += (-1) ** j
-            # Set pointer to env location
-            pointer = tuple(next_state)
-            # Check if next state is valid
-            if next_state[i] >= 0 and next_state[i] < self._env.shape[i]:
-                # Check if next state is not a WALL
-                if self._env[pointer] != TextStates.WALL:
-                    # Check if next state is GOAL
-                    if self._env[pointer] == TextStates.GOAL:
-                        # Set GOAL reward value and done flag
-                        reward = 20
-                        done = True
-                        info = {'return_sum': reward, 'wins': 1}
-                    # Update agent loaction
-                    self._agent = next_state
-                    # Render image
-                    self._render()
-                    # Return S, R, done, info
-                    return self._location_to_state(next_state), reward, done, info
         if self._neighbor == TextNeighbor.MOORE:
             raise NotImplementedError
+        # Set pointer to env location
+        pointer = tuple(next_state)
+        # Check if next state is valid
+        if next_state[i] >= 0 and next_state[i] < self._env.shape[i]:
+            # Check if next state is not a WALL
+            if self._env[pointer] != TextStates.WALL:
+                # Check if next state is GOAL
+                if self._env[pointer] == TextStates.GOAL:
+                    # Set GOAL reward value and done flag
+                    reward = 20
+                    done = True
+                    info = {'return_sum': reward, 'wins': 1}
+                # Update agent loaction
+                self._agent = next_state
+        # Render image
+        self._render()
+        # Return S, R, done, info
         return self._location_to_state(self._agent), reward, done, info
 
     @property
