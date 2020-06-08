@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 
+
 def plot(results):
     results = results.drop('step', axis=1).\
         groupby(['test', 'sample', 'agent']).sum()

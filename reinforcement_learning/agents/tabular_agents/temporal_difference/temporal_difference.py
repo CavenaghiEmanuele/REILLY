@@ -14,7 +14,7 @@ class TemporalDifference(Agent, object):
         self._alpha = alpha
         self._epsilon = epsilon
         self._gamma = gamma
-        
+
     def _update_policy(self, S) -> None:
         # Avoid choosing always the first move in case policy has the same value
         indices = [i for i, x in enumerate(self._Q[S]) if x == max(self._Q[S])]
@@ -23,6 +23,6 @@ class TemporalDifference(Agent, object):
         n_actions = self._policy.get_n_actions(S)
         for A in range(n_actions):
             if A == A_star:
-                self._policy[S, A] = 1 - self._epsilon + (self._epsilon/n_actions)
+                self._policy[S, A] = 1 - self._epsilon + (self._epsilon / n_actions)
             else:
-                self._policy[S, A] = self._epsilon/n_actions
+                self._policy[S, A] = self._epsilon / n_actions

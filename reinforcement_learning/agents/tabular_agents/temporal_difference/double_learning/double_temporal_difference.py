@@ -22,6 +22,6 @@ class DoubleTemporalDifference(TemporalDifference, object):
         n_actions = policy.get_n_actions(S)
         for A in range(n_actions):
             if A == A_star:
-                policy[S, A] = 1 - self._epsilon + (self._epsilon/n_actions)
+                policy[S, A] = 1 - self._epsilon + (self._epsilon / n_actions)
             else:
-                policy[S, A] = self._epsilon/n_actions
+                policy[S, A] = self._epsilon / n_actions

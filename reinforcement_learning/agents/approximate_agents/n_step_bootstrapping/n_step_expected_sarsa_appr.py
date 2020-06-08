@@ -55,7 +55,6 @@ class NStepExpectedSarsaApproximateAgent(NStepAppr, object):
                 G += np.power(self._gamma, self._n_step) * self._compute_expected_value(
                     self._states[pi + self._n_step], env.actions_size)
 
-
             self._Q_estimator.update(self._states[pi], self._actions[pi], G)
 
         return (n_S, R, self._episode_ended, info)

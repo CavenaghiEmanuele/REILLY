@@ -3,7 +3,7 @@ import numpy as np
 
 class StateValue():
 
-    __slots__=  ["_state_value"]
+    __slots__ = ["_state_value"]
 
     def __init__(self, n_states) -> None:
         self._state_value = np.zeros(n_states)

@@ -40,5 +40,4 @@ class ExpectedSarsaApproximateAgent(TemporalDiffernceAppr, object):
 
         self._S = n_S
         self._A = n_A
-        return (n_S, R, self._episode_ended, info)      
-        
+        return (n_S, R, self._episode_ended, info)

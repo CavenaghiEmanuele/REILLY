@@ -33,7 +33,7 @@ class NStepAppr(Agent, object):
         for action in range(n_actions):
             if action == best_action:
                 action_probs[action] = 1 - self._epsilon + \
-                    (self._epsilon/n_actions)
+                    (self._epsilon / n_actions)
             else:
-                action_probs[action] = self._epsilon/n_actions
+                action_probs[action] = self._epsilon / n_actions
         return action_probs

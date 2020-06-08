@@ -38,7 +38,7 @@ class Tiling:
                      for i in range(self._feature_dims)]
         try:
             return self._tiles[str((start_point, end_point, action))]
-        except:
+        except BaseException:
             self.add_tiles(start_point, action)
             return len(self._tiles)
 
@@ -57,12 +57,12 @@ class TileCoding():
     _tiling_offset: List
 
     def __init__(self, feature_dims: int, tilings_offset: List[float], tiles_size: List[float], n_tilings: int = 8):
-        
-        if tilings_offset == None:
+
+        if tilings_offset is None:
             tilings_offset = [1 for _ in range(feature_dims)]
         if isinstance(tilings_offset, int):
             tilings_offset = [tilings_offset for _ in range(feature_dims)]
-        if tiles_size == None:
+        if tiles_size is None:
             tiles_size = [1 for _ in range(feature_dims)]
         if isinstance(tiles_size, int):
             tiles_size = [tiles_size for _ in range(feature_dims)]
@@ -71,7 +71,7 @@ class TileCoding():
             raise Exception("Size of tiles must have the same dimensions of feature dimensions")
         if len(tilings_offset) != feature_dims:
             raise Exception("Tilings offset must have the same dimensions of feature dimensions")
-        
+
         self._tilings = [Tiling(
             feature_dims=feature_dims,
             tiles_size=tiles_size,

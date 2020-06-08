@@ -38,7 +38,8 @@ class TextEnvironment(Environment):
     _max_steps: int
     _mapper: Dict
 
-    def __init__(self,
+    def __init__(
+        self,
         text: str = '##########\n          \n S        \n          \n        X \n          \n##########',
         neighbor: int = TextNeighbor.MOORE,
         max_steps: int = 50

@@ -24,6 +24,6 @@ class NStep(Agent, object):
         for A in range(n_actions):
             if A == A_star:
                 self._policy[S, A] = 1 - self._epsilon + \
-                    (self._epsilon/n_actions)
+                    (self._epsilon / n_actions)
             else:
-                self._policy[S, A] = self._epsilon/n_actions
+                self._policy[S, A] = self._epsilon / n_actions
