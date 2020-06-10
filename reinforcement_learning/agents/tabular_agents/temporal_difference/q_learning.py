@@ -10,9 +10,9 @@ class QLearningAgent(TemporalDifference, object):
     def __repr__(self):
         return "QLearning: " + "alpha=" + str(self._alpha) + ", gamma=" + str(self._gamma) + ", epsilon=" + str(self._epsilon)
     
-    def reset(self, env):
+    def reset(self, env, *args, **kwargs):
         self._episode_ended = False
-        self._S = env.reset()
+        self._S = env.reset(*args, **kwargs)
     
     def run_step(self, env, *args, **kwargs):
         A = np.random.choice(range(env.actions_size), p=self._policy[self._S])

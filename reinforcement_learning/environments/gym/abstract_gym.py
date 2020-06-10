@@ -18,7 +18,7 @@ class GymEnvironment(Environment):
     def render(self):
         return self._env.render()
 
-    def reset(self) -> int:
+    def reset(self, *args, **kwargs) -> int:
         return self._env.reset()
 
     @abstractmethod

@@ -26,7 +26,7 @@ class MountainCar(Environment):
     def render(self):
         return self._env.render()
 
-    def reset(self) -> int:
+    def reset(self, *args, **kwargs) -> int:
         return self._env.reset()
     
     # If mod flag is "test" return additional dict with environment tests result

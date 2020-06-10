@@ -18,9 +18,9 @@ class DoubleExpectedSarsaAgent(DoubleTemporalDifference, object):
             expected_value += policy[state, action] * Q[state, action]
         return expected_value
     
-    def reset(self, env):
+    def reset(self, env, *args, **kwargs):
         self._episode_ended = False
-        self._S = env.reset()
+        self._S = env.reset(*args, **kwargs)
         policy_average = (self._policy[self._S] + self._policy2[self._S])/2
         self._A = np.random.choice(range(env.actions_size), p=policy_average)
     

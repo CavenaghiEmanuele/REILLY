@@ -65,9 +65,9 @@ class MonteCarloAgent(Agent):
             elif self._visit_update == "every":
                 self._every_visit_update(G, S, A)
 
-    def reset(self, env):
+    def reset(self, env, *args, **kwargs):
         self._episode_ended = False
-        self._S = env.reset()
+        self._S = env.reset(*args, **kwargs)
         self._episode_trajectory = []
         self._test_results = defaultdict(float)
 

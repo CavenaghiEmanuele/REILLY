@@ -18,7 +18,7 @@ class Environment(ABC):
         pass
 
     @abstractmethod
-    def reset(self) -> int:
+    def reset(self, *args, **kwargs) -> int:
         pass
 
     @abstractmethod

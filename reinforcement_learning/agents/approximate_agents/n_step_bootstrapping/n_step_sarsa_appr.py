@@ -13,9 +13,9 @@ class NStepSarsaApproximateAgent(NStepAppr, object):
             ", epsilon=" + str(self._epsilon) + \
             ", n-step=" + str(self._n_step)
 
-    def reset(self, env):
+    def reset(self, env, *args, **kwargs):
         self._episode_ended = False
-        self._states = [env.reset()]
+        self._states = [env.reset(*args, **kwargs)]
         self._actions = [np.random.choice(
             range(env.actions_size), p=self._e_greedy_policy(env, self._states[0]))]
         self._rewards = [0.0]

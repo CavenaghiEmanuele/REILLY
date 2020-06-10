@@ -38,11 +38,11 @@ class Session:
         agents = list(self._agents.keys())
         while len(agents) > 0:
             shuffle(agents)
-            for agent in agents:
+            for agent in agents[::]:
                 S, R, done, info = self._agents[agent].\
-                    run_step(self._env, t=step, mode='train')
-            if done:
-                agents.remove(agent)
+                    run_step(self._env, id=agent, mode='train', t=step)
+                if done:
+                    agents.remove(agent)
             step += 1
         self.reset_env()
 
@@ -54,21 +54,25 @@ class Session:
             agents = list(self._agents.keys())
             while len(agents) > 0:
                 shuffle(agents)
-                for agent in agents:
+                for agent in agents[::]:
                     S, R, done, info = self._agents[agent].\
-                        run_step(self._env, t=step, mode='test')
+                        run_step(self._env, id=agent, mode='test', t=step)
+                    if done:
+                        agents.remove(agent)
                     out.append((agent, S, R, done, info))
                 outs.append(out)
-                if done:
-                    agents.remove(agent)
                 step += 1
             self.reset_env()
         return outs
 
-    def _format_results(self, results):
+    def _format_results(self, data):
+        labels = {
+            key: 'ID: ' + str(key) + ', Params: ' + str(value)
+            for key, value in self._agents.items()
+        }
         out = [
-            {'test': i, 'sample': j, 'step': k, 'agent': agent, **info}
-            for i, test in enumerate(results)
+            {'test': i, 'sample': j, 'step': k, 'agent': labels[agent], **info}
+            for i, test in enumerate(data)
             for j, sample in enumerate(test)
             for k, (agent, state, reward, done, info) in enumerate(sample)
         ]
@@ -76,5 +80,5 @@ class Session:
         return out
 
     def reset_env(self):
-        for agent in self._agents.values():
-            agent.reset(self._env)
+        for key, agent in self._agents.items():
+            agent.reset(self._env, id=key)
