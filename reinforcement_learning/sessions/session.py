@@ -24,14 +24,16 @@ class Session:
         self._agents[id(agent)] = agent
 
     def run(self, episodes: int, test_offset: int, test_samples: int, render: bool = False):
+        out = []
         if render:
             self._env.render()
-        results = []
         for episode in tqdm(range(episodes)):
             self._run_train()
             if episode % test_offset == 0:
-                results.append(self._run_test(test_samples))
-        return self._format_results(results)
+                out.append(
+                    self._run_test(episode // test_offset, test_samples)
+                )
+        return pd.concat(out)
 
     def _run_train(self):
         step = 0
@@ -46,10 +48,13 @@ class Session:
             step += 1
         self.reset_env()
 
-    def _run_test(self, test_samples: int):
-        outs = []
+    def _run_test(self, test: int, test_samples: int):
+        out = []
+        labels = {
+            key: 'ID: ' + str(key) + ', Params: ' + str(value)
+            for key, value in self._agents.items()
+        }
         for sample in range(test_samples):
-            out = []
             step = 0
             agents = list(self._agents.keys())
             while len(agents) > 0:
@@ -59,25 +64,16 @@ class Session:
                         run_step(self._env, id=agent, mode='test', t=step)
                     if done:
                         agents.remove(agent)
-                    out.append((agent, S, R, done, info))
-                outs.append(out)
+                    out.append({
+                        'test': test,
+                        'sample': sample,
+                        'step': step,
+                        'agent': labels[agent],
+                        **info
+                    })
                 step += 1
             self.reset_env()
-        return outs
-
-    def _format_results(self, data):
-        labels = {
-            key: 'ID: ' + str(key) + ', Params: ' + str(value)
-            for key, value in self._agents.items()
-        }
-        out = [
-            {'test': i, 'sample': j, 'step': k, 'agent': labels[agent], **info}
-            for i, test in enumerate(data)
-            for j, sample in enumerate(test)
-            for k, (agent, state, reward, done, info) in enumerate(sample)
-        ]
-        out = pd.DataFrame(out)
-        return out
+        return pd.DataFrame(out)
 
     def reset_env(self):
         for key, agent in self._agents.items():
