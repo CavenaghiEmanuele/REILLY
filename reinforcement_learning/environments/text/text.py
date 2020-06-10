@@ -88,7 +88,8 @@ class TextEnvironment(Environment):
 
     def _render(self) -> None:
         if self._gui:
-            data = np.interp(self._env_exec, (data.min(), data.max()), (255, 0))
+            data = self._env_exec.copy()
+            data = np.interp(data, (data.min(), data.max()), (255, 0))
             self._gui.update(data)
 
     def render(self) -> None:
@@ -142,6 +143,8 @@ class TextEnvironment(Environment):
                     reward = 20
                     done = True
                     info = {'return_sum': reward, 'wins': 1}
+                # Reset agent location
+                self._env_exec[tuple(agent['location'])] = TextStates.EMPTY
                 # Update agent loaction
                 agent['location'] = next_state
                 # Set agent on env if not reached GOAL
