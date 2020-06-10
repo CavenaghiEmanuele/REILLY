@@ -1,11 +1,12 @@
 import numpy as np
 
+from PIL import Image
+from datetime import datetime
 from enum import IntEnum, auto, unique
 from random import choice
 from typing import Dict, List
 
 from ..environment import Environment
-from ...utils import Screen
 
 
 @unique
@@ -30,7 +31,7 @@ class TextEnvironment(Environment):
         '_neighbor', '_max_steps', '_mapper'
     ]
 
-    _gui: Screen
+    _gui: List
     _env_init: np.ndarray
     _env_exec: np.ndarray
     _agents: Dict
@@ -87,13 +88,25 @@ class TextEnvironment(Environment):
         return self._neighbor
 
     def _render(self) -> None:
-        if self._gui:
-            data = self._env_exec.copy()
+        if self._gui is not None:
+            data = self._env_exec
             data = np.interp(data, (data.min(), data.max()), (255, 0))
-            self._gui.update(data)
+            data = np.dstack([data] * 3).astype(np.uint8)
+            data = Image.fromarray(data, mode='RGB').convert('RGBA')
+            data = data.resize(size=(data.size[0] * 7, data.size[1] * 7))
+            self._gui.append(data)
 
     def render(self) -> None:
-        self._gui = Screen(title=self.__class__.__name__)
+        if self._gui is not None:
+            self._gui[0].save(
+                datetime.now().strftime("%d-%b-%Y %H:%M:%S.%f") + '.gif',
+                save_all=True,
+                append_images=self._gui[1:],
+                optimize=False,
+                duration=75,
+                loop=1
+            )
+        self._gui = []
 
     def _location_to_state(self, location: List[int]) -> int:
         return location[0] * self._env_exec.shape[0] + location[1]
