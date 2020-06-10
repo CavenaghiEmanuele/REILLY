@@ -10,7 +10,7 @@ class DoubleQLearningAgent(DoubleTemporalDifference, object):
     def __repr__(self):
         return "DoubleQLearning: " + "alpha=" + str(self._alpha) + ", gamma=" + \
             str(self._gamma) + ", epsilon=" + str(self._epsilon)
-    
+
     def reset(self, env, *args, **kwargs):
         self._episode_ended = False
         self._S = env.reset(*args, **kwargs)

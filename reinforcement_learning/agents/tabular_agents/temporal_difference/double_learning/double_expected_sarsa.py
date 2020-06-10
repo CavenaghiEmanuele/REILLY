@@ -18,7 +18,7 @@ class DoubleExpectedSarsaAgent(DoubleTemporalDifference, object):
         for action in range(len(Q[state])):
             expected_value += policy[state, action] * Q[state, action]
         return expected_value
-    
+
     def reset(self, env, *args, **kwargs):
         self._episode_ended = False
         self._S = env.reset(*args, **kwargs)
