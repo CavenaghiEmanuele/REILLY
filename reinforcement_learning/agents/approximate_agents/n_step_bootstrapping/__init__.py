@@ -1,2 +1,3 @@
-from .n_step_sarsa_appr import NStepSarsaApproximateAgent
 from .n_step_appr import NStepAppr
+from .n_step_sarsa_appr import NStepSarsaApproximateAgent
+from .n_step_expected_sarsa_appr import NStepExpectedSarsaApproximateAgent

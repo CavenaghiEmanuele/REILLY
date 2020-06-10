@@ -13,8 +13,8 @@ class MountainCar(Environment):
     def states_size(self):
         '''
         Discretize the state space for tabular agents. One simple way in which
-        this can be done is to round the first element of the state vector to 
-        the nearest 0.1 and the second element to the nearest 0.01, and then 
+        this can be done is to round the first element of the state vector to
+        the nearest 0.1 and the second element to the nearest 0.01, and then
         (for convenience) multiply the first element by 10 and the second by 100.
         '''
         return 285
@@ -28,7 +28,7 @@ class MountainCar(Environment):
 
     def reset(self, *args, **kwargs) -> int:
         return self._env.reset()
-    
+
     # If mod flag is "test" return additional dict with environment tests result
     def run_step(self, action, *args, **kwargs):
         next_state, reward, done, _ = self._env.step(action)

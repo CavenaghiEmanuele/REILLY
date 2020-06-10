@@ -10,7 +10,9 @@ class NStepExpectedSarsaAgent(NStep, object):
     __slots__ = ['_states', '_actions', '_rewards', 'T']
 
     def __repr__(self):
-        return "n-step Expected Sarsa: " + "alpha=" + str(self._alpha) + ", gamma=" + str(self._gamma) + ", epsilon=" + str(self._epsilon) + ", n-step=" + str(self._n_step)
+        return "n-step Expected Sarsa: " + "alpha=" + \
+            str(self._alpha) + ", gamma=" + str(self._gamma) + ", epsilon=" + \
+            str(self._epsilon) + ", n-step=" + str(self._n_step)
 
     def reset(self, env, *args, **kwargs):
         self._episode_ended = False
@@ -37,18 +39,12 @@ class NStepExpectedSarsaAgent(NStep, object):
         pi = t - self._n_step + 1
         if pi >= 0:
             G = 0
-            # Don't add +1 in upper bound of sum because the last element is
-            # a branch over all action possibilities weighted by their probability
             for i in range(pi + 1, min(self.T, pi + self._n_step)):
                 G += np.power(self._gamma, i - pi - 1) * self._rewards[i]
 
-            G += self._compute_expected_value(
-                state=self._states[pi + self._n_step])
-
             if pi + self._n_step < self.T:
                 G += np.power(self._gamma, self._n_step) * \
-                    self._Q[self._states[pi + self._n_step]
-                            ][self._actions[pi + self._n_step]]
+                    self._compute_expected_value(state=self._states[pi + self._n_step])
 
             self._Q[self._states[pi], self._actions[pi]] += self._alpha * \
                 (G - self._Q[self._states[pi], self._actions[pi]])

@@ -1,5 +1,5 @@
 import numpy as np
-  
+
 
 class ActionValue(object):
 
@@ -7,7 +7,7 @@ class ActionValue(object):
 
     def __init__(self, n_states, n_actions) -> None:
         self._action_value = np.zeros(shape=(n_states, n_actions))
-    
+
     def __repr__(self):
         return str(self._action_value)
 
@@ -19,6 +19,6 @@ class ActionValue(object):
 
     def argmax(self):
         return self._action_value.argmax(axis=0)
-    
+
     def __add__(self, other):
         return self._action_value + other._action_value

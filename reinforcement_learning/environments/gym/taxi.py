@@ -16,7 +16,7 @@ class Taxi(GymEnvironment):
         if kwargs['mode'] == 'test':
             info = {'return_sum': reward, 'wins': 0}
             if done and reward == 20:
-                info['wins'] = 1                
+                info['wins'] = 1
             return next_state, reward, done, info
 
         return next_state, reward, done, _

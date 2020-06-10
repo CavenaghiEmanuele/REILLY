@@ -10,7 +10,7 @@ class NStepAppr(Agent, object):
 
     __slots__ = ["_Q_estimator"]
 
-    def __init__(self, alpha, epsilon, gamma, n_step, feature_dims, num_tilings, tiling_offset=None, tiles_dims=None):
+    def __init__(self, alpha, epsilon, gamma, n_step, feature_dims, num_tilings, tiling_offset=None, tiles_size=None):
         # self._policy  -> Approximante agents don't have policy but approximate it
         self._alpha = alpha
         self._epsilon = epsilon
@@ -20,11 +20,10 @@ class NStepAppr(Agent, object):
                                        feature_dims=feature_dims,
                                        num_tilings=num_tilings,
                                        tiling_offset=tiling_offset,
-                                       tiles_dims=tiles_dims
+                                       tiles_size=tiles_size
                                        )
 
-    def _e_greedy_policy(self, env, state):
-        n_actions = env.actions_size
+    def _e_greedy_policy(self, state, n_actions):
         action_probs = np.zeros(n_actions)
         q_values = [self._Q_estimator.predict(state, action)
                     for action in range(n_actions)]
@@ -34,7 +33,7 @@ class NStepAppr(Agent, object):
         for action in range(n_actions):
             if action == best_action:
                 action_probs[action] = 1 - self._epsilon + \
-                    (self._epsilon/n_actions)
+                    (self._epsilon / n_actions)
             else:
-                action_probs[action] = self._epsilon/n_actions
+                action_probs[action] = self._epsilon / n_actions
         return action_probs
