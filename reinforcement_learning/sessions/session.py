@@ -25,7 +25,7 @@ class Session:
 
     def run(self, episodes: int, test_offset: int, test_samples: int, render: bool = False):
         out = []
-        for episode in tqdm(range(episodes)):
+        for episode in tqdm(range(1, episodes + 1)):
             self._run_train()
             if episode % test_offset == 0:
                 out.append(
