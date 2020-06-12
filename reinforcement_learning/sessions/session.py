@@ -25,13 +25,11 @@ class Session:
 
     def run(self, episodes: int, test_offset: int, test_samples: int, render: bool = False):
         out = []
-        if render:
-            self._env.render()
-        for episode in tqdm(range(episodes)):
+        for episode in tqdm(range(1, episodes + 1)):
             self._run_train()
             if episode % test_offset == 0:
                 out.append(
-                    self._run_test(episode // test_offset, test_samples)
+                    self._run_test(episode // test_offset, test_samples, render)
                 )
         return pd.concat(out)
 
@@ -48,7 +46,9 @@ class Session:
             step += 1
         self.reset_env()
 
-    def _run_test(self, test: int, test_samples: int):
+    def _run_test(self, test: int, test_samples: int, render: bool = False):
+        if render:
+            self._env.render()
         out = []
         labels = {
             key: 'ID: ' + str(key) + ', Params: ' + str(value)

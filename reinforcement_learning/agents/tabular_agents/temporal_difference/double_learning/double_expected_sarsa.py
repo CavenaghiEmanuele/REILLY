@@ -18,7 +18,7 @@ class DoubleExpectedSarsaAgent(DoubleTemporalDifference, object):
         for action in range(len(Q[state])):
             expected_value += policy[state, action] * Q[state, action]
         return expected_value
-    
+
     def reset(self, env, *args, **kwargs):
         self._episode_ended = False
         self._S = env.reset(*args, **kwargs)
@@ -30,18 +30,18 @@ class DoubleExpectedSarsaAgent(DoubleTemporalDifference, object):
         policy_average = (self._policy[n_S] + self._policy2[n_S]) / 2
         n_A = np.random.choice(range(env.actions_size), p=policy_average)
 
-        if np.random.binomial(1, 0.5) == 0:
-            self._Q[self._S, self._A] += self._alpha * \
-                (R + (self._gamma * self._compute_expected_value(self._policy2, self._Q2, n_S)) -
-                 self._Q[self._S, self._A])
-            self._update_policy(self._S, self._policy, self._Q)
-        else:
-            self._Q2[self._S, self._A] += self._alpha * \
-                (R + (self._gamma * self._compute_expected_value(self._policy, self._Q, n_S)) -
-                 self._Q2[self._S, self._A])
-            self._update_policy(self._S, self._policy2, self._Q2)
+        if not kwargs['mode'] == "test":
+            if np.random.binomial(1, 0.5) == 0:
+                self._Q[self._S, self._A] += self._alpha * \
+                    (R + (self._gamma * self._compute_expected_value(self._policy2, self._Q2, n_S)) -
+                    self._Q[self._S, self._A])
+                self._update_policy(self._S, self._policy, self._Q)
+            else:
+                self._Q2[self._S, self._A] += self._alpha * \
+                    (R + (self._gamma * self._compute_expected_value(self._policy, self._Q, n_S)) -
+                    self._Q2[self._S, self._A])
+                self._update_policy(self._S, self._policy2, self._Q2)
 
         self._S = n_S
         self._A = n_A
-
         return (n_S, R, self._episode_ended, info)

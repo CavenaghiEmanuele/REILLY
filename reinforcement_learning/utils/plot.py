@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
+
 def plot(data: pd.DataFrame):
     data = data.drop('step', axis=1).\
         groupby(['test', 'sample', 'agent']).sum()

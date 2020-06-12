@@ -18,7 +18,7 @@ class ExpectedSarsaAgent(TemporalDifference, object):
         for action in range(len(self._Q[state])):
             expected_value += self._policy[state, action] * self._Q[state, action]
         return expected_value
-    
+
     def reset(self, env, *args, **kwargs):
         self._episode_ended = False
         self._S = env.reset(*args, **kwargs)
@@ -27,12 +27,12 @@ class ExpectedSarsaAgent(TemporalDifference, object):
     def run_step(self, env, *args, **kwargs):
         n_S, R, self._episode_ended, info = env.run_step(self._A, **kwargs)
         n_A = np.random.choice(range(env.actions_size), p=self._policy[n_S])
-
-        self._Q[self._S, self._A] += self._alpha * \
-            (R + (self._gamma * self._compute_expected_value(n_S)) - self._Q[self._S, self._A])
-        self._update_policy(self._S)
+        
+        if not kwargs['mode'] == "test":
+            self._Q[self._S, self._A] += self._alpha * \
+                (R + (self._gamma * self._compute_expected_value(n_S)) - self._Q[self._S, self._A])
+            self._update_policy(self._S)
 
         self._S = n_S
         self._A = n_A
-
         return (n_S, R, self._episode_ended, info)

@@ -37,19 +37,20 @@ class NStepSarsaAgent(NStep, object):
                 self._actions.append(np.random.choice(
                     range(env.actions_size), p=self._policy[n_S]))
 
-        pi = t - self._n_step + 1
-        if pi >= 0:
-            G = 0
-            for i in range(pi + 1, min(self.T, pi + self._n_step)):
-                G += np.power(self._gamma, i - pi - 1) * self._rewards[i]
+        if not kwargs['mode'] == "test":
+            pi = t - self._n_step + 1
+            if pi >= 0:
+                G = 0
+                for i in range(pi + 1, min(self.T, pi + self._n_step)):
+                    G += np.power(self._gamma, i - pi - 1) * self._rewards[i]
 
-            if pi + self._n_step < self.T:
-                G += np.power(self._gamma, self._n_step) * \
-                    self._Q[self._states[pi + self._n_step]
-                            ][self._actions[pi + self._n_step]]
-
-            self._Q[self._states[pi], self._actions[pi]] += self._alpha * \
-                (G - self._Q[self._states[pi], self._actions[pi]])
-            self._update_policy(self._states[pi])
+                if pi + self._n_step < self.T:
+                    G += np.power(self._gamma, self._n_step) * \
+                        self._Q[self._states[pi + self._n_step]
+                                ][self._actions[pi + self._n_step]]
+                        
+                self._Q[self._states[pi], self._actions[pi]] += self._alpha * \
+                    (G - self._Q[self._states[pi], self._actions[pi]])
+                self._update_policy(self._states[pi])
 
         return (n_S, R, self._episode_ended, info)

@@ -43,18 +43,19 @@ class NStepExpectedSarsaApproximateAgent(NStepAppr, object):
             else:
                 self._actions.append(np.random.choice(
                     range(env.actions_size), p=self._e_greedy_policy(n_S, env.actions_size)))
+        
+        if not kwargs['mode'] == "test":
+            pi = t - self._n_step + 1
+            if pi >= 0:
+                G = 0
 
-        pi = t - self._n_step + 1
-        if pi >= 0:
-            G = 0
+                for i in range(pi + 1, min(self.T, pi + self._n_step) + 1):
+                    G += np.power(self._gamma, i - pi - 1) * self._rewards[i]
 
-            for i in range(pi + 1, min(self.T, pi + self._n_step) + 1):
-                G += np.power(self._gamma, i - pi - 1) * self._rewards[i]
+                if pi + self._n_step < self.T:
+                    G += np.power(self._gamma, self._n_step) * self._compute_expected_value(
+                        self._states[pi + self._n_step], env.actions_size)
 
-            if pi + self._n_step < self.T:
-                G += np.power(self._gamma, self._n_step) * self._compute_expected_value(
-                    self._states[pi + self._n_step], env.actions_size)
-
-            self._Q_estimator.update(self._states[pi], self._actions[pi], G)
+                self._Q_estimator.update(self._states[pi], self._actions[pi], G)
 
         return (n_S, R, self._episode_ended, info)

@@ -9,7 +9,7 @@ from ...structures import ActionValue, Policy
 class MonteCarloAgent(Agent):
 
     __slots__ = ["_visit_update", "_policy_method",
-                 "_returns", '_episode_trajectory', '_test_results']
+                 "_returns", '_episode_trajectory']
 
     def __init__(self, states_size, actions_size, epsilon, gamma, visit_update="first", policy_method="on-policy"):
         # Basic attribute
@@ -69,7 +69,6 @@ class MonteCarloAgent(Agent):
         self._episode_ended = False
         self._S = env.reset(*args, **kwargs)
         self._episode_trajectory = []
-        self._test_results = defaultdict(float)
 
     def run_step(self, env, *args, **kwargs):
         # Select action according to policy distribution probability
@@ -77,13 +76,8 @@ class MonteCarloAgent(Agent):
                              p=self._policy[self._S])
         n_S, R, self._episode_ended, info = env.run_step(A, **kwargs)
         self._episode_trajectory.append((self._S, A, R))
-        if kwargs['mode'] == "test":
-            for test in info.keys():
-                self._test_results[test] += info[test]
-
-        if self._episode_ended:
+        if kwargs['mode'] == "test" and self._episode_ended:
             self._update()
 
         self._S = n_S
-
         return (n_S, R, self._episode_ended, info)
