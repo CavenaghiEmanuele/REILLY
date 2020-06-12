@@ -24,6 +24,7 @@ class Session:
         self._agents[id(agent)] = agent
 
     def run(self, episodes: int, test_offset: int, test_samples: int, render: bool = False):
+        self.reset_env()
         out = []
         for episode in tqdm(range(1, episodes + 1)):
             self._run_train()
@@ -34,6 +35,7 @@ class Session:
         return pd.concat(out)
 
     def _run_train(self):
+        self.reset_env()
         step = 0
         agents = list(self._agents.keys())
         while len(agents) > 0:
@@ -44,9 +46,9 @@ class Session:
                 if done:
                     agents.remove(agent)
             step += 1
-        self.reset_env()
-
+        
     def _run_test(self, test: int, test_samples: int, render: bool = False):
+        self.reset_env()
         if render:
             self._env.render()
         out = []
