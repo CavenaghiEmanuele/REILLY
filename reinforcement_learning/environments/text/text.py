@@ -38,12 +38,14 @@ class TextEnvironment(Environment):
     _neighbor: int
     _max_steps: int
     _mapper: Dict
+    _linear_state: bool
 
     def __init__(
         self,
         text: str = '##########\n          \n S        \n          \n        X \n          \n##########',
         neighbor: int = TextNeighbor.MOORE,
-        max_steps: int = 50
+        max_steps: int = 50,
+        linear_state: bool = False
     ):
         # Set default GUI to None
         self._gui = None
@@ -53,6 +55,8 @@ class TextEnvironment(Environment):
         self._neighbor = neighbor
         # Set maximun steps for agent exploration
         self._max_steps = max_steps
+        # If True return only one dimensions for states
+        self._linear_state = linear_state
         # Define text mapper values
         self._mapper = {
             ' ': TextStates.EMPTY,          # Empty space
@@ -121,7 +125,9 @@ class TextEnvironment(Environment):
         spawn = list(choice(spawn))
         agent['location'] = spawn
         self._agents[kwargs['id']] = agent
-        return self._location_to_state(spawn)
+        if self._linear_state:
+            return self._location_to_state(spawn)
+        return spawn
 
     def run_step(self, action, *args, **kwargs):
         # Select agent
@@ -133,7 +139,9 @@ class TextEnvironment(Environment):
         # Update and check max_steps
         agent['counter'] += 1
         if agent['counter'] == self._max_steps:
-            return self._location_to_state(agent['location']), reward, True, info
+            if self._linear_state:
+                return self._location_to_state(agent['location']), reward, True, info
+            return agent['location'], reward, True, info
         # Copy the list
         next_state = agent['location'][::]
         if self._neighbor == TextNeighbor.NEUMANN:
@@ -166,7 +174,9 @@ class TextEnvironment(Environment):
         # Render image
         self._render()
         # Return S, R, done, info
-        return self._location_to_state(agent['location']), reward, done, info
+        if self._linear_state:
+            return self._location_to_state(agent['location']), reward, done, info
+        return agent['location'], reward, done, info
 
     @property
     def probability_distribution(self):
