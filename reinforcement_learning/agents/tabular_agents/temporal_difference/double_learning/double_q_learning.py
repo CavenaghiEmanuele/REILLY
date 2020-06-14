@@ -1,21 +1,24 @@
 import numpy as np
-from typing import List, Dict
+from typing import List, Tuple
 
 from .....structures import ActionValue, Policy
+from .....environments import Environment
 from .double_temporal_difference import DoubleTemporalDifference
 
 
 class DoubleQLearningAgent(DoubleTemporalDifference, object):
 
     def __repr__(self):
-        return "DoubleQLearning: " + "alpha=" + str(self._alpha) + ", gamma=" + \
-            str(self._gamma) + ", epsilon=" + str(self._epsilon)
+        return "DoubleQLearning: " + "alpha=" + str(self._alpha) + \
+            ", gamma=" + str(self._gamma) + \
+            ", epsilon=" + str(self._epsilon) + \
+            ", e-decay=" + str(self._e_decay)
 
-    def reset(self, env, *args, **kwargs):
+    def reset(self, env: Environment, *args, **kwargs) -> None:
         self._episode_ended = False
         self._S = env.reset(*args, **kwargs)
 
-    def run_step(self, env, *args, **kwargs):
+    def run_step(self, env: Environment, *args, **kwargs) -> Tuple:
         policy_average = (self._policy[self._S] + self._policy2[self._S]) / 2
         A = np.random.choice(range(env.actions_size), p=policy_average)
         n_S, R, self._episode_ended, info = env.run_step(A, **kwargs)
@@ -31,4 +34,6 @@ class DoubleQLearningAgent(DoubleTemporalDifference, object):
                 self._update_policy(self._S, self._policy2, self._Q2)
 
         self._S = n_S
+        if self._episode_ended:
+            self._epsilon *= self._e_decay
         return (n_S, R, self._episode_ended, info)

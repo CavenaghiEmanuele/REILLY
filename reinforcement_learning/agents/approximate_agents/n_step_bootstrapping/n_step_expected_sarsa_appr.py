@@ -1,5 +1,7 @@
 import numpy as np
+from typing import List, Tuple
 
+from ....environments import Environment
 from .n_step_appr import NStepAppr
 
 
@@ -11,16 +13,10 @@ class NStepExpectedSarsaApproximateAgent(NStepAppr, object):
         return "n-step Expected Sarsa Appr: " + "alpha=" + str(self._alpha) + \
             ", gamma=" + str(self._gamma) + \
             ", epsilon=" + str(self._epsilon) + \
-            ", n-step=" + str(self._n_step)
+            ", n-step=" + str(self._n_step) + \
+            ", e-decay=" + str(self._e_decay)
 
-    def _compute_expected_value(self, state, n_action) -> float:
-        expected_value = 0
-        for action in range(n_action):
-            expected_value += self._e_greedy_policy(
-                state, n_action)[action] * self._Q_estimator.predict(state, action)
-        return expected_value
-
-    def reset(self, env, *args, **kwargs):
+    def reset(self, env: Environment, *args, **kwargs) -> None:
         self._episode_ended = False
         self._states = [env.reset()]
         self._actions = [np.random.choice(
@@ -28,7 +24,7 @@ class NStepExpectedSarsaApproximateAgent(NStepAppr, object):
         self._rewards = [0.0]
         self.T = float('inf')
 
-    def run_step(self, env, *args, **kwargs):
+    def run_step(self, env: Environment, *args, **kwargs) -> Tuple:
         t = kwargs['t']
         n_S = R = 0
         info = {}
@@ -58,4 +54,14 @@ class NStepExpectedSarsaApproximateAgent(NStepAppr, object):
 
                 self._Q_estimator.update(self._states[pi], self._actions[pi], G)
 
+        if self._episode_ended:
+            self._epsilon *= self._e_decay
         return (n_S, R, self._episode_ended, info)
+
+    def _compute_expected_value(self, state: List, n_action:int) -> float:
+        expected_value = 0
+        for action in range(n_action):
+            expected_value += self._e_greedy_policy(
+                state, n_action)[action] * self._Q_estimator.predict(state, action)
+        return expected_value
+    

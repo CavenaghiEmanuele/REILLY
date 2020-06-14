@@ -8,14 +8,21 @@ from ....structures import ActionValue, Policy
 
 class TemporalDifference(Agent, object):
 
-    def __init__(self, states_size, actions_size, alpha, epsilon, gamma):
+    def __init__(self, 
+                states_size:int, 
+                actions_size:int, 
+                alpha:float, 
+                epsilon:float, 
+                gamma:float,
+                epsilon_decay:float = 1):
         self._Q = ActionValue(states_size, actions_size)
         self._policy = Policy(states_size, actions_size)
         self._alpha = alpha
         self._epsilon = epsilon
         self._gamma = gamma
+        self._e_decay = epsilon_decay
 
-    def _update_policy(self, S) -> None:
+    def _update_policy(self, S: int) -> None:
         # Avoid choosing always the first move in case policy has the same value
         indices = [i for i, x in enumerate(self._Q[S]) if x == max(self._Q[S])]
         A_star = np.random.choice(indices)

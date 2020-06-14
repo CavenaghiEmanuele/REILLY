@@ -9,12 +9,18 @@ class DoubleTemporalDifference(TemporalDifference, object):
 
     __slots__ = ["_Q2", "_policy2"]
 
-    def __init__(self, states_size, actions_size, alpha, epsilon, gamma):
-        super().__init__(states_size, actions_size, alpha, epsilon, gamma)
+    def __init__(self, 
+                states_size:int, 
+                actions_size:int, 
+                alpha:float, 
+                epsilon:float, 
+                gamma:float,
+                epsilon_decay:float = 1):
+        super().__init__(states_size, actions_size, alpha, epsilon, gamma, epsilon_decay)
         self._Q2 = ActionValue(states_size, actions_size)
         self._policy2 = Policy(states_size, actions_size)
 
-    def _update_policy(self, S, policy, Q) -> None:
+    def _update_policy(self, S: int, policy: Policy, Q: ActionValue) -> None:
         # Avoid choosing always the first move in case policy has the same value
         indices = [i for i, x in enumerate(Q[S]) if x == max(Q[S])]
         A_star = np.random.choice(indices)

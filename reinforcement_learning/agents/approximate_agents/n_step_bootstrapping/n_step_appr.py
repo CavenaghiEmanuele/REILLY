@@ -1,5 +1,5 @@
 import numpy as np
-from typing import List, Dict
+from typing import List
 
 from ...agent import Agent
 from ....structures import ActionValue, Policy
@@ -10,12 +10,22 @@ class NStepAppr(Agent, object):
 
     __slots__ = ["_Q_estimator"]
 
-    def __init__(self, alpha, epsilon, gamma, n_step, feature_dims, num_tilings, tiling_offset=None, tiles_size=None):
+    def __init__(self,
+                 alpha: float,
+                 epsilon: float,
+                 gamma: float,
+                 n_step: int,
+                 feature_dims: int,
+                 num_tilings: int,
+                 epsilon_decay: float = 1,
+                 tiling_offset: List = None,
+                 tiles_size: List = None):
         # self._policy  -> Approximante agents don't have policy but approximate it
         self._alpha = alpha
         self._epsilon = epsilon
         self._gamma = gamma
         self._n_step = n_step
+        self._e_decay = epsilon_decay
         self._Q_estimator = QEstimator(alpha=alpha,
                                        feature_dims=feature_dims,
                                        num_tilings=num_tilings,

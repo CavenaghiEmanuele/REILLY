@@ -1,7 +1,8 @@
 import numpy as np
-from typing import List, Dict
+from typing import List, Tuple
 
 from ....structures import ActionValue, Policy
+from ....environments import Environment
 from .n_step import NStep
 
 
@@ -10,11 +11,13 @@ class NStepExpectedSarsaAgent(NStep, object):
     __slots__ = ['_states', '_actions', '_rewards', 'T']
 
     def __repr__(self):
-        return "n-step Expected Sarsa: " + "alpha=" + \
-            str(self._alpha) + ", gamma=" + str(self._gamma) + ", epsilon=" + \
-            str(self._epsilon) + ", n-step=" + str(self._n_step)
+        return "n-step Expected Sarsa: " + "alpha=" + str(self._alpha) + \
+            ", gamma=" + str(self._gamma) + \
+            ", epsilon=" + str(self._epsilon) + \
+            ", n-step=" + str(self._n_step) + \
+            ", e-decay=" + str(self._e_decay)
 
-    def reset(self, env, *args, **kwargs):
+    def reset(self, env: Environment, *args, **kwargs) -> None:
         self._episode_ended = False
         self._states = [env.reset(*args, **kwargs)]
         self._actions = [np.random.choice(
@@ -22,7 +25,7 @@ class NStepExpectedSarsaAgent(NStep, object):
         self._rewards = [0.0]
         self.T = float('inf')
 
-    def run_step(self, env, *args, **kwargs):
+    def run_step(self, env: Environment, *args, **kwargs) -> Tuple:
         t = kwargs['t']
         if t < self.T:
             n_S, R, self._episode_ended, info = env.run_step(
@@ -50,10 +53,12 @@ class NStepExpectedSarsaAgent(NStep, object):
                 self._Q[self._states[pi], self._actions[pi]] += self._alpha * \
                     (G - self._Q[self._states[pi], self._actions[pi]])
                 self._update_policy(self._states[pi])
-
+        
+        if self._episode_ended:
+            self._epsilon *= self._e_decay
         return (n_S, R, self._episode_ended, info)
 
-    def _compute_expected_value(self, state) -> float:
+    def _compute_expected_value(self, state:int) -> float:
         expected_value = 0
         for action in range(len(self._Q[state])):
             expected_value += self._policy[state, action] * self._Q[state, action]

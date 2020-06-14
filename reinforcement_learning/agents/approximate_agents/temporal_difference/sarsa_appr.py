@@ -1,5 +1,7 @@
 import numpy as np
+from typing import List, Tuple
 
+from ....environments import Environment
 from .temporal_difference_appr import TemporalDiffernceAppr
 
 
@@ -10,16 +12,16 @@ class SarsaApproximateAgent(TemporalDiffernceAppr, object):
     def __repr__(self):
         return "Sarsa Appr: " + "alpha=" + str(self._alpha) + \
             ", gamma=" + str(self._gamma) + \
-            ", epsilon=" + str(self._epsilon)
+            ", epsilon=" + str(self._epsilon) + \
+            ", e-decay=" + str(self._e_decay)
 
-    def reset(self, env, *args, **kwargs):
+    def reset(self, env: Environment, *args, **kwargs) -> None:
         self._episode_ended = False
         self._S = env.reset(*args, **kwargs)
         self._A = np.random.choice(
             range(env.actions_size), p=self._e_greedy_policy(self._S, env.actions_size))
 
-    def run_step(self, env, *args, **kwargs):
-
+    def run_step(self, env: Environment, *args, **kwargs) -> Tuple:
         n_S, R, self._episode_ended, info = env.run_step(self._A, **kwargs)
 
         if self._episode_ended and not kwargs['mode'] == "test":
@@ -35,4 +37,7 @@ class SarsaApproximateAgent(TemporalDiffernceAppr, object):
 
         self._S = n_S
         self._A = n_A
+        
+        if self._episode_ended:
+            self._epsilon *= self._e_decay
         return (n_S, R, self._episode_ended, info)
