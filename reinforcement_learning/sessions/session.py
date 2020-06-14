@@ -1,6 +1,7 @@
 from random import shuffle, randint
 from typing import Dict, List
 from tqdm import tqdm
+from abc import abstractmethod
 
 import pandas as pd
 
@@ -35,23 +36,9 @@ class Session:
                 )
         return pd.concat(out)
 
+    @abstractmethod    
     def _run_train(self) -> None:
-        self.reset_env()
-        step = 0
-        all_agents = list(self._agents.keys())
-        agents = self._random_start(all_agents)
-                
-        while len(agents) > 0:
-            shuffle(agents)
-            for agent in agents[::]:
-                S, R, done, info = self._agents[agent].\
-                    run_step(self._env, id=agent, mode='train', t=step)
-                if done:
-                    agents.remove(agent)
-            step += 1
-            if self._step_start > 0:
-                self._step_start -= 1
-                agents.extend(self._random_start(all_agents))
+        pass
         
     def _run_test(self, test: int, test_samples: int, render: bool = False) -> pd.DataFrame:
         self.reset_env()
