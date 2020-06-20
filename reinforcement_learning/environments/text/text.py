@@ -99,8 +99,7 @@ class TextEnvironment(Environment):
         if self._gui is not None:
             data = self._env_exec
             data = np.interp(data, (data.min(), data.max()), (255, 0))
-            data = np.dstack([data] * 3).astype(np.uint8)
-            data = Image.fromarray(data, mode='RGB').convert('RGBA')
+            data = Image.fromarray(data.astype(np.uint8), mode='L').convert('RGBA')
             data = data.resize(size=(data.size[0] * 7, data.size[1] * 7))
             self._gui.append(data)
 
