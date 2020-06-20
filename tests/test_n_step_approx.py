@@ -3,7 +3,7 @@ import reinforcement_learning as rl
 
 def test_n_step_sarsa_appr_agent():
     env = rl.Frozen_Lake4x4()
-    session = rl.Session(env)
+    session = rl.JointTrainSession(env)
     agent1 = rl.NStepSarsaApproximateAgent(
         alpha=0.1,
         epsilon=0.03,
@@ -37,12 +37,11 @@ def test_n_step_sarsa_appr_agent():
     session.add_agent(agent1)
     session.add_agent(agent2)
     session.add_agent(agent3)
-    session.reset_env()
     session.run(100, 10, 10)
     
 def test_n_step_expected_sarsa_appr_agent():
     env = rl.Frozen_Lake4x4()
-    session = rl.Session(env)
+    session = rl.JointTrainSession(env)
     agent = rl.NStepExpectedSarsaApproximateAgent(
         alpha=0.1,
         epsilon=0.03,
@@ -54,6 +53,5 @@ def test_n_step_expected_sarsa_appr_agent():
         tiles_size=[1]
     )
     session.add_agent(agent)
-    session.reset_env()
     session.run(100, 10, 10)
     

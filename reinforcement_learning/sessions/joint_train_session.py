@@ -9,22 +9,21 @@ from ..agents import Agent
 from ..environments import Environment
 
 
-class JoinTrainSession(Session):
+class JointTrainSession(Session):
 
     def _run_train(self) -> None:
-        self.reset_env()
+        self._reset_env()
         step = 0
-        all_agents = list(self._agents.keys())
-        agents = self._random_start(all_agents)
+        agents = self._random_start()
                 
         while len(agents) > 0:
             shuffle(agents)
             for agent in agents[::]:
-                S, R, done, info = self._agents[agent].\
+                next_state, reward, done, info = self._agents[agent].\
                     run_step(self._env, id=agent, mode='train', t=step)
                 if done:
                     agents.remove(agent)
             step += 1
-            if self._step_start > 0:
-                self._step_start -= 1
-                agents.extend(self._random_start(all_agents))
+            if self._start_step > 0:
+                self._start_step -= 1
+                agents = list(set(agents) + set(self._random_start()))
