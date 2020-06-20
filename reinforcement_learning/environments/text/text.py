@@ -28,7 +28,7 @@ class TextEnvironment(Environment):
 
     __slots__ = [
         '_gui', '_env_init', '_env_exec', '_agents',
-        '_neighbor', '_max_steps', '_mapper'
+        '_neighbor', '_max_steps', '_mapper', '_raw_state'
     ]
 
     _gui: List
@@ -38,14 +38,14 @@ class TextEnvironment(Environment):
     _neighbor: int
     _max_steps: int
     _mapper: Dict
-    _linear_state: bool
+    _raw_state: bool
 
     def __init__(
         self,
         text: str = '##########\n          \n S        \n          \n        X \n          \n##########',
         neighbor: int = TextNeighbor.MOORE,
         max_steps: int = 50,
-        linear_state: bool = False
+        raw_state: bool = True
     ):
         # Set default GUI to None
         self._gui = None
@@ -56,7 +56,7 @@ class TextEnvironment(Environment):
         # Set maximun steps for agent exploration
         self._max_steps = max_steps
         # If True return only one dimensions for states
-        self._linear_state = linear_state
+        self._raw_state = raw_state
         # Define text mapper values
         self._mapper = {
             ' ': TextStates.EMPTY,          # Empty space
@@ -125,7 +125,7 @@ class TextEnvironment(Environment):
         spawn = list(choice(spawn))
         agent['location'] = spawn
         self._agents[kwargs['id']] = agent
-        if self._linear_state:
+        if not self._raw_state:
             return self._location_to_state(spawn)
         return spawn
 
@@ -139,7 +139,7 @@ class TextEnvironment(Environment):
         # Update and check max_steps
         agent['counter'] += 1
         if agent['counter'] == self._max_steps:
-            if self._linear_state:
+            if not self._raw_state:
                 return self._location_to_state(agent['location']), reward, True, info
             return agent['location'], reward, True, info
         # Copy the list
@@ -174,7 +174,7 @@ class TextEnvironment(Environment):
         # Render image
         self._render()
         # Return S, R, done, info
-        if self._linear_state:
+        if not self._raw_state:
             return self._location_to_state(agent['location']), reward, done, info
         return agent['location'], reward, done, info
 
