@@ -27,8 +27,8 @@ class TextNeighbor(IntEnum):
 class TextEnvironment(Environment):
 
     __slots__ = [
-        '_gui', '_env_init', '_env_exec', '_agents',
-        '_neighbor', '_max_steps', '_mapper', '_raw_state'
+        '_gui', '_env_init', '_env_exec', '_agents', '_neighbor',
+        '_max_steps', '_mapper', '_rewards', '_raw_state'
     ]
 
     _gui: List
@@ -38,6 +38,7 @@ class TextEnvironment(Environment):
     _neighbor: int
     _max_steps: int
     _mapper: Dict
+    _rewards: Dict
     _raw_state: bool
 
     def __init__(
@@ -45,6 +46,7 @@ class TextEnvironment(Environment):
         text: str = '##########\n          \n S        \n          \n        X \n          \n##########',
         neighbor: int = TextNeighbor.MOORE,
         max_steps: int = 50,
+        rewards: Dict = {TextStates.EMPTY: -1, TextStates.WALL: -5, TextStates.GOAL: 20},
         raw_state: bool = True
     ):
         # Set default GUI to None
@@ -55,6 +57,8 @@ class TextEnvironment(Environment):
         self._neighbor = neighbor
         # Set maximun steps for agent exploration
         self._max_steps = max_steps
+        # Set rewards per states
+        self._rewards = rewards
         # If True return only one dimensions for states
         self._raw_state = raw_state
         # Define text mapper values
@@ -132,8 +136,8 @@ class TextEnvironment(Environment):
     def run_step(self, action, *args, **kwargs):
         # Select agent
         agent = self._agents[kwargs['id']]
-        # Initialize reward as -1, done as False and wins as 0
-        reward = -1
+        # Initialize reward as EMPTY, done as False and wins as 0
+        reward = self._rewards[TextStates.EMPTY]
         done = False
         info = {'return_sum': reward, 'wins': 0}
         # Update and check max_steps
@@ -161,7 +165,7 @@ class TextEnvironment(Environment):
                 # Check if next state is GOAL
                 if pointer == TextStates.GOAL:
                     # Set GOAL reward value and done flag
-                    reward = 20
+                    reward = self._rewards[TextStates.GOAL]
                     done = True
                     info = {'return_sum': reward, 'wins': 1}
                 # Reset agent location
@@ -171,6 +175,9 @@ class TextEnvironment(Environment):
                 # Set agent on env if not reached GOAL
                 if not done:
                     self._env_exec[tuple(next_state)] = TextStates.AGENT
+            else:
+                # Set reward for WALL
+                reward = self._rewards[TextStates.WALL]
         # Render image
         self._render()
         # Return S, R, done, info
