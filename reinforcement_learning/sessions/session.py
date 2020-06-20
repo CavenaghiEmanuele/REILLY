@@ -11,19 +11,23 @@ from ..environments import Environment
 
 class Session(ABC):
 
-    __slots__ = ['_env', '_agents', '_start_step']
+    __slots__ = ['_env', '_agents', '_labels', '_start_step']
 
     _env: Environment
-    _agents: List[Agent]
+    _agents: Dict[int, Agent]
+    _labels: Dict[int, str]
     _start_step: int
 
     def __init__(self, env: Environment, start_step: int = 1):
-        self._env: Environment = env
-        self._agents: Dict[int, Agent] = {}
+        self._env = env
+        self._agents = {}
+        self._labels = {}
         self._start_step = start_step - 1
 
     def add_agent(self, agent: Agent):
-        self._agents[id(agent)] = agent
+        key = id(agent)
+        self._agents[key] = agent
+        self._labels[key] = 'ID: ' + str(key) + ', Params: ' + str(agent)
 
     def run(self, episodes: int, test_offset: int, test_samples: int, render: bool = False) -> pd.DataFrame:
         self._reset_env()
@@ -46,10 +50,6 @@ class Session(ABC):
         if render:
             self._env.render()
         out = []
-        labels = {
-            key: 'ID: ' + str(key) + ', Params: ' + str(value)
-            for key, value in self._agents.items()
-        }
         for sample in range(test_samples):
             step = 0
             agents = self._random_start()
@@ -64,7 +64,7 @@ class Session(ABC):
                         'test': test,
                         'sample': sample,
                         'step': step,
-                        'agent': labels[agent],
+                        'agent': self._labels[agent],
                         **info
                     })
                 step += 1
