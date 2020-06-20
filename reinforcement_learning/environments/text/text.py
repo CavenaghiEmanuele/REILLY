@@ -154,9 +154,17 @@ class TextEnvironment(Environment):
             # Update next state (-1, 1, 1, -1)
             next_state[i] += (-1) ** j
         if self._neighbor == TextNeighbor.MOORE:
-            raise NotImplementedError
+            i = (action + 2) % 4 > 0
+            j = (action + 2) % 8 < 4
+            k = action % 4 > 0
+            l = action > 4
+            # Update next state, N -> [-1, 0], NE -> [-1, +1], ...
+            next_state[0] += (-1) ** j * i
+            next_state[1] += (-1) ** l * k
         # Check if next state is valid
-        if next_state[i] >= 0 and next_state[i] < self._env_exec.shape[i]:
+        if next_state[0] >= 0 and next_state[1] >= 0 and \
+            next_state[0] < self._env_exec.shape[0] and \
+            next_state[1] < self._env_exec.shape[1]:
             # Set pointer to env location
             pointer = self._env_exec[tuple(next_state)]
             # Check if next state is not an AGENT nor a WALL
