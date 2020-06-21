@@ -8,11 +8,11 @@ class GymEnvironment(Environment):
     _env: Environment
 
     @property
-    def states_size(self) -> int:
+    def states(self) -> int:
         return self._env.observation_space.n
 
     @property
-    def actions_size(self) -> int:
+    def actions(self) -> int:
         return self._env.action_space.n
 
     def render(self):

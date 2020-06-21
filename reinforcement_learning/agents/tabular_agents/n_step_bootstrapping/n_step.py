@@ -8,15 +8,15 @@ from ....structures import ActionValue, Policy
 class NStep(Agent, object):
 
     def __init__(self, 
-                states_size:int,
-                actions_size:int, 
+                states:int,
+                actions:int, 
                 alpha:float, 
                 epsilon:float, 
                 gamma:float, 
                 n_step:int,
                 epsilon_decay:float = 1):
-        self._Q = ActionValue(states_size, actions_size)
-        self._policy = Policy(states_size, actions_size)
+        self._Q = ActionValue(states, actions)
+        self._policy = Policy(states, actions)
         self._alpha = alpha
         self._epsilon = epsilon
         self._gamma = gamma

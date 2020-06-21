@@ -20,7 +20,7 @@ class NStepExpectedSarsaApproximateAgent(NStepAppr, object):
         self._episode_ended = False
         self._states = [env.reset()]
         self._actions = [np.random.choice(
-            range(env.actions_size), p=self._e_greedy_policy(self._states[0], env.actions_size))]
+            range(env.actions), p=self._e_greedy_policy(self._states[0], env.actions))]
         self._rewards = [0.0]
         self.T = float('inf')
 
@@ -38,7 +38,7 @@ class NStepExpectedSarsaApproximateAgent(NStepAppr, object):
                 self.T = t + 1
             else:
                 self._actions.append(np.random.choice(
-                    range(env.actions_size), p=self._e_greedy_policy(n_S, env.actions_size)))
+                    range(env.actions), p=self._e_greedy_policy(n_S, env.actions)))
         
         if not kwargs['mode'] == "test":
             pi = t - self._n_step + 1
@@ -50,7 +50,7 @@ class NStepExpectedSarsaApproximateAgent(NStepAppr, object):
 
                 if pi + self._n_step < self.T:
                     G += np.power(self._gamma, self._n_step) * self._compute_expected_value(
-                        self._states[pi + self._n_step], env.actions_size)
+                        self._states[pi + self._n_step], env.actions)
 
                 self._Q_estimator.update(self._states[pi], self._actions[pi], G)
 

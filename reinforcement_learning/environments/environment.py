@@ -5,12 +5,12 @@ class Environment(ABC):
 
     @property
     @abstractmethod
-    def states_size(self) -> int:
+    def states(self) -> int:
         pass
 
     @property
     @abstractmethod
-    def actions_size(self) -> int:
+    def actions(self) -> int:
         pass
 
     @abstractmethod

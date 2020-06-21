@@ -88,11 +88,11 @@ class TextEnvironment(Environment):
                     self._env_init[i, j] = TextStates.EMPTY
 
     @property
-    def states_size(self) -> int:
+    def states(self) -> int:
         return np.prod(self._env_init.shape)
 
     @property
-    def actions_size(self) -> int:
+    def actions(self) -> int:
         return self._neighbor
 
     def _render(self) -> None:

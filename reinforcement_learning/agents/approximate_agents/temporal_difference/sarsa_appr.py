@@ -19,7 +19,7 @@ class SarsaApproximateAgent(TemporalDiffernceAppr, object):
         self._episode_ended = False
         self._S = env.reset(*args, **kwargs)
         self._A = np.random.choice(
-            range(env.actions_size), p=self._e_greedy_policy(self._S, env.actions_size))
+            range(env.actions), p=self._e_greedy_policy(self._S, env.actions))
 
     def run_step(self, env: Environment, *args, **kwargs) -> Tuple:
         n_S, R, self._episode_ended, info = env.run_step(self._A, **kwargs)
@@ -28,8 +28,8 @@ class SarsaApproximateAgent(TemporalDiffernceAppr, object):
             self._Q_estimator.update(self._S, self._A, R)
             return (n_S, R, self._episode_ended, info)
 
-        n_A = np.random.choice(range(env.actions_size),
-                               p=self._e_greedy_policy(n_S, env.actions_size))
+        n_A = np.random.choice(range(env.actions),
+                               p=self._e_greedy_policy(n_S, env.actions))
 
         if not kwargs['mode'] == "test":
             G = R + (self._gamma * self._Q_estimator.predict(n_S, n_A))

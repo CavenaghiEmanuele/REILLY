@@ -5,8 +5,8 @@ def test_QLearning_agent():
     env = rl.Frozen_Lake4x4()
     session = rl.JointTrainSession(env)
     agent = rl.QLearningAgent(
-        states_size=env.states_size,
-        actions_size=env.actions_size,
+        states=env.states,
+        actions=env.actions,
         alpha=0.1,
         epsilon=0.03,
         gamma=0.99
@@ -21,8 +21,8 @@ def test_Sarsa_agent():
         env = rl.Frozen_Lake4x4()
         session = rl.JointTrainSession(env)
         agent = rl.SarsaAgent(
-            states_size=env.states_size,
-            actions_size=env.actions_size,
+            states=env.states,
+            actions=env.actions,
             alpha=0.1,
             epsilon=0.03,
             gamma=0.99
@@ -35,8 +35,8 @@ def test_Expected_Sarsa_agent():
     env = rl.Frozen_Lake4x4()
     session = rl.JointTrainSession(env)
     agent = rl.ExpectedSarsaAgent(
-        states_size=env.states_size,
-        actions_size=env.actions_size,
+        states=env.states,
+        actions=env.actions,
         alpha=0.1,
         epsilon=0.03,
         gamma=0.99

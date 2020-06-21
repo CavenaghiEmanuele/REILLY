@@ -19,7 +19,7 @@ class QLearningAgent(TemporalDifference, object):
         self._S = env.reset(*args, **kwargs)
 
     def run_step(self, env: Environment, *args, **kwargs) -> Tuple:
-        A = np.random.choice(range(env.actions_size), p=self._policy[self._S])
+        A = np.random.choice(range(env.actions), p=self._policy[self._S])
         n_S, R, self._episode_ended, info = env.run_step(A, **kwargs)
         
         if not kwargs['mode'] == "test":

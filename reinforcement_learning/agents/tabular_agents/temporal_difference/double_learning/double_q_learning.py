@@ -20,7 +20,7 @@ class DoubleQLearningAgent(DoubleTemporalDifference, object):
 
     def run_step(self, env: Environment, *args, **kwargs) -> Tuple:
         policy_average = (self._policy[self._S] + self._policy2[self._S]) / 2
-        A = np.random.choice(range(env.actions_size), p=policy_average)
+        A = np.random.choice(range(env.actions), p=policy_average)
         n_S, R, self._episode_ended, info = env.run_step(A, **kwargs)
 
         if not kwargs['mode'] == "test":

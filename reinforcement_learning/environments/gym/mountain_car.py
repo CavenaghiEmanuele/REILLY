@@ -10,7 +10,7 @@ class MountainCar(Environment):
         self.reset()
 
     @property
-    def states_size(self):
+    def states(self):
         '''
         Discretize the state space for tabular agents. One simple way in which
         this can be done is to round the first element of the state vector to
@@ -20,7 +20,7 @@ class MountainCar(Environment):
         return 285
 
     @property
-    def actions_size(self):
+    def actions(self):
         return self._env.action_space.n
 
     def render(self):

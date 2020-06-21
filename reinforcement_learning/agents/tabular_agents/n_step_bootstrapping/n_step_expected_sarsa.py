@@ -21,7 +21,7 @@ class NStepExpectedSarsaAgent(NStep, object):
         self._episode_ended = False
         self._states = [env.reset(*args, **kwargs)]
         self._actions = [np.random.choice(
-            range(env.actions_size), p=self._policy[self._states[0]])]
+            range(env.actions), p=self._policy[self._states[0]])]
         self._rewards = [0.0]
         self.T = float('inf')
 
@@ -37,7 +37,7 @@ class NStepExpectedSarsaAgent(NStep, object):
                 self.T = t + 1
             else:
                 self._actions.append(np.random.choice(
-                    range(env.actions_size), p=self._policy[n_S]))
+                    range(env.actions), p=self._policy[n_S]))
 
         if not kwargs['mode'] == "test":
             pi = t - self._n_step + 1

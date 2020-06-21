@@ -12,17 +12,17 @@ class MonteCarloAgent(Agent):
     __slots__ = ["_visit_update", "_policy_method", "_returns", '_episode_trajectory']
 
     def __init__(self,
-                 states_size: int,
-                 actions_size: int,
+                 states: int,
+                 actions: int,
                  epsilon: float,
                  gamma: float,
                  epsilon_decay: float = 1,
                  visit_update: str = "first",
                  policy_method: str = "on-policy"):
         # Basic attribute
-        self._Q = ActionValue(states_size, actions_size)
-        self._policy = Policy(states_size, actions_size)
-        self._returns = np.zeros(shape=(states_size, actions_size))
+        self._Q = ActionValue(states, actions)
+        self._policy = Policy(states, actions)
+        self._returns = np.zeros(shape=(states, actions))
         self._epsilon = epsilon
         self._gamma = gamma
         self._e_decay = epsilon_decay
@@ -87,7 +87,7 @@ class MonteCarloAgent(Agent):
 
     def run_step(self, env:Environment, *args, **kwargs) -> Tuple:
         # Select action according to policy distribution probability
-        A = np.random.choice(range(env.actions_size),
+        A = np.random.choice(range(env.actions),
                              p=self._policy[self._S])
         n_S, R, self._episode_ended, info = env.run_step(A, **kwargs)
         self._episode_trajectory.append((self._S, A, R))

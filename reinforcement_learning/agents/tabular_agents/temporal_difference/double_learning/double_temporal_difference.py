@@ -10,15 +10,15 @@ class DoubleTemporalDifference(TemporalDifference, object):
     __slots__ = ["_Q2", "_policy2"]
 
     def __init__(self, 
-                states_size:int, 
-                actions_size:int, 
+                states:int, 
+                actions:int, 
                 alpha:float, 
                 epsilon:float, 
                 gamma:float,
                 epsilon_decay:float = 1):
-        super().__init__(states_size, actions_size, alpha, epsilon, gamma, epsilon_decay)
-        self._Q2 = ActionValue(states_size, actions_size)
-        self._policy2 = Policy(states_size, actions_size)
+        super().__init__(states, actions, alpha, epsilon, gamma, epsilon_decay)
+        self._Q2 = ActionValue(states, actions)
+        self._policy2 = Policy(states, actions)
 
     def _update_policy(self, S: int, policy: Policy, Q: ActionValue) -> None:
         # Avoid choosing always the first move in case policy has the same value
