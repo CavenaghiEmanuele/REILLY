@@ -6,20 +6,26 @@ project(Telegraph   VERSION 0.0.1
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_compile_options(-Wall -Wextra -Werror -Wno-deprecated-copy -std=c++14 -O3 -shared -fPIC `python3 -m pybind11 --includes`)
+add_compile_options(-Wall -Wextra -pedantic)
+add_compile_options(-O3 -shared -std=c++14 -fPIC)
 
 add_compile_options(-fopenmp)
 add_link_options(-fopenmp)
 
 add_definitions(-DXTENSOR_USE_XSIMD -DXTENSOR_USE_OPENMP)
 
-include_directories("${CMAKE_SOURCE_DIR}/include")
+include_directories(include)
 
-include_directories("${CMAKE_SOURCE_DIR}/extern/xtl/include")
-include_directories("${CMAKE_SOURCE_DIR}/extern/xsimd/include")
-include_directories("${CMAKE_SOURCE_DIR}/extern/xtensor/include")
-include_directories("${CMAKE_SOURCE_DIR}/extern/pybind11/include")
-include_directories("${CMAKE_SOURCE_DIR}/extern/xtensor-python/include")
+include_directories(extern/xtl/include)
+include_directories(extern/xsimd/include)
+include_directories(extern/xtensor/include)
+include_directories(extern/pybind11/include)
+include_directories(extern/xtensor-python/include)
+
+set(PYBIND11_CPP_STANDARD -std=c++14)
+add_subdirectory(extern/pybind11)
+
+add_subdirectory(src)
 
 enable_testing()
 include(GoogleTest)
