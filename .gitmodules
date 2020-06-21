@@ -13,3 +13,6 @@
 [submodule "reinforcement_learning/backend/extern/pybind11"]
 	path = reinforcement_learning/backend/extern/pybind11
 	url = git@github.com:pybind/pybind11.git
+[submodule "reinforcement_learning/backend/extern/xtensor-python"]
+	path = reinforcement_learning/backend/extern/xtensor-python
+	url = git@github.com:xtensor-stack/xtensor-python.git
