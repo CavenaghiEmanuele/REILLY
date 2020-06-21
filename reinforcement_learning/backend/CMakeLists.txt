@@ -18,6 +18,7 @@ include_directories("${CMAKE_SOURCE_DIR}/include")
 include_directories("${CMAKE_SOURCE_DIR}/extern/xtl/include")
 include_directories("${CMAKE_SOURCE_DIR}/extern/xsimd/include")
 include_directories("${CMAKE_SOURCE_DIR}/extern/xtensor/include")
+include_directories("${CMAKE_SOURCE_DIR}/extern/pybind11/include")
 
 enable_testing()
 include(GoogleTest)
