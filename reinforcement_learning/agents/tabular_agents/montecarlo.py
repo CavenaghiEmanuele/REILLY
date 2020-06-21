@@ -91,7 +91,7 @@ class MonteCarloAgent(Agent):
                              p=self._policy[self._S])
         n_S, R, self._episode_ended, info = env.run_step(A, **kwargs)
         self._episode_trajectory.append((self._S, A, R))
-        if kwargs['mode'] == "test" and self._episode_ended:
+        if not kwargs['mode'] == "test" and self._episode_ended:
             self._update()
 
         self._S = n_S
