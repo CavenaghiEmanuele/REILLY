@@ -1,3 +1,5 @@
+from . import backend
+
 from .agents import (
     MonteCarloAgent,
     TemporalDifference, SarsaAgent, QLearningAgent, ExpectedSarsaAgent,
