@@ -25,7 +25,7 @@ class QEstimator():
 
     def __init__(self, alpha: float, feature_dims: int, num_tilings: int,
                  tiling_offset: List[float], tiles_size: List[float], 
-                 trace: bool = False, trace_type: str = "replacing"):
+                 have_trace: bool = False, trace_type: str = "replacing"):
 
         self._tile_coding = TileCoding(
             feature_dims, tiling_offset, tiles_size, num_tilings)
@@ -33,7 +33,7 @@ class QEstimator():
         # The learning rate alpha is scaled by number of tilings
         self._alpha = alpha / num_tilings
         self._weights = [defaultdict(lambda:0) for _ in range(num_tilings)]
-        self._have_trace = trace
+        self._have_trace = have_trace
         # If trace is True initialize traces
         if self._have_trace:
             self._traces = [defaultdict(lambda:0) for _ in range(num_tilings)]
@@ -92,7 +92,13 @@ class QEstimator():
         else:
             for i in range(self._num_tilings):
                 self._weights[i][features[i]] += self._alpha * delta
-
+                
+    def update_traces(self, gamma: float, lambd: float) -> None:
+        for i in range(self._num_tilings):
+            for key in self._traces[i]:
+                self._traces[i][key] *= gamma * lambd
+            
+        
     def reset_traces(self) -> None:
         """
         Resets the eligibility trace (must be done at the start of every epoch)
