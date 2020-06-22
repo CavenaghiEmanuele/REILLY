@@ -15,23 +15,29 @@ class QEstimator():
     _tile_coding: TileCoding
     _num_tilings: int
     _alpha: float
-    _weights: List[defaultdict]  # Every tiling have a separated list with its weights
-    _max_size: int
-    _have_trace: bool
+
+    # Every tiling have a separated list with its weights and (optionally) traces
+    _weights: List[defaultdict]
     _traces: np.array
+    _have_trace: bool
+
+    _trace_type: str  # accumulating or replacing
 
     def __init__(self, alpha: float, feature_dims: int, num_tilings: int,
-                 tiling_offset: List[float], tiles_size: List[float], max_size: int = 4096, trace: bool = False):
+                 tiling_offset: List[float], tiles_size: List[float], 
+                 trace: bool = False, trace_type: str = "replacing"):
 
-        self._tile_coding = TileCoding(feature_dims, tiling_offset, tiles_size, num_tilings)
+        self._tile_coding = TileCoding(
+            feature_dims, tiling_offset, tiles_size, num_tilings)
         self._num_tilings = num_tilings
         # The learning rate alpha is scaled by number of tilings
         self._alpha = alpha / num_tilings
         self._weights = [defaultdict(lambda:0) for _ in range(num_tilings)]
-        self._max_size = max_size
-        self._have_trace = trace  # If trace is True initialize traces
+        self._have_trace = trace
+        # If trace is True initialize traces
         if self._have_trace:
-            self._traces = np.zeros(max_size)
+            self._traces = [defaultdict(lambda:0) for _ in range(num_tilings)]
+            self._trace_type = trace_type
 
     def predict(self, state: List, action=None, number_action=None):
         """
@@ -74,22 +80,23 @@ class QEstimator():
         delta = target - estimation
 
         if self._have_trace:
-            # self.z[features] += 1  # Accumulating trace
-            self.z[features] = 1  # Replacing trace
-            self.weights += self.alpha * delta * self.z
+            for i in range(self._num_tilings):
+                if self._trace_type == "replacing":
+                    self._traces[i][features[i]] = 1  # Replacing trace
+                elif self._trace_type == "accumulating":
+                    self._traces[i][features[i]] += 1  # Accumulating trace
+
+                self._weights[i][features[i]] += self._alpha * \
+                    delta * self._traces[i][features[i]]
+
         else:
             for i in range(self._num_tilings):
                 self._weights[i][features[i]] += self._alpha * delta
 
-    def reset(self, traces_only=False):
+    def reset_traces(self) -> None:
         """
-        Resets the eligibility trace (must be done at the start of every epoch) and optionally the
-        weight vector (if we want to restart training from scratch).
+        Resets the eligibility trace (must be done at the start of every epoch)
         """
-        if traces_only:
-            assert self._have_trace, 'q-value estimator has no traces to reset.'
-            self._traces = np.zeros(self._max_size)
-        else:
-            if self._have_trace:
-                self._traces = np.zeros(self._max_size)
-            self._weights = [defaultdict(lambda:0) for _ in range(self._num_tilings)]
+        if self._have_trace:
+            self._traces = [defaultdict(lambda:0)
+                            for _ in range(self._num_tilings)]
