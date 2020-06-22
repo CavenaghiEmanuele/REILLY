@@ -25,6 +25,11 @@ Agent::Agent(const Agent &other)
 
 Agent::~Agent() {}
 
+inline size_t Agent::argmaxQs(const ActionValue &Qs, size_t state) {
+    xt::xtensor<float, 1> row = xt::row(Qs, state);
+    return xt::random::choice(xt::ravel_indices(xt::argwhere(xt::equal(row, xt::amax(row))), row.shape()), 1)(0);
+}
+
 size_t Agent::get_action() {
     xt::xtensor<float, 1> weights = xt::row(pi, state);
     std::discrete_distribution<size_t> distribution(weights.cbegin(), weights.cend());

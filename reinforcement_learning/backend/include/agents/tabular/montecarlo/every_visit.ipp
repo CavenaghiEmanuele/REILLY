@@ -45,7 +45,7 @@ void MonteCarloEveryVisit::control() {
         Q_star = (G - Q(t->state, t->action)) / returns(t->state, t->action);
         Q(t->state, t->action) += Q_star;
         // Select greedy action, ties broken arbitrarily
-        a_star = xt::argmax(xt::row(Q, t->state))();
+        a_star = argmaxQs(Q, t->state);
         // Update policy
         for (size_t a = 0; a < pi.shape(1); a++) {
             if (a == a_star)
