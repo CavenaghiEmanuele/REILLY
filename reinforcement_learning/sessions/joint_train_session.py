@@ -14,7 +14,7 @@ class JointTrainSession(Session):
     def _run_train(self) -> None:
         self._reset_env()
         step = 0
-        agents = self._random_start()
+        agents = self._random_start(step)
                 
         while len(agents) > 0:
             shuffle(agents)
@@ -24,6 +24,5 @@ class JointTrainSession(Session):
                 if done:
                     agents.remove(agent)
             step += 1
-            if self._start_step > 0:
-                self._start_step -= 1
-                agents = list(set(agents) + set(self._random_start()))
+            if self._start_step - step >= 0:
+                agents = list(set(agents) | set(self._random_start(step)))

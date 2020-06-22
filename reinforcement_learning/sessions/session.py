@@ -52,7 +52,7 @@ class Session(ABC):
         out = []
         for sample in range(test_samples):
             step = 0
-            agents = self._random_start()
+            agents = self._random_start(step)
             while len(agents) > 0:
                 shuffle(agents)
                 for agent in agents[::]:
@@ -68,9 +68,8 @@ class Session(ABC):
                         **info
                     })
                 step += 1
-                if self._start_step > 0:
-                    self._start_step -= 1
-                    agents = list(set(agents) + set(self._random_start()))
+                if self._start_step - step >= 0:
+                    agents = list(set(agents) | set(self._random_start(step)))
             self._reset_env()
         return pd.DataFrame(out)
 
@@ -78,9 +77,9 @@ class Session(ABC):
         for key, agent in self._agents.items():
             agent.reset(self._env, id=key)
 
-    def _random_start(self) -> List:
+    def _random_start(self, step) -> List:
         return [
             agent
             for agent in self._agents.keys()
-            if randint(0, self._start_step) == 0
+            if randint(0, self._start_step - step) == 0
         ]
