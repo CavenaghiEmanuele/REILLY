@@ -2,7 +2,6 @@ import numpy as np
 from typing import List
 
 from ...agent import Agent
-from ....structures import ActionValue, Policy
 from ..q_estimator import QEstimator
 
 
