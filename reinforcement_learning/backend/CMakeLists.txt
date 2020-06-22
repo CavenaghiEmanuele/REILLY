@@ -10,10 +10,7 @@ add_compile_options(-Wall -Wextra -pedantic)
 add_compile_options(-O3 -shared -std=c++14 -fPIC)
 add_compile_options(-Wno-unused-but-set-parameter)
 
-add_compile_options(-fopenmp)
-add_link_options(-fopenmp)
-
-add_definitions(-DXTENSOR_USE_XSIMD -DXTENSOR_USE_OPENMP)
+add_definitions(-DXTENSOR_USE_XSIMD)
 
 include_directories(include)
 
