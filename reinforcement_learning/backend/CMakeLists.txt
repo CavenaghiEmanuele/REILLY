@@ -6,22 +6,41 @@ project(Telegraph   VERSION 0.0.1
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_compile_options(-Wall -Wextra -Werror -pedantic)
-add_compile_options(-O3 -shared -std=c++14 -fPIC)
+add_compile_options(-Wall -Wextra -pedantic)
 add_compile_options(-Wno-unused-but-set-parameter)
+add_compile_options(-O3 -march=native -shared -std=c++14 -fPIC)
 
 add_definitions(-DXTENSOR_USE_XSIMD)
 
 include_directories(include)
 
+set(xtl extern/xtl CACHE STRING "" FORCE)
+set(xsimd extern/xsimd CACHE STRING "" FORCE)
+set(xtensor extern/xtensor CACHE STRING "" FORCE)
+
+add_subdirectory(extern/xtl)
 include_directories(extern/xtl/include)
+
+add_subdirectory(extern/xsimd)
 include_directories(extern/xsimd/include)
+
+add_subdirectory(extern/xtensor)
 include_directories(extern/xtensor/include)
-include_directories(extern/pybind11/include)
-include_directories(extern/xtensor-python/include)
 
 set(PYBIND11_CPP_STANDARD -std=c++14)
 add_subdirectory(extern/pybind11)
+include_directories(extern/pybind11/include)
+
+# add_subdirectory(extern/xtensor-python)
+include_directories(extern/xtensor-python/include)
+
+add_library(xtensor::use_xsimd INTERFACE IMPORTED)
+target_link_libraries(xtensor::use_xsimd INTERFACE xsimd)
+target_compile_definitions(xtensor::use_xsimd INTERFACE XTENSOR_USE_XSIMD)
+
+add_library(xtensor::optimize INTERFACE IMPORTED)
+target_link_libraries(xtensor::optimize INTERFACE xtensor)
+target_compile_definitions(xtensor::optimize INTERFACE XTENSOR_OPTIMIZE)
 
 add_subdirectory(src)
 
