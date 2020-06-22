@@ -33,19 +33,23 @@ MonteCarloFirstVisit &MonteCarloFirstVisit::operator=(const MonteCarloFirstVisit
 MonteCarloFirstVisit::~MonteCarloFirstVisit() {}
 
 void MonteCarloFirstVisit::control() {
-    float G = 0;
+    size_t a_star = 0;
+    float G = 0, Q_star = 0;
     Trajectory::reverse_iterator t;
     // For each step of episode, t = T-1, T-2, ..., 0
-    for (t = trajectory.rbegin(); t != trajectory.rend(); t++) {
+    for (t = trajectory.rbegin(); t != trajectory.rend(); ++t) {
         G = gamma * G + t->reward;
         // Unless the pair St, At appears in S0, A0, ..., St-1, At-1
-        if (std::find(trajectory.begin(), t.base(), *t) == t.base()) {
+        Trajectory::iterator end = (t+1).base();
+        if (std::find(trajectory.begin(), end, *t) == end) {
             // Append G to Returns(St, At)
             returns(t->state, t->action) += 1;
             // Incremental update of Average(Returns(St, At))
-            Q(t->state, t->action) += (G - Q(t->state, t->action)) / returns(t->state, t->action);
+            Q_star = (G - Q(t->state, t->action)) / returns(t->state, t->action);
+            Q(t->state, t->action) += Q_star;
             // Select greedy action, ties broken arbitrarily
-            size_t a_star = xt::random::choice(xt::argmax(xt::row(Q, t->state)), 1)(0);
+            a_star = xt::argmax(xt::row(Q, t->state))();
+            // Update policy
             for (size_t a = 0; a < pi.shape(1); a++) {
                 if (a == a_star)
                     pi(t->state, a) = 1 - epsilon + epsilon / actions;

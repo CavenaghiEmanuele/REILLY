@@ -24,7 +24,7 @@ class MonteCarlo : public Agent {
         }
     };
 
-    using Trajectory = std::list<Point>;
+    using Trajectory = std::vector<Point>;
 
     Trajectory trajectory;
     xt::xtensor<float, 2> returns;

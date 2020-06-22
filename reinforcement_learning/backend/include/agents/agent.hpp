@@ -7,6 +7,7 @@
 #include <iostream>
 #include <random>
 #include <string>
+#include <xtensor/xio.hpp>
 #include <xtensor/xrandom.hpp>
 #include <xtensor/xsort.hpp>
 #include <xtensor/xtensor.hpp>
