@@ -8,7 +8,7 @@ from ..q_estimator import QEstimator
 
 class NStepAppr(Agent, object):
 
-    __slots__ = ["_Q_estimator"]
+    __slots__ = ["_Q_estimator", '_states', '_actions', '_rewards', 'T']
 
     def __init__(self,
                  alpha: float,

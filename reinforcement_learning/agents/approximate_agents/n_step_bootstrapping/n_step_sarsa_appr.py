@@ -7,8 +7,6 @@ from .n_step_appr import NStepAppr
 
 class NStepSarsaApproximateAgent(NStepAppr, object):
 
-    __slots__ = ['_states', '_actions', '_rewards', 'T']
-
     def __repr__(self):
         return "n-step Sarsa Appr: " + "alpha=" + str(self._alpha) + \
             ", gamma=" + str(self._gamma) + \
