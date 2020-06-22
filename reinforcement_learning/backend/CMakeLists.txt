@@ -6,7 +6,7 @@ project(Telegraph   VERSION 0.0.1
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_compile_options(-Wall -Wextra -pedantic)
+add_compile_options(-Wall -Wextra -Werror -pedantic)
 add_compile_options(-O3 -shared -std=c++14 -fPIC)
 add_compile_options(-Wno-unused-but-set-parameter)
 
