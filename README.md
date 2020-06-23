@@ -18,11 +18,11 @@
 
 ### Temporal Difference
 
-| Name           | On-Policy | Off-Policy |  Python  | C/C++ |
-| -------------- | :-------: | :--------: | :------: | :---: |
-| Sarsa          | &#x2705;  |            | &#x2705; |       |
-| Q-learning     |    :x:    |  &#x2705;  | &#x2705; |       |
-| Expected Sarsa | &#x2705;  |            | &#x2705; |       |
+| Name           | On-Policy | Off-Policy |  Python  |  C/C++   |
+| -------------- | :-------: | :--------: | :------: | :------: |
+| Sarsa          | &#x2705;  |            | &#x2705; | &#x2705; |
+| Q-learning     |    :x:    |  &#x2705;  | &#x2705; | &#x2705; |
+| Expected Sarsa | &#x2705;  |            | &#x2705; | &#x2705; |
 
 ### Double Temporal Difference
 

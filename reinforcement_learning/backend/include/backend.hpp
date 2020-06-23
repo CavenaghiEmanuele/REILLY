@@ -7,3 +7,4 @@
 #include <agents/tabular/temporal_difference/temporal_difference.ipp>
 #include <agents/tabular/temporal_difference/sarsa.ipp>
 #include <agents/tabular/temporal_difference/q_learning.ipp>
+#include <agents/tabular/temporal_difference/expected_sarsa.ipp>
