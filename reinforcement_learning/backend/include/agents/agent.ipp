@@ -27,29 +27,30 @@ Agent::Agent(const Agent &other)
 
 Agent::~Agent() {}
 
-inline size_t Agent::argmaxQs(const ActionValue &Qs, size_t state) {
-    xt::xtensor<float, 1> row = xt::row(Qs, state);
+inline size_t Agent::argmaxQs(const ActionValue &Qs, size_t s) {
+    xt::xtensor<float, 1> row = xt::row(Qs, s);
     return xt::random::choice(xt::ravel_indices(xt::argwhere(xt::equal(row, xt::amax(row))), row.shape()), 1)(0);
 }
 
-inline void Agent::policy_update(size_t state) {
+inline size_t Agent::select_action(size_t s) {
+    xt::xtensor<float, 1> weights = xt::row(pi, s);
+    std::discrete_distribution<size_t> distribution(weights.cbegin(), weights.cend());
+    return distribution(generator);
+}
+
+inline void Agent::policy_update(size_t s) {
     // Select greedy action, ties broken arbitrarily
-    size_t a_star = argmaxQs(Q, state);
+    size_t a_star = argmaxQs(Q, s);
     // Update policy
     for (size_t a = 0; a < pi.shape(1); a++) {
         if (a == a_star)
-            pi(state, a) = 1 - epsilon + epsilon / actions;
+            pi(s, a) = 1 - epsilon + epsilon / actions;
         else
-            pi(state, a) = epsilon / actions;
+            pi(s, a) = epsilon / actions;
     }
 }
 
-size_t Agent::get_action() {
-    xt::xtensor<float, 1> weights = xt::row(pi, state);
-    std::discrete_distribution<size_t> distribution(weights.cbegin(), weights.cend());
-    action = distribution(generator);
-    return action;
-}
+size_t Agent::get_action() { return action; }
 
 std::string Agent::__repr__() {
     int status;

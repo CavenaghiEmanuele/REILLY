@@ -33,7 +33,7 @@ MonteCarloEveryVisit &MonteCarloEveryVisit::operator=(const MonteCarloEveryVisit
 MonteCarloEveryVisit::~MonteCarloEveryVisit() {}
 
 void MonteCarloEveryVisit::control() {
-    float G = 0, Q_star = 0;
+    float G = 0;
     Trajectory::reverse_iterator t;
     // For each step of episode, t = T-1, T-2, ..., 0
     for (t = trajectory.rbegin(); t != trajectory.rend(); ++t) {
@@ -41,8 +41,7 @@ void MonteCarloEveryVisit::control() {
         // Append G to Returns(St, At)
         returns(t->state, t->action) += 1;
         // Incremental update of Average(Returns(St, At))
-        Q_star = (G - Q(t->state, t->action)) / returns(t->state, t->action);
-        Q(t->state, t->action) += Q_star;
+        Q(t->state, t->action) += (G - Q(t->state, t->action)) / returns(t->state, t->action);
         // Update policy
         policy_update(t->state);
     }

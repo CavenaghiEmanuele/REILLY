@@ -41,6 +41,7 @@ class Agent {
     std::minstd_rand generator;
 
     inline size_t argmaxQs(const ActionValue &Q, size_t state);
+    inline virtual size_t select_action(size_t state);
     inline virtual void policy_update(size_t state);
 
    public:

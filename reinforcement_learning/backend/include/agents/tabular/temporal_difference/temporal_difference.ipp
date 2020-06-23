@@ -13,13 +13,9 @@ TemporalDifference::TemporalDifference(const TemporalDifference &other) : Agent(
 
 TemporalDifference::~TemporalDifference() {}
 
-size_t TemporalDifference::get_action() {
-    return action;
-}
-
 void TemporalDifference::reset(size_t init_state) {
     state = init_state;
-    action = Agent::get_action();
+    action = select_action(state);
 }
 
 std::string TemporalDifference::__repr__() {

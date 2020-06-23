@@ -15,6 +15,11 @@ MonteCarlo::MonteCarlo(const MonteCarlo &other) : Agent(other), trajectory(other
 
 MonteCarlo::~MonteCarlo() {}
 
+size_t MonteCarlo::get_action() {
+    action = select_action(state);
+    return action;
+}
+
 void MonteCarlo::reset(size_t init_state) {
     state = init_state;
     trajectory.clear();

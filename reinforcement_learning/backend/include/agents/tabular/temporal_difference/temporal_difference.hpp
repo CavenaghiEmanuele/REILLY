@@ -15,7 +15,6 @@ class TemporalDifference : public Agent {
     TemporalDifference(const TemporalDifference &other);
     virtual ~TemporalDifference();
 
-    size_t get_action();
     void reset(size_t init_state);
 
     std::string __repr__();
