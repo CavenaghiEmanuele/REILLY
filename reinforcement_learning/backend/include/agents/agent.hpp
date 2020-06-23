@@ -4,10 +4,10 @@
 
 #include <algorithm>
 #include <cstddef>
+#include <ctime>
 #include <iostream>
 #include <random>
 #include <string>
-#include <ctime>
 #include <xtensor/xio.hpp>
 #include <xtensor/xrandom.hpp>
 #include <xtensor/xsort.hpp>
