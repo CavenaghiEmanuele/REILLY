@@ -10,4 +10,4 @@
 #include <agents/tabular/temporal_difference/expected_sarsa.ipp>
 #include <agents/tabular/temporal_difference/double_learning/double_temporal_difference.ipp>
 #include <agents/tabular/temporal_difference/double_learning/double_sarsa.ipp>
-
+#include <agents/tabular/temporal_difference/double_learning/double_q_learning.ipp>

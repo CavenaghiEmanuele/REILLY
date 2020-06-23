@@ -105,4 +105,15 @@ PYBIND11_MODULE(backend, m) {
             py::arg("gamma"),
             py::arg("epsilon_decay") = 1
         );
+    
+    py::class_<DoubleQLearning, DoubleTemporalDifference>(m, "DoubleQLearning")
+        .def(
+            py::init<size_t, size_t, float, float, float, float>(),
+            py::arg("states"),
+            py::arg("actions"),
+            py::arg("alpha"),
+            py::arg("epsilon"),
+            py::arg("gamma"),
+            py::arg("epsilon_decay") = 1
+        );
 }
