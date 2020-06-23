@@ -29,6 +29,15 @@ class PyMonteCarlo : public MonteCarlo {
     void control() override { PYBIND11_OVERLOAD_PURE(void, MonteCarlo, control, ); }
 };
 
+class PyTemporalDifference : public TemporalDifference {
+   public:
+    using TemporalDifference::TemporalDifference;
+
+    void update(size_t next_state, float reward, bool done, bool training) override {
+        PYBIND11_OVERLOAD_PURE(void, Agent, update, next_state, reward, done, training);
+    }
+};
+
 }  // namespace agents
 
 }  // namespace rl

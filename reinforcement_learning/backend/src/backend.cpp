@@ -26,14 +26,6 @@ PYBIND11_MODULE(backend, m) {
     m.doc() = "Reinforcement Learning Library Backend";
 
     py::class_<Agent, PyAgent>(m, "Agent")
-        .def(
-            py::init<size_t, size_t, float, float, float>(),
-            py::arg("states"),
-            py::arg("actions"),
-            py::arg("epsilon"),
-            py::arg("gamma"),
-            py::arg("epsilon_decay") = 1
-        )
         .def("get_action", &Agent::get_action)
         .def("reset", &Agent::reset, py::arg("init_state"))
         .def("update", &Agent::update,
@@ -44,15 +36,7 @@ PYBIND11_MODULE(backend, m) {
         )
         .def("__repr__", &Agent::__repr__);
     
-    py::class_<MonteCarlo, PyMonteCarlo, Agent>(m, "MonteCarlo")
-        .def(
-            py::init<size_t, size_t, float, float, float>(),
-            py::arg("states"),
-            py::arg("actions"),
-            py::arg("epsilon"),
-            py::arg("gamma"),
-            py::arg("epsilon_decay") = 1
-        );
+    py::class_<MonteCarlo, PyMonteCarlo, Agent>(m, "MonteCarlo");
 
     py::class_<MonteCarloFirstVisit, MonteCarlo>(m, "MonteCarloFirstVisit")
         .def(
@@ -69,6 +53,19 @@ PYBIND11_MODULE(backend, m) {
             py::init<size_t, size_t, float, float, float>(),
             py::arg("states"),
             py::arg("actions"),
+            py::arg("epsilon"),
+            py::arg("gamma"),
+            py::arg("epsilon_decay") = 1
+        );
+    
+    py::class_<TemporalDifference, PyTemporalDifference, Agent>(m, "TemporalDifference");
+    
+    py::class_<Sarsa, TemporalDifference>(m, "Sarsa")
+        .def(
+            py::init<size_t, size_t, float, float, float, float>(),
+            py::arg("states"),
+            py::arg("actions"),
+            py::arg("alpha"),
             py::arg("epsilon"),
             py::arg("gamma"),
             py::arg("epsilon_decay") = 1
