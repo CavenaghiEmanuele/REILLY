@@ -24,3 +24,42 @@ def test_MonteCarloEveryVisit():
     )
     session.add_agent(agent)
     session.run(100, 10, 10)
+
+def test_Sarsa():
+    env = rl.Frozen_Lake4x4()
+    session = rl.PyBindSession(env)
+    agent = rl.backend.Sarsa(
+        states=env.states,
+        actions=env.actions,
+        alpha=0.1,
+        epsilon=0.03,
+        gamma=0.99
+    )
+    session.add_agent(agent)
+    session.run(100, 10, 10)
+
+def test_QLearning():
+    env = rl.Frozen_Lake4x4()
+    session = rl.PyBindSession(env)
+    agent = rl.backend.QLearning(
+        states=env.states,
+        actions=env.actions,
+        alpha=0.1,
+        epsilon=0.03,
+        gamma=0.99
+    )
+    session.add_agent(agent)
+    session.run(100, 10, 10)
+
+def test_ExpectedSarsa():
+    env = rl.Frozen_Lake4x4()
+    session = rl.PyBindSession(env)
+    agent = rl.backend.ExpectedSarsa(
+        states=env.states,
+        actions=env.actions,
+        alpha=0.1,
+        epsilon=0.03,
+        gamma=0.99
+    )
+    session.add_agent(agent)
+    session.run(100, 10, 10)
