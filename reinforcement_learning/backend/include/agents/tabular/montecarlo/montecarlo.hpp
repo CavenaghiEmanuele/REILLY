@@ -36,7 +36,6 @@ class MonteCarlo : public Agent {
     MonteCarlo(const MonteCarlo &other);
     virtual ~MonteCarlo();
 
-    size_t get_action();
     void reset(size_t init_state);
     void update(size_t next_state, float reward, bool done, bool training);
 };

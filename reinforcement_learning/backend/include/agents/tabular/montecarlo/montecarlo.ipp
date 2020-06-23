@@ -15,23 +15,22 @@ MonteCarlo::MonteCarlo(const MonteCarlo &other) : Agent(other), trajectory(other
 
 MonteCarlo::~MonteCarlo() {}
 
-size_t MonteCarlo::get_action() {
-    action = select_action(state);
-    return action;
-}
-
 void MonteCarlo::reset(size_t init_state) {
     state = init_state;
+    action = select_action(state);
     trajectory.clear();
 }
 
 void MonteCarlo::update(size_t next_state, float reward, bool done, bool training) {
     trajectory.push_back({state, action, reward});
+    
     if (done) {
         if (training) control();
         epsilon *= epsilon_decay;
     }
+
     state = next_state;
+    action = select_action(state);
 }
 
 }  // namespace agents
