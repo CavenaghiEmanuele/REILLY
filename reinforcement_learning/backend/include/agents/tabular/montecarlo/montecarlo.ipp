@@ -7,7 +7,7 @@ namespace rl {
 namespace agents {
 
 MonteCarlo::MonteCarlo(size_t states, size_t actions, float epsilon, float gamma, float epsilon_decay)
-    : Agent(states, actions, epsilon, epsilon_decay, gamma) {
+    : Agent(states, actions, 0, epsilon, epsilon_decay, gamma) {
     returns = xt::zeros<float>({states, actions});
 }
 
