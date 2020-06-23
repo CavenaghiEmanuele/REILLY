@@ -26,11 +26,11 @@
 
 ### Double Temporal Difference
 
-| Name                  | On-Policy | Off-Policy |  Python  | C/C++ |
-| --------------------- | :-------: | :--------: | :------: | :---: |
-| Double Sarsa          | &#x2705;  |            | &#x2705; |       |
-| Double Q-learning     |    :x:    |  &#x2705;  | &#x2705; |       |
-| Double Expected Sarsa | &#x2705;  |            | &#x2705; |       |
+| Name                  | On-Policy | Off-Policy |  Python  |  C/C++   |
+| --------------------- | :-------: | :--------: | :------: | :------: |
+| Double Sarsa          | &#x2705;  |            | &#x2705; | &#x2705; |
+| Double Q-learning     |    :x:    |  &#x2705;  | &#x2705; | &#x2705; |
+| Double Expected Sarsa | &#x2705;  |            | &#x2705; | &#x2705; |
 
 ### n-step Bootstrapping
 

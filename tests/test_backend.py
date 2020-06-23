@@ -63,3 +63,42 @@ def test_ExpectedSarsa():
     )
     session.add_agent(agent)
     session.run(100, 10, 10)
+
+def test_DoubleSarsa():
+    env = rl.Frozen_Lake4x4()
+    session = rl.PyBindSession(env)
+    agent = rl.backend.DoubleSarsa(
+        states=env.states,
+        actions=env.actions,
+        alpha=0.1,
+        epsilon=0.03,
+        gamma=0.99
+    )
+    session.add_agent(agent)
+    session.run(100, 10, 10)
+
+def test_DoubleQLearning():
+    env = rl.Frozen_Lake4x4()
+    session = rl.PyBindSession(env)
+    agent = rl.backend.DoubleQLearning(
+        states=env.states,
+        actions=env.actions,
+        alpha=0.1,
+        epsilon=0.03,
+        gamma=0.99
+    )
+    session.add_agent(agent)
+    session.run(100, 10, 10)
+
+def test_DoubleExpectedSarsa():
+    env = rl.Frozen_Lake4x4()
+    session = rl.PyBindSession(env)
+    agent = rl.backend.DoubleExpectedSarsa(
+        states=env.states,
+        actions=env.actions,
+        alpha=0.1,
+        epsilon=0.03,
+        gamma=0.99
+    )
+    session.add_agent(agent)
+    session.run(100, 10, 10)

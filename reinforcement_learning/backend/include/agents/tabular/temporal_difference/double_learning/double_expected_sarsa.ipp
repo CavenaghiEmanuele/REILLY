@@ -1,19 +1,19 @@
 #pragma once
 
-#include "double_q_learning.hpp"
+#include "double_expected_sarsa.hpp"
 
 namespace rl {
 
 namespace agents {
 
-DoubleQLearning::DoubleQLearning(size_t states, size_t actions, float alpha, float epsilon, float gamma, float epsilon_decay)
+DoubleExpectedSarsa::DoubleExpectedSarsa(size_t states, size_t actions, float alpha, float epsilon, float gamma, float epsilon_decay)
     : DoubleTemporalDifference(states, actions, alpha, epsilon, gamma, epsilon_decay) {}
 
-DoubleQLearning::DoubleQLearning(const DoubleQLearning &other) : DoubleTemporalDifference(other) {}
+DoubleExpectedSarsa::DoubleExpectedSarsa(const DoubleExpectedSarsa &other) : DoubleTemporalDifference(other) {}
 
-DoubleQLearning &DoubleQLearning::operator=(const DoubleQLearning &other) {
+DoubleExpectedSarsa &DoubleExpectedSarsa::operator=(const DoubleExpectedSarsa &other) {
     if (this != &other) {
-        DoubleQLearning tmp(other);
+        DoubleExpectedSarsa tmp(other);
         std::swap(tmp.states, states);
         std::swap(tmp.actions, actions);
         std::swap(tmp.Q, Q);
@@ -30,15 +30,18 @@ DoubleQLearning &DoubleQLearning::operator=(const DoubleQLearning &other) {
     return *this;
 }
 
-DoubleQLearning::~DoubleQLearning() {}
+DoubleExpectedSarsa::~DoubleExpectedSarsa() {}
 
-void DoubleQLearning::update(size_t next_state, float reward, bool done, bool training) {
+void DoubleExpectedSarsa::update(size_t next_state, float reward, bool done, bool training) {
     if (training) {
+        float expected_value = 0;
         if (xt::random::binomial<int>({1})(0) == 0) {
-            Q(state, action) += alpha * (reward + gamma * xt::amax(xt::row(Q2, next_state))() - Q(state, action));
+            expected_value = xt::sum(xt::row(pi2, next_state) * xt::row(Q2, next_state))();
+            Q(state, action) += alpha * (reward + gamma * expected_value - Q(state, action));
             policy_update(Q, pi, state);
         } else {
-            Q2(state, action) += alpha * (reward + gamma * xt::amax(xt::row(Q, next_state))() - Q2(state, action));
+            expected_value = xt::sum(xt::row(pi, next_state) * xt::row(Q, next_state))();
+            Q2(state, action) += alpha * (reward + gamma * expected_value - Q2(state, action));
             policy_update(Q2, pi2, state);
         }
     }
