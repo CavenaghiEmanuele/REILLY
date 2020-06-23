@@ -37,7 +37,7 @@ void QLearning::update(size_t next_state, float reward, bool done, bool training
     }
 
     state = next_state;
-    action = select_action(state);
+    action = select_action(next_state);
 
     if (done) epsilon *= epsilon_decay;
 }

@@ -30,7 +30,7 @@ void MonteCarlo::update(size_t next_state, float reward, bool done, bool trainin
     }
 
     state = next_state;
-    action = select_action(state);
+    action = select_action(next_state);
 }
 
 }  // namespace agents
