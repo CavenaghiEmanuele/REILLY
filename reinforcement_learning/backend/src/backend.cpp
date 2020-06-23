@@ -27,10 +27,9 @@ PYBIND11_MODULE(backend, m) {
 
     py::class_<Agent, PyAgent>(m, "Agent")
         .def(
-            py::init<size_t, size_t, float, float, float, float>(),
+            py::init<size_t, size_t, float, float, float>(),
             py::arg("states"),
             py::arg("actions"),
-            py::arg("alpha"),
             py::arg("epsilon"),
             py::arg("gamma"),
             py::arg("epsilon_decay") = 1

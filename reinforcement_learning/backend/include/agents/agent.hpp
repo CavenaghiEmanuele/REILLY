@@ -29,7 +29,6 @@ class Agent {
     ActionValue Q;
     Policy pi;
 
-    float alpha;
     float epsilon;
     float gamma;
 
@@ -44,7 +43,7 @@ class Agent {
     inline virtual void policy_update(size_t state);
 
    public:
-    Agent(size_t states, size_t actions, float alpha, float epsilon, float gamma, float epsilon_decay = 1);
+    Agent(size_t states, size_t actions, float epsilon, float gamma, float epsilon_decay = 1);
     Agent(const Agent &other);
     virtual ~Agent();
 

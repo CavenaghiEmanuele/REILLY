@@ -32,7 +32,7 @@ class MonteCarlo : public Agent {
     virtual void control() = 0;
 
    public:
-    MonteCarlo(size_t states, size_t actions, float epsilon, float epsilon_decay, float gamma);
+    MonteCarlo(size_t states, size_t actions, float epsilon, float gamma, float epsilon_decay);
     MonteCarlo(const MonteCarlo &other);
     virtual ~MonteCarlo();
 
