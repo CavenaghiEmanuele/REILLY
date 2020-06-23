@@ -46,7 +46,7 @@ void MonteCarloFirstVisit::control() {
             // Incremental update of Average(Returns(St, At))
             Q(t->state, t->action) += (G - Q(t->state, t->action)) / returns(t->state, t->action);
             // Update policy
-            policy_update(t->state);
+            policy_update(Q, pi, t->state);
         }
     }
 }

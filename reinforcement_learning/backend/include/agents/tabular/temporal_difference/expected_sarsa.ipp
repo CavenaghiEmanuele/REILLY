@@ -34,11 +34,11 @@ void ExpectedSarsa::update(size_t next_state, float reward, bool done, bool trai
     if (training) {
         float expected_value = xt::sum(xt::row(pi, next_state) * xt::row(Q, next_state))();
         Q(state, action) += alpha * (reward + gamma * expected_value - Q(state, action));
-        policy_update(state);
+        policy_update(Q, pi, state);
     }
 
     state = next_state;
-    action = select_action(next_state);
+    action = select_action(pi, next_state);
 
     if (done) epsilon *= epsilon_decay;
 }

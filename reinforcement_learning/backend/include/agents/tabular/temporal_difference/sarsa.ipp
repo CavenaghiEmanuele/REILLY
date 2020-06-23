@@ -31,11 +31,11 @@ Sarsa &Sarsa::operator=(const Sarsa &other) {
 Sarsa::~Sarsa() {}
 
 void Sarsa::update(size_t next_state, float reward, bool done, bool training) {
-    size_t next_action = select_action(next_state);
+    size_t next_action = select_action(pi, next_state);
 
     if (training) {
         Q(state, action) += alpha * (reward + gamma * Q(next_state, next_action) - Q(state, action));
-        policy_update(state);
+        policy_update(Q, pi, state);
     }
 
     state = next_state;

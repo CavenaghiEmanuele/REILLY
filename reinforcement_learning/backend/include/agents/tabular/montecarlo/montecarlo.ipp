@@ -17,7 +17,7 @@ MonteCarlo::~MonteCarlo() {}
 
 void MonteCarlo::reset(size_t init_state) {
     state = init_state;
-    action = select_action(state);
+    action = select_action(pi, state);
     trajectory.clear();
 }
 
@@ -30,7 +30,7 @@ void MonteCarlo::update(size_t next_state, float reward, bool done, bool trainin
     }
 
     state = next_state;
-    action = select_action(next_state);
+    action = select_action(pi, next_state);
 }
 
 }  // namespace agents

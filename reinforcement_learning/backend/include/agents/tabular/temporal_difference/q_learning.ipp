@@ -33,11 +33,11 @@ QLearning::~QLearning() {}
 void QLearning::update(size_t next_state, float reward, bool done, bool training) {
     if (training) {
         Q(state, action) += alpha * (reward + gamma * xt::amax(xt::row(Q, next_state))() - Q(state, action));
-        policy_update(state);
+        policy_update(Q, pi, state);
     }
 
     state = next_state;
-    action = select_action(next_state);
+    action = select_action(pi, next_state);
 
     if (done) epsilon *= epsilon_decay;
 }
