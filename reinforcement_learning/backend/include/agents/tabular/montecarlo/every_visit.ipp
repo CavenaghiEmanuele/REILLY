@@ -33,7 +33,6 @@ MonteCarloEveryVisit &MonteCarloEveryVisit::operator=(const MonteCarloEveryVisit
 MonteCarloEveryVisit::~MonteCarloEveryVisit() {}
 
 void MonteCarloEveryVisit::control() {
-    size_t a_star = 0;
     float G = 0, Q_star = 0;
     Trajectory::reverse_iterator t;
     // For each step of episode, t = T-1, T-2, ..., 0
@@ -44,15 +43,8 @@ void MonteCarloEveryVisit::control() {
         // Incremental update of Average(Returns(St, At))
         Q_star = (G - Q(t->state, t->action)) / returns(t->state, t->action);
         Q(t->state, t->action) += Q_star;
-        // Select greedy action, ties broken arbitrarily
-        a_star = argmaxQs(Q, t->state);
         // Update policy
-        for (size_t a = 0; a < pi.shape(1); a++) {
-            if (a == a_star)
-                pi(t->state, a) = 1 - epsilon + epsilon / actions;
-            else
-                pi(t->state, a) = epsilon / actions;
-        }
+        policy_update(t->state);
     }
 }
 

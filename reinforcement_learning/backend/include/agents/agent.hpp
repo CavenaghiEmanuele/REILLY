@@ -40,6 +40,7 @@ class Agent {
     std::default_random_engine generator;
 
     inline size_t argmaxQs(const ActionValue &Q, size_t state);
+    inline virtual void policy_update(size_t state);
 
    public:
     Agent(size_t states, size_t actions, float epsilon, float gamma, float epsilon_decay = 1);

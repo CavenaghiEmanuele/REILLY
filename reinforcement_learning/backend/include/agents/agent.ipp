@@ -30,6 +30,18 @@ inline size_t Agent::argmaxQs(const ActionValue &Qs, size_t state) {
     return xt::random::choice(xt::ravel_indices(xt::argwhere(xt::equal(row, xt::amax(row))), row.shape()), 1)(0);
 }
 
+inline void Agent::policy_update(size_t state) {
+    // Select greedy action, ties broken arbitrarily
+    size_t a_star = argmaxQs(Q, state);
+    // Update policy
+    for (size_t a = 0; a < pi.shape(1); a++) {
+        if (a == a_star)
+            pi(state, a) = 1 - epsilon + epsilon / actions;
+        else
+            pi(state, a) = epsilon / actions;
+    }
+}
+
 size_t Agent::get_action() {
     xt::xtensor<float, 1> weights = xt::row(pi, state);
     std::discrete_distribution<size_t> distribution(weights.cbegin(), weights.cend());
