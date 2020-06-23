@@ -7,6 +7,7 @@
 #include <iostream>
 #include <random>
 #include <string>
+#include <ctime>
 #include <xtensor/xio.hpp>
 #include <xtensor/xrandom.hpp>
 #include <xtensor/xsort.hpp>
@@ -37,7 +38,7 @@ class Agent {
     size_t state;
     size_t action;
 
-    std::default_random_engine generator;
+    std::minstd_rand generator;
 
     inline size_t argmaxQs(const ActionValue &Q, size_t state);
     inline virtual void policy_update(size_t state);

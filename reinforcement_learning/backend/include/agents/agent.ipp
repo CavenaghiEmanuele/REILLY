@@ -8,6 +8,8 @@ namespace agents {
 
 Agent::Agent(size_t states, size_t actions, float epsilon, float gamma, float epsilon_decay)
     : states(states), actions(actions), epsilon(epsilon), gamma(gamma), epsilon_decay(epsilon_decay) {
+    generator.seed(time(NULL));
+    xt::random::seed(time(NULL));
     Q = xt::zeros<float>({states, actions});
     pi = xt::ones<float>({states, actions}) / actions;
 }
