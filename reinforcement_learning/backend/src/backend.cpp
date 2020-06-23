@@ -92,4 +92,6 @@ PYBIND11_MODULE(backend, m) {
             py::arg("gamma"),
             py::arg("epsilon_decay") = 1
         );
+    
+    py::class_<DoubleTemporalDifference, PyDoubleTemporalDifference, TemporalDifference>(m, "DoubleTemporalDifference");
 }
