@@ -94,4 +94,15 @@ PYBIND11_MODULE(backend, m) {
         );
     
     py::class_<DoubleTemporalDifference, PyDoubleTemporalDifference, TemporalDifference>(m, "DoubleTemporalDifference");
+
+    py::class_<DoubleSarsa, DoubleTemporalDifference>(m, "DoubleSarsa")
+        .def(
+            py::init<size_t, size_t, float, float, float, float>(),
+            py::arg("states"),
+            py::arg("actions"),
+            py::arg("alpha"),
+            py::arg("epsilon"),
+            py::arg("gamma"),
+            py::arg("epsilon_decay") = 1
+        );
 }
