@@ -126,4 +126,6 @@ PYBIND11_MODULE(backend, m) {
             py::arg("gamma"),
             py::arg("epsilon_decay") = 1
         );
+    
+    py::class_<NStep, PyNStep, TemporalDifference>(m, "NStep");
 }
