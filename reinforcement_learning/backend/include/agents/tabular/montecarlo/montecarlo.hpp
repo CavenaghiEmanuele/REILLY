@@ -10,22 +10,6 @@ namespace agents {
 
 class MonteCarlo : public Agent {
    protected:
-    struct Point {
-        size_t state;
-        size_t action;
-        float reward;
-
-        bool operator==(const Point &other) {
-            return state == other.state && action == other.action;
-        }
-
-        bool operator!=(const Point &other) {
-            return !(this == &other); 
-        }
-    };
-
-    using Trajectory = std::vector<Point>;
-
     Trajectory trajectory;
     xt::xtensor<float, 2> returns;
 

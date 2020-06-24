@@ -9,7 +9,7 @@ namespace agents {
 NStep::NStep(size_t states, size_t actions, float alpha, float epsilon, float gamma, size_t n_step, float epsilon_decay)
     : TemporalDifference(states, actions, alpha, epsilon, gamma, epsilon_decay), n_step(n_step) {}
 
-NStep::NStep(const NStep &other) : TemporalDifference(other), n_step(other.n_step) {}
+NStep::NStep(const NStep &other) : TemporalDifference(other), n_step(other.n_step), trajectory(other.trajectory) {}
 
 NStep::~NStep() {}
 

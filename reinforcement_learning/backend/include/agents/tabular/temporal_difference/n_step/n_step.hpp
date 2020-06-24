@@ -10,6 +10,8 @@ class NStep : public TemporalDifference {
    protected:
     size_t n_step;
 
+    Trajectory trajectory;
+
    public:
     NStep(size_t states, size_t actions, float alpha, float epsilon, float gamma, size_t n_step, float epsilon_decay);
     NStep(const NStep &other);
