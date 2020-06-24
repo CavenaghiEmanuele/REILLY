@@ -32,9 +32,10 @@ DoubleSarsa &DoubleSarsa::operator=(const DoubleSarsa &other) {
 
 DoubleSarsa::~DoubleSarsa() {}
 
-void DoubleSarsa::update(size_t next_state, float reward, bool done, bool training) {
+void DoubleSarsa::update(size_t next_state, float reward, bool done, py::kwargs kwargs) {
     size_t next_action = select_action(pi + pi2, next_state);
 
+    bool training = py::cast<bool>(kwargs["training"]);
     if (training) {
         if (xt::random::binomial<int>({1})(0) == 0) {
             Q(state, action) += alpha * (reward + gamma * Q2(next_state, next_action) - Q(state, action));

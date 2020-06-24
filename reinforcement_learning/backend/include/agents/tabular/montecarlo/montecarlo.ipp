@@ -21,11 +21,11 @@ void MonteCarlo::reset(size_t init_state) {
     trajectory.clear();
 }
 
-void MonteCarlo::update(size_t next_state, float reward, bool done, bool training) {
+void MonteCarlo::update(size_t next_state, float reward, bool done, py::kwargs kwargs) {
     trajectory.push_back({state, action, reward});
     
     if (done) {
-        if (training) control();
+        if (py::cast<bool>(kwargs["training"])) control();
         epsilon *= epsilon_decay;
     }
 

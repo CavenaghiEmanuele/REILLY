@@ -32,7 +32,8 @@ DoubleQLearning &DoubleQLearning::operator=(const DoubleQLearning &other) {
 
 DoubleQLearning::~DoubleQLearning() {}
 
-void DoubleQLearning::update(size_t next_state, float reward, bool done, bool training) {
+void DoubleQLearning::update(size_t next_state, float reward, bool done, py::kwargs kwargs) {
+    bool training = py::cast<bool>(kwargs["training"]);
     if (training) {
         if (xt::random::binomial<int>({1})(0) == 0) {
             Q(state, action) += alpha * (reward + gamma * xt::amax(xt::row(Q2, next_state))() - Q(state, action));

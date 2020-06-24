@@ -1,6 +1,8 @@
 #pragma once
 
 #include <cxxabi.h>
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
 
 #include <algorithm>
 #include <cstddef>
@@ -13,6 +15,8 @@
 #include <xtensor/xsort.hpp>
 #include <xtensor/xtensor.hpp>
 #include <xtensor/xview.hpp>
+
+namespace py = pybind11;
 
 namespace rl {
 
@@ -51,7 +55,7 @@ class Agent {
 
     virtual size_t get_action();
     virtual void reset(size_t init_state) = 0;
-    virtual void update(size_t next_state, float reward, bool done, bool training = true) = 0;
+    virtual void update(size_t next_state, float reward, bool done, py::kwargs kwargs) = 0;
 
     virtual std::string __repr__();
 };

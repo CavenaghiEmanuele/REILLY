@@ -30,7 +30,8 @@ QLearning &QLearning::operator=(const QLearning &other) {
 
 QLearning::~QLearning() {}
 
-void QLearning::update(size_t next_state, float reward, bool done, bool training) {
+void QLearning::update(size_t next_state, float reward, bool done, py::kwargs kwargs) {
+    bool training = py::cast<bool>(kwargs["training"]);
     if (training) {
         Q(state, action) += alpha * (reward + gamma * xt::amax(xt::row(Q, next_state))() - Q(state, action));
         policy_update(Q, pi, state);

@@ -30,7 +30,8 @@ ExpectedSarsa &ExpectedSarsa::operator=(const ExpectedSarsa &other) {
 
 ExpectedSarsa::~ExpectedSarsa() {}
 
-void ExpectedSarsa::update(size_t next_state, float reward, bool done, bool training) {
+void ExpectedSarsa::update(size_t next_state, float reward, bool done, py::kwargs kwargs) {
+    bool training = py::cast<bool>(kwargs["training"]);
     if (training) {
         float expected_value = xt::sum(xt::row(pi, next_state) * xt::row(Q, next_state))();
         Q(state, action) += alpha * (reward + gamma * expected_value - Q(state, action));

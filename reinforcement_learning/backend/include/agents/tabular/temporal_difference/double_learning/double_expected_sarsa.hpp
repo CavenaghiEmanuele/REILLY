@@ -13,7 +13,7 @@ class DoubleExpectedSarsa : public DoubleTemporalDifference {
     DoubleExpectedSarsa &operator=(const DoubleExpectedSarsa &other);
     virtual ~DoubleExpectedSarsa();
 
-    void update(size_t next_state, float reward, bool done, bool training);
+    void update(size_t next_state, float reward, bool done, py::kwargs kwargs);
 };
 
 }  // namespace agents

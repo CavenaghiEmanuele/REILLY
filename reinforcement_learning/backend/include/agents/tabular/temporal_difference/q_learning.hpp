@@ -13,7 +13,7 @@ class QLearning : public TemporalDifference {
     QLearning &operator=(const QLearning &other);
     virtual ~QLearning();
 
-    void update(size_t next_state, float reward, bool done, bool training);
+    void update(size_t next_state, float reward, bool done, py::kwargs kwargs);
 };
 
 }  // namespace agents

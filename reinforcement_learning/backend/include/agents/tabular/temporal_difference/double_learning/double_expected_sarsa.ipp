@@ -32,7 +32,8 @@ DoubleExpectedSarsa &DoubleExpectedSarsa::operator=(const DoubleExpectedSarsa &o
 
 DoubleExpectedSarsa::~DoubleExpectedSarsa() {}
 
-void DoubleExpectedSarsa::update(size_t next_state, float reward, bool done, bool training) {
+void DoubleExpectedSarsa::update(size_t next_state, float reward, bool done, py::kwargs kwargs) {
+    bool training = py::cast<bool>(kwargs["training"]);
     if (training) {
         float expected_value = 0;
         if (xt::random::binomial<int>({1})(0) == 0) {

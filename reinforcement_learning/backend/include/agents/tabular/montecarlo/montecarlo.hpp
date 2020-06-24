@@ -37,7 +37,7 @@ class MonteCarlo : public Agent {
     virtual ~MonteCarlo();
 
     void reset(size_t init_state);
-    void update(size_t next_state, float reward, bool done, bool training);
+    void update(size_t next_state, float reward, bool done, py::kwargs kwargs);
 };
 
 }  // namespace agents

@@ -51,7 +51,7 @@ class PyBindSession:
             for agent in agents[::]:
                 action = self._agents[agent].get_action()
                 next_state, reward, done, info = self._env.run_step(action, id=agent, mode="train")
-                self._agents[agent].update(next_state, reward, done, training=True)
+                self._agents[agent].update(next_state, reward, done, training=True, t=step)
                 if done:
                     agents.remove(agent)
             step += 1
@@ -72,7 +72,7 @@ class PyBindSession:
                 for agent in agents[::]:
                     action = self._agents[agent].get_action()
                     next_state, reward, done, info = self._env.run_step(action, id=agent, mode="test")
-                    self._agents[agent].update(next_state, reward, done, training=False)
+                    self._agents[agent].update(next_state, reward, done, training=False, t=step)
                     if done:
                         agents.remove(agent)
                     out.append({

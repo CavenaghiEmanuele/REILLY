@@ -30,9 +30,10 @@ Sarsa &Sarsa::operator=(const Sarsa &other) {
 
 Sarsa::~Sarsa() {}
 
-void Sarsa::update(size_t next_state, float reward, bool done, bool training) {
+void Sarsa::update(size_t next_state, float reward, bool done, py::kwargs kwargs) {
     size_t next_action = select_action(pi, next_state);
 
+    bool training = py::cast<bool>(kwargs["training"]);
     if (training) {
         Q(state, action) += alpha * (reward + gamma * Q(next_state, next_action) - Q(state, action));
         policy_update(Q, pi, state);

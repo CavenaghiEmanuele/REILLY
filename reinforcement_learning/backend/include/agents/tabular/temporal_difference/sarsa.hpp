@@ -13,7 +13,7 @@ class Sarsa : public TemporalDifference {
     Sarsa &operator=(const Sarsa &other);
     virtual ~Sarsa();
 
-    void update(size_t next_state, float reward, bool done, bool training);
+    void update(size_t next_state, float reward, bool done, py::kwargs kwargs);
 };
 
 }  // namespace agents

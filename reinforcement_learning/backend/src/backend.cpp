@@ -31,8 +31,7 @@ PYBIND11_MODULE(backend, m) {
         .def("update", &Agent::update,
             py::arg("next_state"),
             py::arg("reward"),
-            py::arg("done"),
-            py::arg("training")
+            py::arg("done")
         )
         .def("__repr__", &Agent::__repr__);
     

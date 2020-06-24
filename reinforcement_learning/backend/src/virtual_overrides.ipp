@@ -14,8 +14,8 @@ class PyAgent : public Agent {
     
     size_t get_action() override { PYBIND11_OVERLOAD(size_t, Agent, get_action, ); }
     void reset(size_t init_state) override { PYBIND11_OVERLOAD_PURE(void, Agent, reset, init_state); }
-    void update(size_t next_state, float reward, bool done, bool training) override {
-        PYBIND11_OVERLOAD_PURE(void, Agent, update, next_state, reward, done, training);
+    void update(size_t next_state, float reward, bool done, py::kwargs kwargs) override {
+        PYBIND11_OVERLOAD_PURE(void, Agent, update, next_state, reward, done, kwargs);
     }
     std::string __repr__() override {
         PYBIND11_OVERLOAD(std::string, Agent, __repr__, );
@@ -33,8 +33,8 @@ class PyTemporalDifference : public TemporalDifference {
    public:
     using TemporalDifference::TemporalDifference;
 
-    void update(size_t next_state, float reward, bool done, bool training) override {
-        PYBIND11_OVERLOAD_PURE(void, Agent, update, next_state, reward, done, training);
+    void update(size_t next_state, float reward, bool done, py::kwargs kwargs) override {
+        PYBIND11_OVERLOAD_PURE(void, Agent, update, next_state, reward, done, kwargs);
     }
 };
 
@@ -42,8 +42,8 @@ class PyDoubleTemporalDifference : public DoubleTemporalDifference {
    public:
     using DoubleTemporalDifference::DoubleTemporalDifference;
 
-    void update(size_t next_state, float reward, bool done, bool training) override {
-        PYBIND11_OVERLOAD_PURE(void, Agent, update, next_state, reward, done, training);
+    void update(size_t next_state, float reward, bool done, py::kwargs kwargs) override {
+        PYBIND11_OVERLOAD_PURE(void, Agent, update, next_state, reward, done, kwargs);
     }
 };
 
