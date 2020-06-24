@@ -15,9 +15,9 @@ class TemporalDifference : public Agent {
     TemporalDifference(const TemporalDifference &other);
     virtual ~TemporalDifference();
 
-    void reset(size_t init_state);
+    virtual void reset(size_t init_state);
 
-    std::string __repr__();
+    virtual std::string __repr__();
 };
 
 }  // namespace agents
