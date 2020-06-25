@@ -34,12 +34,12 @@
 
 ### n-step Bootstrapping
 
-| Name                         | On-Policy | Off-Policy |  Python  | C/C++ |
-| ---------------------------- | :-------: | :--------: | :------: | :---: |
-| n-step Sarsa                 | &#x2705;  |            | &#x2705; |       |
-| n-step Expected Sarsa        | &#x2705;  |            | &#x2705; |       |
-| n-step Tree Backup Algorithm |           |            |          |       |
-| n-step Q$(\sigma)$           |           |            |          |       |
+| Name                         | On-Policy | Off-Policy |  Python  |  C/C++   |
+| ---------------------------- | :-------: | :--------: | :------: | :------: |
+| n-step Sarsa                 | &#x2705;  |            | &#x2705; | &#x2705; |
+| n-step Expected Sarsa        | &#x2705;  |            | &#x2705; | &#x2705; |
+| n-step Tree Backup Algorithm |           |            |          |          |
+| n-step Q$(\sigma)$           |           |            |          |          |
 
 
 ### Planning and learning with tabular
