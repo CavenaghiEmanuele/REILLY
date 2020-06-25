@@ -18,7 +18,6 @@ class SarsaLambdaAgent(Agent, object):
                  feature_dims: int,
                  num_tilings: int,
                  epsilon_decay: float = 1,
-                 have_trace: bool = False,
                  trace_type: str = "replacing",
                  tiling_offset: List = None,
                  tiles_size: List = None):
@@ -33,7 +32,7 @@ class SarsaLambdaAgent(Agent, object):
                                        num_tilings=num_tilings,
                                        tiling_offset=tiling_offset,
                                        tiles_size=tiles_size,
-                                       have_trace=have_trace,
+                                       have_trace=True,
                                        trace_type=trace_type
                                        )
 
