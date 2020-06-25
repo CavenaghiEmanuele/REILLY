@@ -6,7 +6,7 @@ namespace rl {
 
 namespace agents {
 
-NStepExpectedSarsa::NStepExpectedSarsa(size_t states, size_t actions, float alpha, float epsilon, float gamma, int64_t n_step, float epsilon_decay)
+NStepExpectedSarsa::NStepExpectedSarsa(size_t states, size_t actions, float alpha, float epsilon, float gamma, size_t n_step, float epsilon_decay)
     : NStep(states, actions, alpha, epsilon, gamma, n_step, epsilon_decay) {}
 
 NStepExpectedSarsa::NStepExpectedSarsa(const NStepExpectedSarsa &other) : NStep(other) {}
@@ -34,7 +34,7 @@ NStepExpectedSarsa &NStepExpectedSarsa::operator=(const NStepExpectedSarsa &othe
 NStepExpectedSarsa::~NStepExpectedSarsa() {}
 
 void NStepExpectedSarsa::update(size_t next_state, float reward, bool done, py::kwargs kwargs) {
-    int64_t t = py::cast<int64_t>(kwargs["t"]);
+    size_t t = py::cast<size_t>(kwargs["t"]);
     bool training = py::cast<bool>(kwargs["training"]);
 
     size_t next_action = select_action(pi, next_state);
@@ -45,12 +45,12 @@ void NStepExpectedSarsa::update(size_t next_state, float reward, bool done, py::
     }
 
     if (training) {
-        int64_t tau = t - n_step + 1;
-        if (tau >= 0) {
+        size_t tau = t - n_step + 1;
+        if (t + 1 >= n_step) {  // Like tau >= 0, but for unsigned numbers
             Point *p;
             float G = 0;
             
-            for (int64_t i = tau + 1; i < std::min(T, tau + n_step); i++) {
+            for (size_t i = tau + 1; i < std::min(T, tau + n_step); i++) {
                 G += std::pow(gamma, i - tau - 1) * trajectory[i].reward;
             }
 

@@ -131,7 +131,7 @@ PYBIND11_MODULE(backend, m) {
 
     py::class_<NStepSarsa, NStep>(m, "NStepSarsa")
         .def(
-            py::init<size_t, size_t, float, float, float, int64_t, float>(),
+            py::init<size_t, size_t, float, float, float, size_t, float>(),
             py::arg("states"),
             py::arg("actions"),
             py::arg("alpha"),
@@ -143,7 +143,7 @@ PYBIND11_MODULE(backend, m) {
     
     py::class_<NStepExpectedSarsa, NStep>(m, "NStepExpectedSarsa")
         .def(
-            py::init<size_t, size_t, float, float, float, int64_t, float>(),
+            py::init<size_t, size_t, float, float, float, size_t, float>(),
             py::arg("states"),
             py::arg("actions"),
             py::arg("alpha"),

@@ -6,7 +6,7 @@ namespace rl {
 
 namespace agents {
 
-NStep::NStep(size_t states, size_t actions, float alpha, float epsilon, float gamma, int64_t n_step, float epsilon_decay)
+NStep::NStep(size_t states, size_t actions, float alpha, float epsilon, float gamma, size_t n_step, float epsilon_decay)
     : TemporalDifference(states, actions, alpha, epsilon, gamma, epsilon_decay), n_step(n_step) {}
 
 NStep::NStep(const NStep &other) : TemporalDifference(other), n_step(other.n_step), T(other.T), trajectory(other.trajectory) {}
@@ -17,7 +17,7 @@ void NStep::reset(size_t init_state) {
     state = init_state;
     action = select_action(pi, state);
 
-    T = std::numeric_limits<int64_t>::max();
+    T = (size_t) -1;
     
     trajectory.clear();
     trajectory.push_back({state, action, 0});
