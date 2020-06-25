@@ -55,7 +55,7 @@ void NStepSarsa::update(size_t next_state, float reward, bool done, py::kwargs k
             }
 
             if (tau + n_step < T) {
-                p = &trajectory[tau + n_step - 1];
+                p = &trajectory[tau + n_step];
                 G += std::pow(gamma, n_step) * Q(p->state, p->action);
             }
 
