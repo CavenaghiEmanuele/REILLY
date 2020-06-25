@@ -13,3 +13,4 @@
 #include <agents/tabular/temporal_difference/double_learning/double_q_learning.ipp>
 #include <agents/tabular/temporal_difference/double_learning/double_expected_sarsa.ipp>
 #include <agents/tabular/temporal_difference/n_step/n_step.ipp>
+#include <agents/tabular/temporal_difference/n_step/n_step_sarsa.ipp>

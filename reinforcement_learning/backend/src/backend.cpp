@@ -128,4 +128,16 @@ PYBIND11_MODULE(backend, m) {
         );
     
     py::class_<NStep, PyNStep, TemporalDifference>(m, "NStep");
+
+    py::class_<NStepSarsa, NStep>(m, "NStepSarsa")
+        .def(
+            py::init<size_t, size_t, float, float, float, int64_t, float>(),
+            py::arg("states"),
+            py::arg("actions"),
+            py::arg("alpha"),
+            py::arg("epsilon"),
+            py::arg("gamma"),
+            py::arg("n_step"),
+            py::arg("epsilon_decay") = 1
+        );
 }

@@ -8,13 +8,13 @@ namespace agents {
 
 class NStep : public TemporalDifference {
    protected:
-    size_t n_step;
-    size_t T;
+    int64_t n_step;
+    int64_t T;
 
     Trajectory trajectory;
 
    public:
-    NStep(size_t states, size_t actions, float alpha, float epsilon, float gamma, size_t n_step, float epsilon_decay);
+    NStep(size_t states, size_t actions, float alpha, float epsilon, float gamma, int64_t n_step, float epsilon_decay);
     NStep(const NStep &other);
     virtual ~NStep();
 
