@@ -20,4 +20,3 @@ def corridor():
         neighbor=rl.TextNeighbor.NEUMANN,
         raw_state=True
     )
-    

@@ -3,7 +3,6 @@ import reinforcement_learning as rl
 
 def rotated_corridor():
 
-    # 25 x 8
     ENV = rl.TextEnvironment(
         text=   "                 ###X#####\n" +
                 "                ##  X#####\n" +
@@ -35,4 +34,3 @@ def rotated_corridor():
         neighbor=rl.TextNeighbor.NEUMANN,
         raw_state=True
     )
-    
