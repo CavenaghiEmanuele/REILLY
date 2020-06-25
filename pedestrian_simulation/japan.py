@@ -3,7 +3,7 @@ import reinforcement_learning as rl
 
 def japan():
 
-    ENV = rl.TextEnvironment(
+    env = rl.TextEnvironment(
         text="##########XXXXXX###\n" +
              "#                 #\n" +
              "#                 #\n" +
@@ -37,6 +37,8 @@ def japan():
              "##########SSSSSS###",
 
         max_steps=100,
-        neighbor=rl.TextNeighbor.NEUMANN,
+        neighbor=rl.TextNeighbor.MOORE,
         raw_state=True
     )
+    
+    return env

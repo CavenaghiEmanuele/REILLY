@@ -3,7 +3,7 @@ import reinforcement_learning as rl
 
 def three_room():
 
-    ENV = rl.TextEnvironment(
+    env = rl.TextEnvironment(
         text=   " #####XXX#########XXX#########XXX##### \n" +
                 " #           #           #           # \n" +
                 " #           #           #           # \n" +
@@ -45,6 +45,8 @@ def three_room():
                 " #####XXX#########XXX#########XXX##### \n",
 
         max_steps=100,
-        neighbor=rl.TextNeighbor.NEUMANN,
+        neighbor=rl.TextNeighbor.MOORE,
         raw_state=True
     )
+    
+    return env

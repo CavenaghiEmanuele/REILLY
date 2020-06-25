@@ -1,5 +1,6 @@
-import os
-import sys
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
-import reinforcement_learning
+from .simulation import *
+from .corridor import *
+from .rotated_corridor import *
+from .T import *
+from .japan import *
+from .three_room import *
