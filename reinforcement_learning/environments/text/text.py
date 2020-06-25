@@ -6,6 +6,7 @@ from enum import IntEnum, auto, unique
 from random import choice
 from functools import reduce
 from typing import Dict, List
+from math import sqrt
 
 from ..environment import Environment
 
@@ -171,7 +172,7 @@ class TextEnvironment(Environment):
         # Initialize reward as EMPTY, done as False and wins as 0
         reward = self._rewards[TextStates.EMPTY]
         done = False
-        info = {'return_sum': reward, 'wins': 0}
+        info = {'return_sum': reward, 'wins': 0, 'time': 0.25, 'distance': 0}
         # Update and check max_steps
         agent['counter'] += 1
         if agent['counter'] == self._max_steps:
@@ -207,9 +208,14 @@ class TextEnvironment(Environment):
                     # Set GOAL reward value and done flag
                     reward = self._rewards[TextStates.GOAL]
                     done = True
-                    info = {'return_sum': reward, 'wins': 1}
+                    info = {'return_sum': reward, 
+                            'wins': 1,
+                            'time': 0.25, 
+                            'distance': 0}
                 # Reset agent location
                 self._env_exec[tuple(agent['location'])] = TextStates.EMPTY
+                # Add distance info
+                info['distance'] = self._distance(agent['location'], next_state, action)
                 # Update agent loaction
                 agent['location'] = next_state
                 # Set agent on env if not reached GOAL
@@ -224,6 +230,13 @@ class TextEnvironment(Environment):
         if not self._raw_state:
             return self._location_to_state(agent['location']), reward, done, info
         return agent['location'], reward, done, info
+
+    def _distance(self, old_state, new_state, action):       
+        if old_state == new_state:
+            return 0
+        if self._neighbor == TextNeighbor.NEUMANN or action % 2 == 0:
+            return 0.4
+        return 0.4 * sqrt(2)
 
     @property
     def probability_distribution(self):
