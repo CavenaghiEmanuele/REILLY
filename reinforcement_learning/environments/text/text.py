@@ -97,13 +97,7 @@ class TextEnvironment(Environment):
     def actions(self) -> int:
         return self._neighbor
 
-    def _render(self) -> None:
-        if self._gui is not None:
-            data = self._env_exec
-            data = np.interp(data, (data.min(), data.max()), (255, 0))
-            self._gui.append(data)
-
-    def render(self) -> None:
+    def heatmap(self) -> None:
         if self._gui is not None:
             # Cast from uint8 to float32
             self._gui = [
@@ -130,6 +124,21 @@ class TextEnvironment(Environment):
                 subsampling=0,
                 quality=100
             )
+        self._gui = []
+
+    def _render(self) -> None:
+        if self._gui is not None:
+            data = self._env_exec
+            data = np.interp(data, (data.min(), data.max()), (255, 0))
+            self._gui.append(data)
+
+    def render(self) -> None:
+        if self._gui is not None:
+            # Cast from uint8 to float32
+            self._gui = [
+                data.astype(np.float32)
+                for data in self._gui
+            ]
             # Build gif
             self._gui = [
                 Image.fromarray(data.astype(np.uint8), mode='L').convert('RGBA')
