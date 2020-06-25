@@ -71,7 +71,7 @@
 | Name | Python | C/C++ |
 | - | :-: | :-: |
 | Base implementation | ✅ |   |
-| With trace |   |   |
+| With trace | ✅|   |
 
 ### Temporal difference
 
@@ -96,7 +96,7 @@
 | - | :-: | :-: | :-: | :-: |
 | Accumulating Trace | ✅ |   | ✅ |   |
 | Replacing Trace | ✅ |   | ✅ |   |
-| Dutch Trace | ✅ |   | ✅ |   |
+| Dutch Trace |   |   |   |   |
 
 ### Eligibility Traces
 
@@ -105,7 +105,7 @@
 | :- | :-: | :- | :-: | :-: |
 | Temporal difference$(\lambda)$ |   |   |   |   |
 | True Online TD$(\lambda)$ |   |   |   |   |
-| Sarsa$(\lambda)$ |  ✅ |   | ✅  |   |
+| Sarsa$(\lambda)$ | ✅ |   | ✅ |   |
 | True Online Sarsa$(\lambda)$ |   |   |   |   |
 | Forward Sarsa$(\lambda)$ |   |   |   |   |
 | Watkins’s Q$(\lambda)$ |   |   |   |   |
