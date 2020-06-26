@@ -1,3 +1,4 @@
+import pandas as pd
 import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -25,7 +26,18 @@ def simulate(env, n_agents: int, start_step:int = 1):
 
     results = single_train_session.run(500, 50, 50)
     rl.plot(results)
-    
+
+def travelling_time(results):
+    groupby = results.drop(['return_sum', 'wins', 'time', 'distance'], axis=1).\
+        groupby(['test', 'sample', 'agent'])
+    arrival_time = groupby.max()
+    travelling_time = arrival_time - groupby.min()
+    scatter = pd.concat([arrival_time, travelling_time], axis=1, sort=False)
+    scatter.columns = ['arrival_time', 'travelling_time']
+    return [
+        tuple(row)
+        for _, row in scatter.iterrows()
+    ]
 
 if __name__ == "__main__":
     
