@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../temporal_difference.ipp"
+#include "../temporal_difference/temporal_difference.ipp"
 
 namespace rl {
 
