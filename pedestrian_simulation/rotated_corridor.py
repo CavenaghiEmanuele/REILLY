@@ -4,7 +4,7 @@ import reinforcement_learning as rl
 def rotated_corridor():
 
     env = rl.TextEnvironment(
-        text=   "                 ###X#####\n" +
+        text=   "                 ##X######\n" +
                 "                ##  X#####\n" +
                 "               ##    X####\n" +
                 "              ##      X###\n" +
