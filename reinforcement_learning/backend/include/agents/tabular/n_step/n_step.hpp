@@ -1,12 +1,12 @@
 #pragma once
 
-#include "../temporal_difference/temporal_difference.ipp"
+#include "../../agent.ipp"
 
 namespace rl {
 
 namespace agents {
 
-class NStep : public TemporalDifference {
+class NStep : public Agent {
    protected:
     size_t n_step;
     size_t T;

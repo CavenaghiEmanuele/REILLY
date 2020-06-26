@@ -7,7 +7,7 @@ namespace rl {
 namespace agents {
 
 MonteCarlo::MonteCarlo(size_t states, size_t actions, float epsilon, float gamma, float epsilon_decay)
-    : Agent(states, actions, epsilon, gamma, epsilon_decay) {
+    : Agent(states, actions, 0, epsilon, gamma, epsilon_decay) {
     returns = xt::zeros<float>({states, actions});
 }
 
@@ -31,6 +31,15 @@ void MonteCarlo::update(size_t next_state, float reward, bool done, py::kwargs k
 
     state = next_state;
     action = select_action(pi, next_state);
+}
+
+std::string MonteCarlo::__repr__() {
+    int status;
+    std::stringstream out;
+    char *demangled = abi::__cxa_demangle(typeid(*this).name(), 0, 0, &status);
+    out << "<" << demangled << "(epsilon=" << epsilon;
+    out << ", gamma=" << gamma << ", epsilon_decay=" << epsilon_decay << ")>";
+    return out.str();
 }
 
 }  // namespace agents

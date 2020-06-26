@@ -6,8 +6,7 @@ namespace rl {
 
 namespace agents {
 
-MonteCarloFirstVisit::MonteCarloFirstVisit(size_t states, size_t actions, float epsilon, float gamma,
-                                           float epsilon_decay)
+MonteCarloFirstVisit::MonteCarloFirstVisit(size_t states, size_t actions, float epsilon, float gamma, float epsilon_decay)
     : MonteCarlo(states, actions, epsilon, gamma, epsilon_decay) {}
 
 MonteCarloFirstVisit::MonteCarloFirstVisit(const MonteCarloFirstVisit &other) : MonteCarlo(other) {}
@@ -19,6 +18,7 @@ MonteCarloFirstVisit &MonteCarloFirstVisit::operator=(const MonteCarloFirstVisit
         std::swap(tmp.actions, actions);
         std::swap(tmp.Q, Q);
         std::swap(tmp.pi, pi);
+        std::swap(tmp.alpha, alpha);
         std::swap(tmp.epsilon, epsilon);
         std::swap(tmp.gamma, gamma);
         std::swap(tmp.epsilon_decay, epsilon_decay);

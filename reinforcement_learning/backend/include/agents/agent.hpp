@@ -11,6 +11,7 @@
 #include <iostream>
 #include <random>
 #include <string>
+#include <xtensor/xindex_view.hpp>
 #include <xtensor/xio.hpp>
 #include <xtensor/xrandom.hpp>
 #include <xtensor/xsort.hpp>
@@ -35,6 +36,7 @@ class Agent {
     ActionValue Q;
     Policy pi;
 
+    float alpha;
     float epsilon;
     float gamma;
 
@@ -61,7 +63,7 @@ class Agent {
     using Trajectory = std::vector<Point>;
 
    public:
-    Agent(size_t states, size_t actions, float epsilon, float gamma, float epsilon_decay = 1);
+    Agent(size_t states, size_t actions, float alpha, float epsilon, float gamma, float epsilon_decay = 1);
     Agent(const Agent &other);
     virtual ~Agent();
 

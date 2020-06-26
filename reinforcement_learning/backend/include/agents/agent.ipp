@@ -6,8 +6,8 @@ namespace rl {
 
 namespace agents {
 
-Agent::Agent(size_t states, size_t actions, float epsilon, float gamma, float epsilon_decay)
-    : states(states), actions(actions), epsilon(epsilon), gamma(gamma), epsilon_decay(epsilon_decay) {
+Agent::Agent(size_t states, size_t actions, float alpha, float epsilon, float gamma, float epsilon_decay)
+    : states(states), actions(actions), alpha(alpha), epsilon(epsilon), gamma(gamma), epsilon_decay(epsilon_decay) {
     generator.seed(time(NULL));
     xt::random::seed(time(NULL));
     Q = xt::zeros<float>({states, actions});
@@ -19,6 +19,7 @@ Agent::Agent(const Agent &other)
       actions(other.actions),
       Q(other.Q),
       pi(other.pi),
+      alpha(other.alpha),
       epsilon(other.epsilon),
       gamma(other.gamma),
       epsilon_decay(other.epsilon_decay),
@@ -56,7 +57,7 @@ std::string Agent::__repr__() {
     int status;
     std::stringstream out;
     char *demangled = abi::__cxa_demangle(typeid(*this).name(), 0, 0, &status);
-    out << "<" << demangled << "(epsilon=" << epsilon;
+    out << "<" << demangled << "(alpha=" << alpha << ", epsilon=" << epsilon;
     out << ", gamma=" << gamma << ", epsilon_decay=" << epsilon_decay << ")>";
     return out.str();
 }

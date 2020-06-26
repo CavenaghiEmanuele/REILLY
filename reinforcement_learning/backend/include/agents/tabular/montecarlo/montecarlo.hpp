@@ -22,6 +22,8 @@ class MonteCarlo : public Agent {
 
     void reset(size_t init_state);
     void update(size_t next_state, float reward, bool done, py::kwargs kwargs);
+
+    std::string __repr__();
 };
 
 }  // namespace agents

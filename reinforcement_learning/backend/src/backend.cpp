@@ -127,7 +127,7 @@ PYBIND11_MODULE(backend, m) {
             py::arg("epsilon_decay") = 1
         );
     
-    py::class_<NStep, PyNStep, TemporalDifference>(m, "NStep");
+    py::class_<NStep, PyNStep, Agent>(m, "NStep");
 
     py::class_<NStepSarsa, NStep>(m, "NStepSarsa")
         .def(
