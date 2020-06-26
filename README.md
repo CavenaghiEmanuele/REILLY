@@ -48,7 +48,7 @@
 | ----------------------------------------- | :----: | :------: |
 | Random-sample one-step tabular Q-planning |        | &#x2705; |
 | Tabular Dyna-Q                            |        | &#x2705; |
-| Tabular Dyna-Q+                           |        |          |
+| Tabular Dyna-Q+                           |        | &#x2705; |
 | Prioritized sweeping                      |        |          |
 
 ## Approximate Agents

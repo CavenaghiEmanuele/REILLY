@@ -166,4 +166,16 @@ PYBIND11_MODULE(backend, m) {
             py::arg("n_plan"),
             py::arg("epsilon_decay") = 1
         );
+    
+    py::class_<TabularDynaQPlus, QPlanning>(m, "TabularDynaQPlus")
+        .def(
+            py::init<size_t, size_t, float, float, float, size_t, float>(),
+            py::arg("states"),
+            py::arg("actions"),
+            py::arg("alpha"),
+            py::arg("epsilon"),
+            py::arg("gamma"),
+            py::arg("n_plan"),
+            py::arg("epsilon_decay") = 1
+        );
 }
