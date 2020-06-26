@@ -15,7 +15,7 @@ NStep::~NStep() {}
 
 void NStep::reset(size_t init_state) {
     state = init_state;
-    action = select_action(pi, state);
+    action = select_action(pi, init_state);
 
     T = (size_t) -1;
     

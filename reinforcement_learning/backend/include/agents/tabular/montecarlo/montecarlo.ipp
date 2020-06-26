@@ -17,7 +17,7 @@ MonteCarlo::~MonteCarlo() {}
 
 void MonteCarlo::reset(size_t init_state) {
     state = init_state;
-    action = select_action(pi, state);
+    action = select_action(pi, init_state);
     trajectory.clear();
 }
 
