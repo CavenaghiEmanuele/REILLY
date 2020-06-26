@@ -178,4 +178,17 @@ PYBIND11_MODULE(backend, m) {
             py::arg("n_plan"),
             py::arg("epsilon_decay") = 1
         );
+    
+    py::class_<PrioritizedSweeping, QPlanning>(m, "PrioritizedSweeping")
+        .def(
+            py::init<size_t, size_t, float, float, float, size_t, float, float>(),
+            py::arg("states"),
+            py::arg("actions"),
+            py::arg("alpha"),
+            py::arg("epsilon"),
+            py::arg("gamma"),
+            py::arg("n_plan"),
+            py::arg("theta"),
+            py::arg("epsilon_decay") = 1
+        );
 }

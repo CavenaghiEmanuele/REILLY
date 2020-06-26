@@ -18,3 +18,4 @@
 #include <agents/tabular/planning/q_planning.ipp>
 #include <agents/tabular/planning/tabular_dyna_q.ipp>
 #include <agents/tabular/planning/tabular_dyna_q_plus.ipp>
+#include <agents/tabular/planning/prioritized_sweeping.ipp>

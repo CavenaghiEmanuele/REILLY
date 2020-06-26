@@ -58,6 +58,16 @@ class QPlanning : public Agent {
             auto idx = xt::from_indices(xt::where(xt::greater_equal(xt::row(visited, observed_state), 0)));
             return xt::random::choice(xt::row(idx, 0), 1)(0);
         }
+
+        std::vector<Point> lead_to(size_t state) {
+            std::vector<Point> leaders;
+            auto idx = xt::argwhere(xt::greater_equal(visited, 0));
+            for (auto i : idx) {
+                Result r = results[visited(i[0], i[1])];
+                if (r.next_state == state) leaders.push_back({i[0], i[1], r.reward});
+            }
+            return leaders;
+        }
     };
 
     size_t n_plan;

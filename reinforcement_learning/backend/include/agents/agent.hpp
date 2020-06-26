@@ -9,6 +9,7 @@
 #include <cstddef>
 #include <ctime>
 #include <iostream>
+#include <queue>
 #include <random>
 #include <string>
 #include <xtensor/xindex_view.hpp>
@@ -56,8 +57,9 @@ class Agent {
         size_t action;
         float reward;
 
-        bool operator==(const Point &other) { return state == other.state && action == other.action; }
-        bool operator!=(const Point &other) { return !(this == &other); }
+        bool operator==(const Point &other) const { return state == other.state && action == other.action; }
+        bool operator!=(const Point &other) const { return !(this == &other); }
+        bool operator<(const Point &other) const { return reward < other.reward; }
     };
 
     using Trajectory = std::vector<Point>;
