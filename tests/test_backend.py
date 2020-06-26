@@ -130,3 +130,17 @@ def test_NStepExpectedSarsa():
     )
     session.add_agent(agent)
     session.run(100, 10, 10)
+
+def test_TabularDynaQ():
+    env = rl.Frozen_Lake4x4()
+    session = rl.PyBindSession(env)
+    agent = rl.backend.TabularDynaQ(
+        states=env.states,
+        actions=env.actions,
+        alpha=0.1,
+        epsilon=0.03,
+        gamma=0.99,
+        n_plan=5
+    )
+    session.add_agent(agent)
+    session.run(100, 10, 10)

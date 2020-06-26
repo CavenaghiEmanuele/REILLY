@@ -15,3 +15,5 @@
 #include <agents/tabular/n_step/n_step.ipp>
 #include <agents/tabular/n_step/n_step_sarsa.ipp>
 #include <agents/tabular/n_step/n_step_expected_sarsa.ipp>
+#include <agents/tabular/planning/q_planning.ipp>
+#include <agents/tabular/planning/tabular_dyna_q.ipp>

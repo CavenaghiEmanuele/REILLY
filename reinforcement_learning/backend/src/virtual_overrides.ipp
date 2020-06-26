@@ -58,6 +58,15 @@ class PyNStep : public NStep {
     }
 };
 
+class PyQPlanning : public QPlanning {
+   public:
+    using QPlanning::QPlanning;
+
+    void update(size_t next_state, float reward, bool done, py::kwargs kwargs) override {
+        PYBIND11_OVERLOAD_PURE(void, Agent, update, next_state, reward, done, kwargs);
+    }
+};
+
 }  // namespace agents
 
 }  // namespace rl

@@ -44,11 +44,12 @@
 
 ### Planning and learning with tabular
 
-| Name                                      | Python | C/C++ |
-| ----------------------------------------- | :----: | :---: |
-| Random-sample one-step tabular Q-planning |        |       |
-| Tabular Dyna-Q                            |        |       |
-| Prioritized sweeping                      |        |       |
+| Name                                      | Python |  C/C++   |
+| ----------------------------------------- | :----: | :------: |
+| Random-sample one-step tabular Q-planning |        | &#x2705; |
+| Tabular Dyna-Q                            |        | &#x2705; |
+| Tabular Dyna-Q+                           |        |          |
+| Prioritized sweeping                      |        |          |
 
 ## Approximate Agents
 
