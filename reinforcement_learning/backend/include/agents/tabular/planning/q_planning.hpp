@@ -1,12 +1,12 @@
 #pragma once
 
-#include "../../agent.hpp"
+#include "../tabular_agent.ipp"
 
 namespace rl {
 
 namespace agents {
 
-class QPlanning : public Agent {
+class QPlanning : public TabularAgent {
    protected:
     struct Result {
         float reward;

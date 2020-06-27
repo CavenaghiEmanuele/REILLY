@@ -2,13 +2,13 @@
 
 #include <list>
 
-#include "../../agent.ipp"
+#include "../tabular_agent.ipp"
 
 namespace rl {
 
 namespace agents {
 
-class MonteCarlo : public Agent {
+class MonteCarlo : public TabularAgent {
    protected:
     Trajectory trajectory;
     xt::xtensor<float, 2> returns;

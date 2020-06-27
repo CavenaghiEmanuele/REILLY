@@ -7,11 +7,11 @@ namespace rl {
 namespace agents {
 
 MonteCarlo::MonteCarlo(size_t states, size_t actions, float epsilon, float gamma, float epsilon_decay)
-    : Agent(states, actions, 0, epsilon, gamma, epsilon_decay) {
+    : TabularAgent(states, actions, 0, epsilon, gamma, epsilon_decay) {
     returns = xt::zeros<float>({states, actions});
 }
 
-MonteCarlo::MonteCarlo(const MonteCarlo &other) : Agent(other), trajectory(other.trajectory), returns(other.returns) {}
+MonteCarlo::MonteCarlo(const MonteCarlo &other) : TabularAgent(other), trajectory(other.trajectory), returns(other.returns) {}
 
 MonteCarlo::~MonteCarlo() {}
 

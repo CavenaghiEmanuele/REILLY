@@ -1,12 +1,12 @@
 #pragma once
 
-#include "../../agent.ipp"
+#include "../tabular_agent.ipp"
 
 namespace rl {
 
 namespace agents {
 
-class NStep : public Agent {
+class NStep : public TabularAgent {
    protected:
     size_t n_step;
     size_t T;

@@ -27,15 +27,17 @@ PYBIND11_MODULE(backend, m) {
 
     py::class_<Agent, PyAgent>(m, "Agent")
         .def("get_action", &Agent::get_action)
-        .def("reset", &Agent::reset, py::arg("init_state"))
-        .def("update", &Agent::update,
+        .def("__repr__", &Agent::__repr__);
+    
+    py::class_<TabularAgent, PyTabularAgent, Agent>(m, "TabularAgent")
+        .def("reset", &TabularAgent::reset, py::arg("init_state"))
+        .def("update", &TabularAgent::update,
             py::arg("next_state"),
             py::arg("reward"),
             py::arg("done")
-        )
-        .def("__repr__", &Agent::__repr__);
+        );
     
-    py::class_<MonteCarlo, PyMonteCarlo, Agent>(m, "MonteCarlo");
+    py::class_<MonteCarlo, PyMonteCarlo, TabularAgent>(m, "MonteCarlo");
 
     py::class_<MonteCarloFirstVisit, MonteCarlo>(m, "MonteCarloFirstVisit")
         .def(
@@ -57,7 +59,7 @@ PYBIND11_MODULE(backend, m) {
             py::arg("epsilon_decay") = 1
         );
     
-    py::class_<TemporalDifference, PyTemporalDifference, Agent>(m, "TemporalDifference");
+    py::class_<TemporalDifference, PyTemporalDifference, TabularAgent>(m, "TemporalDifference");
     
     py::class_<Sarsa, TemporalDifference>(m, "Sarsa")
         .def(
@@ -127,7 +129,7 @@ PYBIND11_MODULE(backend, m) {
             py::arg("epsilon_decay") = 1
         );
     
-    py::class_<NStep, PyNStep, Agent>(m, "NStep");
+    py::class_<NStep, PyNStep, TabularAgent>(m, "NStep");
 
     py::class_<NStepSarsa, NStep>(m, "NStepSarsa")
         .def(
@@ -165,7 +167,7 @@ PYBIND11_MODULE(backend, m) {
             py::arg("epsilon_decay") = 1
         );
     
-    py::class_<QPlanning, PyQPlanning, Agent>(m, "QPlanning");
+    py::class_<QPlanning, PyQPlanning, TabularAgent>(m, "QPlanning");
 
     py::class_<TabularDynaQ, QPlanning>(m, "TabularDynaQ")
         .def(

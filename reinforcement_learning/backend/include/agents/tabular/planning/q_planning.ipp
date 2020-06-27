@@ -7,9 +7,9 @@ namespace rl {
 namespace agents {
 
 QPlanning::QPlanning(size_t states, size_t actions, float alpha, float epsilon, float gamma, size_t n_plan, float epsilon_decay)
-    : Agent(states, actions, alpha, epsilon, gamma, epsilon_decay), n_plan(n_plan), model(states, actions) {}
+    : TabularAgent(states, actions, alpha, epsilon, gamma, epsilon_decay), n_plan(n_plan), model(states, actions) {}
 
-QPlanning::QPlanning(const QPlanning &other) : Agent(other), n_plan(other.n_plan), model(other.model) {}
+QPlanning::QPlanning(const QPlanning &other) : TabularAgent(other), n_plan(other.n_plan), model(other.model) {}
 
 QPlanning::~QPlanning() {}
 

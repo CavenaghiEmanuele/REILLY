@@ -25,18 +25,8 @@ namespace rl {
 
 namespace agents {
 
-using ActionValue = xt::xtensor<float, 2>;
-using StateValue = xt::xtensor<float, 1>;
-using Policy = xt::xtensor<float, 2>;
-
 class Agent {
    protected:
-    size_t states;
-    size_t actions;
-
-    ActionValue Q;
-    Policy pi;
-
     float alpha;
     float epsilon;
     float gamma;
@@ -47,10 +37,6 @@ class Agent {
     size_t action;
 
     std::minstd_rand generator;
-
-    inline size_t argmaxQs(const ActionValue &Q, size_t state);
-    inline virtual size_t select_action(const Policy &pi, size_t state);
-    inline virtual void policy_update(const ActionValue &Q, Policy &pi, size_t state);
 
     struct Point {
         size_t state;
@@ -65,15 +51,13 @@ class Agent {
     using Trajectory = std::vector<Point>;
 
    public:
-    Agent(size_t states, size_t actions, float alpha, float epsilon, float gamma, float epsilon_decay = 1);
+    Agent(float alpha, float epsilon, float gamma, float epsilon_decay = 1);
     Agent(const Agent &other);
     virtual ~Agent();
 
     virtual size_t get_action();
-    virtual void reset(size_t init_state) = 0;
-    virtual void update(size_t next_state, float reward, bool done, py::kwargs kwargs) = 0;
 
-    virtual std::string __repr__();
+    virtual std::string __repr__() = 0;
 };
 
 }  // namespace agents

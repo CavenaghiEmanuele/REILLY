@@ -7,9 +7,9 @@ namespace rl {
 namespace agents {
 
 TemporalDifference::TemporalDifference(size_t states, size_t actions, float alpha, float epsilon, float gamma, float epsilon_decay)
-    : Agent(states, actions, alpha, epsilon, gamma, epsilon_decay) {}
+    : TabularAgent(states, actions, alpha, epsilon, gamma, epsilon_decay) {}
 
-TemporalDifference::TemporalDifference(const TemporalDifference &other) : Agent(other) {}
+TemporalDifference::TemporalDifference(const TemporalDifference &other) : TabularAgent(other) {}
 
 TemporalDifference::~TemporalDifference() {}
 
