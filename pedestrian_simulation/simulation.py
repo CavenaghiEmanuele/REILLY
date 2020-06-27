@@ -1,11 +1,10 @@
-import pedestrian_simulation as ps
 import pandas as pd
 from copy import deepcopy
 import os
 import sys
-sys.path.insert(0, os.path.abspath(
-    os.path.join(os.path.dirname(__file__), '..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+import pedestrian_simulation as ps
 import reinforcement_learning as rl
 
 
