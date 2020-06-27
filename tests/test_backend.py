@@ -131,6 +131,20 @@ def test_NStepExpectedSarsa():
     session.add_agent(agent)
     session.run(100, 10, 10)
 
+def test_NStepTreeBackup():
+    env = rl.Frozen_Lake4x4()
+    session = rl.PyBindSession(env)
+    agent = rl.backend.NStepTreeBackup(
+        states=env.states,
+        actions=env.actions,
+        alpha=0.1,
+        epsilon=0.03,
+        gamma=0.99,
+        n_step=5
+    )
+    session.add_agent(agent)
+    session.run(100, 10, 10)
+
 def test_TabularDynaQ():
     env = rl.Frozen_Lake4x4()
     session = rl.PyBindSession(env)
@@ -141,6 +155,35 @@ def test_TabularDynaQ():
         epsilon=0.03,
         gamma=0.99,
         n_plan=5
+    )
+    session.add_agent(agent)
+    session.run(100, 10, 10)
+
+def test_TabularDynaQPlus():
+    env = rl.Frozen_Lake4x4()
+    session = rl.PyBindSession(env)
+    agent = rl.backend.TabularDynaQPlus(
+        states=env.states,
+        actions=env.actions,
+        alpha=0.1,
+        epsilon=0.03,
+        gamma=0.99,
+        n_plan=5
+    )
+    session.add_agent(agent)
+    session.run(100, 10, 10)
+
+def test_PrioritizedSweeping():
+    env = rl.Frozen_Lake4x4()
+    session = rl.PyBindSession(env)
+    agent = rl.backend.PrioritizedSweeping(
+        states=env.states,
+        actions=env.actions,
+        alpha=0.1,
+        epsilon=0.03,
+        gamma=0.99,
+        n_plan=5,
+        theta=0.5
     )
     session.add_agent(agent)
     session.run(100, 10, 10)
