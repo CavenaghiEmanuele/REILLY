@@ -153,6 +153,18 @@ PYBIND11_MODULE(backend, m) {
             py::arg("epsilon_decay") = 1
         );
     
+    py::class_<NStepTreeBackup, NStep>(m, "NStepTreeBackup")
+        .def(
+            py::init<size_t, size_t, float, float, float, size_t, float>(),
+            py::arg("states"),
+            py::arg("actions"),
+            py::arg("alpha"),
+            py::arg("epsilon"),
+            py::arg("gamma"),
+            py::arg("n_step"),
+            py::arg("epsilon_decay") = 1
+        );
+    
     py::class_<QPlanning, PyQPlanning, Agent>(m, "QPlanning");
 
     py::class_<TabularDynaQ, QPlanning>(m, "TabularDynaQ")
