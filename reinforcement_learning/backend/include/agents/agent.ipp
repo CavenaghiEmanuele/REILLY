@@ -17,7 +17,6 @@ Agent::Agent(const Agent &other)
       epsilon(other.epsilon),
       gamma(other.gamma),
       epsilon_decay(other.epsilon_decay),
-      state(other.state),
       action(other.action) {}
 
 Agent::~Agent() {}

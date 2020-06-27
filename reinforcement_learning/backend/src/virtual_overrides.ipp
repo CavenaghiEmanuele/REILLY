@@ -79,6 +79,19 @@ class PyQPlanning : public QPlanning {
     }
 };
 
+class PyApproximateAgent : public ApproximateAgent {
+   public:
+    using ApproximateAgent::ApproximateAgent;
+    
+    void reset(size_t init_state) override { PYBIND11_OVERLOAD(void, Agent, reset, init_state); }
+    void update(size_t next_state, float reward, bool done, py::kwargs kwargs) override {
+        PYBIND11_OVERLOAD(void, Agent, update, next_state, reward, done, kwargs);
+    }
+    std::string __repr__() override {
+        PYBIND11_OVERLOAD(std::string, Agent, __repr__, );
+    }
+};
+
 }  // namespace agents
 
 }  // namespace rl

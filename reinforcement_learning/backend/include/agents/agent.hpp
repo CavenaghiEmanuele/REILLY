@@ -9,9 +9,11 @@
 #include <cstddef>
 #include <ctime>
 #include <iostream>
+#include <list>
 #include <queue>
 #include <random>
 #include <string>
+#include <vector>
 #include <xtensor/xindex_view.hpp>
 #include <xtensor/xio.hpp>
 #include <xtensor/xrandom.hpp>
@@ -33,22 +35,9 @@ class Agent {
 
     float epsilon_decay;
 
-    size_t state;
     size_t action;
 
     std::minstd_rand generator;
-
-    struct Point {
-        size_t state;
-        size_t action;
-        float reward;
-
-        bool operator==(const Point &other) const { return state == other.state && action == other.action; }
-        bool operator!=(const Point &other) const { return !(this == &other); }
-        bool operator<(const Point &other) const { return reward < other.reward; }
-    };
-
-    using Trajectory = std::vector<Point>;
 
    public:
     Agent(float alpha, float epsilon, float gamma, float epsilon_decay = 1);

@@ -17,9 +17,23 @@ class TabularAgent : public Agent {
     ActionValue Q;
     Policy pi;
 
+    size_t state;
+    
     inline size_t argmaxQs(const ActionValue &Q, size_t state);
     inline virtual size_t select_action(const Policy &pi, size_t state);
     inline virtual void policy_update(const ActionValue &Q, Policy &pi, size_t state);
+
+    struct Point {
+        size_t state;
+        size_t action;
+        float reward;
+
+        bool operator==(const Point &other) const { return state == other.state && action == other.action; }
+        bool operator!=(const Point &other) const { return !(this == &other); }
+        bool operator<(const Point &other) const { return reward < other.reward; }
+    };
+
+    using Trajectory = std::vector<Point>;
 
    public:
     TabularAgent(size_t states, size_t actions, float alpha, float epsilon, float gamma, float epsilon_decay = 1);

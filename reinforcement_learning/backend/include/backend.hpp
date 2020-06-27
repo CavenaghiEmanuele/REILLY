@@ -1,6 +1,7 @@
 #pragma once
 
 #include <agents/agent.ipp>
+
 #include <agents/tabular/tabular_agent.ipp>
 #include <agents/tabular/montecarlo/montecarlo.ipp>
 #include <agents/tabular/montecarlo/first_visit.ipp>
@@ -21,3 +22,5 @@
 #include <agents/tabular/planning/tabular_dyna_q.ipp>
 #include <agents/tabular/planning/tabular_dyna_q_plus.ipp>
 #include <agents/tabular/planning/prioritized_sweeping.ipp>
+
+#include <agents/approximate/approximate_agent.ipp>

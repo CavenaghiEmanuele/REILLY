@@ -13,7 +13,7 @@ TabularAgent::TabularAgent(size_t states, size_t actions, float alpha, float eps
 }
 
 TabularAgent::TabularAgent(const TabularAgent &other)
-    : Agent(other), states(other.states), actions(other.actions), Q(other.Q), pi(other.pi) {}
+    : Agent(other), states(other.states), actions(other.actions), Q(other.Q), pi(other.pi), state(other.state) {}
 
 TabularAgent::~TabularAgent() {}
 
