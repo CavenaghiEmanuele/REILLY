@@ -56,6 +56,8 @@ class Agent {
     virtual ~Agent();
 
     virtual size_t get_action();
+    virtual void reset(size_t init_state) = 0;
+    virtual void update(size_t next_state, float reward, bool done, py::kwargs kwargs) = 0;
 
     virtual std::string __repr__() = 0;
 };

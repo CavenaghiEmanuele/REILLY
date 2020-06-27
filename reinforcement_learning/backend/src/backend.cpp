@@ -27,15 +27,15 @@ PYBIND11_MODULE(backend, m) {
 
     py::class_<Agent, PyAgent>(m, "Agent")
         .def("get_action", &Agent::get_action)
-        .def("__repr__", &Agent::__repr__);
-    
-    py::class_<TabularAgent, PyTabularAgent, Agent>(m, "TabularAgent")
-        .def("reset", &TabularAgent::reset, py::arg("init_state"))
-        .def("update", &TabularAgent::update,
+        .def("reset", &Agent::reset, py::arg("init_state"))
+        .def("update", &Agent::update,
             py::arg("next_state"),
             py::arg("reward"),
             py::arg("done")
-        );
+        )
+        .def("__repr__", &Agent::__repr__);
+    
+    py::class_<TabularAgent, PyTabularAgent, Agent>(m, "TabularAgent");
     
     py::class_<MonteCarlo, PyMonteCarlo, TabularAgent>(m, "MonteCarlo");
 

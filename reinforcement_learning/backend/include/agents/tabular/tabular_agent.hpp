@@ -26,9 +26,6 @@ class TabularAgent : public Agent {
     TabularAgent(const TabularAgent &other);
     virtual ~TabularAgent();
 
-    virtual void reset(size_t init_state) = 0;
-    virtual void update(size_t next_state, float reward, bool done, py::kwargs kwargs) = 0;
-
     std::string __repr__();
 };
 
