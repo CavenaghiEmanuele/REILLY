@@ -26,6 +26,7 @@ def simulate(env, n_agents: int, start_step: int = 1):
         single_train_session.add_agent(agent)
 
     results = single_train_session.run(500, 50, 50)
+    results.to_csv("Test.csv", index=False)
     rl.plot(results)
 
 
@@ -82,11 +83,19 @@ def travelling_time(results):
         tuple(row)
         for _, row in scatter.iterrows()
     ]
+    
+    
+def load_csv(name: str) -> pd.DataFrame:
+    return pd.read_csv(name)
+
 
 
 if __name__ == "__main__":
-
     env = ps.three_room()
-    #simulate(env, n_agents=20, start_step=4)
-    duplicated_simulation(env, n_train_agents=20, n_duplication=100, start_step=250)
+    #simulate(env, n_agents=1, start_step=1)
+    #duplicated_simulation(env, n_train_agents=20, n_duplication=100, start_step=250)
+    
+    results = load_csv("Test.csv")
+    rl.plot(results)
+    
     
