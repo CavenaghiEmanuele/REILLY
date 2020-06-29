@@ -7,13 +7,13 @@ namespace rl {
 namespace agents {
 
 TabularAgent::TabularAgent(size_t states, size_t actions, float alpha, float epsilon, float gamma, float epsilon_decay)
-    : Agent(alpha, epsilon, gamma, epsilon_decay), states(states), actions(actions) {
+    : Agent(actions, alpha, epsilon, gamma, epsilon_decay), states(states) {
     Q = xt::zeros<float>({states, actions});
     pi = xt::ones<float>({states, actions}) / actions;
 }
 
 TabularAgent::TabularAgent(const TabularAgent &other)
-    : Agent(other), states(other.states), actions(other.actions), Q(other.Q), pi(other.pi), state(other.state) {}
+    : Agent(other), states(other.states), Q(other.Q), pi(other.pi), state(other.state) {}
 
 TabularAgent::~TabularAgent() {}
 

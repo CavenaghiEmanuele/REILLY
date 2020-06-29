@@ -1,19 +1,33 @@
 #pragma once
 
 #include "../agent.ipp"
+#include "tile_coding.ipp"
 
 namespace rl {
 
 namespace agents {
 
-using State = xt::xtensor<float, 1>;
+State to_xtensor(std::list<float> in) {
+    size_t i = 0;
+    State out = xt::empty<float>({in.size()});
+    for (auto j = in.begin(); j != in.end(); j++) {
+        out[i] = (float)(*j);
+        i++;
+    }
+    return out;
+}
 
 class ApproximateAgent : public Agent {
    protected:
     State state;
 
+    TileCoding estimator;
+
+    inline virtual size_t select_action(TileCoding &estimator, State &state);
+
    public:
-    ApproximateAgent(float alpha, float epsilon, float gamma, float epsilon_decay = 1);
+    ApproximateAgent(size_t actions, float alpha, float epsilon, float gamma, float epsilon_decay,
+                    size_t tilings, std::list<float> tiling_offset, std::list<float> tile_size);
     ApproximateAgent(const ApproximateAgent &other);
     virtual ~ApproximateAgent();
 

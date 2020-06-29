@@ -12,7 +12,6 @@ using Policy = xt::xtensor<float, 2>;
 class TabularAgent : public Agent {
    protected:
     size_t states;
-    size_t actions;
 
     ActionValue Q;
     Policy pi;

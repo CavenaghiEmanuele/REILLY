@@ -29,6 +29,8 @@ namespace agents {
 
 class Agent {
    protected:
+    size_t actions;
+
     float alpha;
     float epsilon;
     float gamma;
@@ -40,7 +42,7 @@ class Agent {
     std::minstd_rand generator;
 
    public:
-    Agent(float alpha, float epsilon, float gamma, float epsilon_decay = 1);
+    Agent(size_t actions, float alpha, float epsilon, float gamma, float epsilon_decay = 1);
     Agent(const Agent &other);
     virtual ~Agent();
 

@@ -6,27 +6,39 @@ namespace rl {
 
 namespace agents {
 
-ApproximateAgent::ApproximateAgent(float alpha, float epsilon, float gamma, float epsilon_decay)
-    : Agent(alpha, epsilon, gamma, epsilon_decay) {}
+ApproximateAgent::ApproximateAgent(size_t actions, float alpha, float epsilon, float gamma, float epsilon_decay,
+                                   size_t tilings, std::list<float> tiling_offset, std::list<float> tile_size)
+    : Agent(actions, alpha, epsilon, gamma, epsilon_decay),
+      estimator(alpha, tilings, to_xtensor(tiling_offset), to_xtensor(tile_size)) {}
 
-ApproximateAgent::ApproximateAgent(const ApproximateAgent &other) : Agent(other) {}
+ApproximateAgent::ApproximateAgent(const ApproximateAgent &other) : Agent(other), estimator(other.estimator) {}
 
 ApproximateAgent::~ApproximateAgent() {}
 
+inline size_t ApproximateAgent::select_action(TileCoding &estimator, State &state) {
+    xt::xtensor<float, 1> weights = xt::empty<float>({actions});
+    for (size_t a = 0; a < actions; a++) weights(a) = estimator(state, a);
+    // Argmax breaking ties arbitrarily
+    size_t a_star = xt::random::choice(
+        xt::ravel_indices(xt::argwhere(xt::equal(weights, xt::amax(weights))), weights.shape()), 1)(0);
+    // Epsilon-greedy policy
+    for (size_t a = 0; a < actions; a++) {
+        if (a == a_star) {
+            weights(a) = 1 - epsilon + epsilon / actions;
+        } else {
+            weights(a) = epsilon / actions;
+        }
+    }
+    std::discrete_distribution<size_t> distribution(weights.cbegin(), weights.cend());
+    return distribution(generator);
+}
+
 void ApproximateAgent::reset(size_t init_state) {
-    State vector_state = {(float) init_state};
+    State vector_state = {(float)init_state};
     reset(vector_state);
 }
 
-void ApproximateAgent::reset(std::list<float> init_state) {
-    size_t i = 0;
-    State vector_state = xt::zeros<float>({init_state.size()});
-    for (std::list<float>::iterator j = init_state.begin(); j != init_state.end(); j++) {
-        vector_state[i] = *j;
-        i++;
-    }
-    reset(vector_state);
-}
+void ApproximateAgent::reset(std::list<float> init_state) { reset(to_xtensor(init_state)); }
 
 void ApproximateAgent::reset(py::array init_state) {
     auto np = init_state.unchecked<float, 1>();
@@ -38,18 +50,12 @@ void ApproximateAgent::reset(py::array init_state) {
 }
 
 void ApproximateAgent::update(size_t next_state, float reward, bool done, py::kwargs kwargs) {
-    State vector_state = {(float) next_state};
+    State vector_state = {(float)next_state};
     update(vector_state, reward, done, kwargs);
 }
 
 void ApproximateAgent::update(std::list<float> next_state, float reward, bool done, py::kwargs kwargs) {
-    size_t i = 0;
-    State vector_state = xt::zeros<float>({next_state.size()});
-    for (std::list<float>::iterator j = next_state.begin(); j != next_state.end(); j++) {
-        vector_state[i] = *j;
-        i++;
-    }
-    update(vector_state, reward, done, kwargs);
+    update(to_xtensor(next_state), reward, done, kwargs);
 }
 
 void ApproximateAgent::update(py::array next_state, float reward, bool done, py::kwargs kwargs) {
