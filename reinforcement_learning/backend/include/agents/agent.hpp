@@ -44,7 +44,8 @@ class Agent {
 
     std::minstd_rand generator;
 
-    inline size_t argmaxQs(Vector &v);
+    inline size_t argmaxQs(Vector &weights);
+    inline Vector e_greedy_policy(Vector &weights);
     inline size_t select_action(Vector &weights);
 
    public:

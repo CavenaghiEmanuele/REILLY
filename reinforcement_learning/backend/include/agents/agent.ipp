@@ -22,8 +22,22 @@ Agent::Agent(const Agent &other)
 
 Agent::~Agent() {}
 
-inline size_t Agent::argmaxQs(Vector &v) {
-    return xt::random::choice(xt::ravel_indices(xt::argwhere(xt::equal(v, xt::amax(v))), v.shape()), 1)(0);
+inline size_t Agent::argmaxQs(Vector &w) {
+    return xt::random::choice(xt::ravel_indices(xt::argwhere(xt::equal(w, xt::amax(w))), w.shape()), 1)(0);
+}
+
+inline Vector Agent::e_greedy_policy(Vector &weights) {
+    Vector out = xt::empty<float>({actions});
+    // Select greedy action, ties broken arbitrarily
+    size_t a_star = argmaxQs(weights);
+    // Update policy
+    for (size_t a = 0; a < actions; a++) {
+        if (a == a_star)
+            out(a) = 1 - epsilon + epsilon / actions;
+        else
+            out(a) = epsilon / actions;
+    }
+    return out;
 }
 
 inline size_t Agent::select_action(Vector &weights) {

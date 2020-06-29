@@ -18,7 +18,6 @@ class TabularAgent : public Agent {
 
     size_t state;
     
-    inline size_t argmaxQs(const ActionValue &Q, size_t state);
     inline virtual size_t select_action(const Policy &pi, size_t state);
     inline virtual void policy_update(const ActionValue &Q, Policy &pi, size_t state);
 

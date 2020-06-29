@@ -17,14 +17,7 @@ ApproximateAgent::~ApproximateAgent() {}
 
 inline size_t ApproximateAgent::select_action(TileCoding &estimator, Vector &state) {
     Vector weights = estimator(state);
-    size_t a_star = Agent::argmaxQs(weights);
-    // Epsilon-greedy policy
-    for (size_t a = 0; a < actions; a++) {
-        if (a == a_star)
-            weights(a) = 1 - epsilon + epsilon / actions;
-        else
-            weights(a) = epsilon / actions;
-    }
+    weights = e_greedy_policy(weights);
     return Agent::select_action(weights);
 }
 

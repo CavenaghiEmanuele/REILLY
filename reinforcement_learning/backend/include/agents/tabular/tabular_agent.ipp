@@ -17,26 +17,14 @@ TabularAgent::TabularAgent(const TabularAgent &other)
 
 TabularAgent::~TabularAgent() {}
 
-inline size_t TabularAgent::argmaxQs(const ActionValue &Q, size_t state) {
-    Vector v = xt::row(Q, state);
-    return Agent::argmaxQs(v);
-}
-
 inline size_t TabularAgent::select_action(const Policy &pi, size_t state) {
     Vector weights = xt::row(pi, state);
     return Agent::select_action(weights);
 }
 
 inline void TabularAgent::policy_update(const ActionValue &Q, Policy &pi, size_t state) {
-    // Select greedy action, ties broken arbitrarily
-    size_t a_star = argmaxQs(Q, state);
-    // Update policy
-    for (size_t a = 0; a < actions; a++) {
-        if (a == a_star)
-            pi(state, a) = 1 - epsilon + epsilon / actions;
-        else
-            pi(state, a) = epsilon / actions;
-    }
+    Vector weights = xt::row(Q, state);
+    xt::row(pi, state) = e_greedy_policy(weights);
 }
 
 std::string TabularAgent::__repr__() {
