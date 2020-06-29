@@ -8,7 +8,7 @@ namespace agents {
 
 class SemiGradientSarsa : public ApproximateTemporalDifference {
    protected:
-    void update(State next_state, float reward, bool done, py::kwargs kwargs);
+    void update(Vector next_state, float reward, bool done, py::kwargs kwargs);
 
    public:
     SemiGradientSarsa(size_t actions, float alpha, float epsilon, float gamma, float epsilon_decay, size_t tilings,

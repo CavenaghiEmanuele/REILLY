@@ -18,14 +18,13 @@ TabularAgent::TabularAgent(const TabularAgent &other)
 TabularAgent::~TabularAgent() {}
 
 inline size_t TabularAgent::argmaxQs(const ActionValue &Q, size_t state) {
-    xt::xtensor<float, 1> row = xt::row(Q, state);
-    return xt::random::choice(xt::ravel_indices(xt::argwhere(xt::equal(row, xt::amax(row))), row.shape()), 1)(0);
+    Vector v = xt::row(Q, state);
+    return Agent::argmaxQs(v);
 }
 
 inline size_t TabularAgent::select_action(const Policy &pi, size_t state) {
-    xt::xtensor<float, 1> weights = xt::row(pi, state);
-    std::discrete_distribution<size_t> distribution(weights.cbegin(), weights.cend());
-    return distribution(generator);
+    Vector weights = xt::row(pi, state);
+    return Agent::select_action(weights);
 }
 
 inline void TabularAgent::policy_update(const ActionValue &Q, Policy &pi, size_t state) {

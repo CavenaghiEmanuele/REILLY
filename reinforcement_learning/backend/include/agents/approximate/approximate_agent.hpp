@@ -7,9 +7,9 @@ namespace rl {
 
 namespace agents {
 
-State to_xtensor(std::list<float> in) {
+Vector to_xtensor(std::list<float> in) {
     size_t i = 0;
-    State out = xt::empty<float>({in.size()});
+    Vector out = xt::empty<float>({in.size()});
     for (auto j = in.begin(); j != in.end(); j++) {
         out[i] = (float)(*j);
         i++;
@@ -19,14 +19,14 @@ State to_xtensor(std::list<float> in) {
 
 class ApproximateAgent : public Agent {
    protected:
-    State state;
+    Vector state;
 
     TileCoding estimator;
 
-    inline virtual size_t select_action(TileCoding &estimator, State &state);
+    inline virtual size_t select_action(TileCoding &estimator, Vector &state);
 
-    virtual void reset(State init_state) = 0;
-    virtual void update(State next_state, float reward, bool done, py::kwargs kwargs) = 0;
+    virtual void reset(Vector init_state) = 0;
+    virtual void update(Vector next_state, float reward, bool done, py::kwargs kwargs) = 0;
 
    public:
     ApproximateAgent(size_t actions, float alpha, float epsilon, float gamma, float epsilon_decay,

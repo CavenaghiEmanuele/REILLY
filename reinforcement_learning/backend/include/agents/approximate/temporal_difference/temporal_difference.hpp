@@ -8,7 +8,7 @@ namespace agents {
 
 class ApproximateTemporalDifference : public ApproximateAgent {
    protected:
-    virtual void reset(State init_state);
+    virtual void reset(Vector init_state);
 
    public:
     ApproximateTemporalDifference(size_t actions, float alpha, float epsilon, float gamma, float epsilon_decay,

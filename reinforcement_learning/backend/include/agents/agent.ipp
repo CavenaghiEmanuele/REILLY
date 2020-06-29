@@ -22,6 +22,15 @@ Agent::Agent(const Agent &other)
 
 Agent::~Agent() {}
 
+inline size_t Agent::argmaxQs(Vector &v) {
+    return xt::random::choice(xt::ravel_indices(xt::argwhere(xt::equal(v, xt::amax(v))), v.shape()), 1)(0);
+}
+
+inline size_t Agent::select_action(Vector &weights) {
+    std::discrete_distribution<size_t> distribution(weights.cbegin(), weights.cend());
+    return distribution(generator);
+}
+
 size_t Agent::get_action() { return action; }
 
 }  // namespace agents

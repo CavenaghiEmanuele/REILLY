@@ -10,6 +10,7 @@
 #include <ctime>
 #include <iostream>
 #include <list>
+#include <map>
 #include <queue>
 #include <random>
 #include <string>
@@ -27,6 +28,8 @@ namespace rl {
 
 namespace agents {
 
+using Vector = xt::xtensor<float, 1>;
+
 class Agent {
    protected:
     size_t actions;
@@ -40,6 +43,9 @@ class Agent {
     size_t action;
 
     std::minstd_rand generator;
+
+    inline size_t argmaxQs(Vector &v);
+    inline size_t select_action(Vector &weights);
 
    public:
     Agent(size_t actions, float alpha, float epsilon, float gamma, float epsilon_decay = 1);

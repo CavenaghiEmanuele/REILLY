@@ -15,12 +15,10 @@ ApproximateAgent::ApproximateAgent(const ApproximateAgent &other) : Agent(other)
 
 ApproximateAgent::~ApproximateAgent() {}
 
-inline size_t ApproximateAgent::select_action(TileCoding &estimator, State &state) {
-    xt::xtensor<float, 1> weights = xt::empty<float>({actions});
+inline size_t ApproximateAgent::select_action(TileCoding &estimator, Vector &state) {
+    Vector weights = xt::empty<float>({actions});
     for (size_t a = 0; a < actions; a++) weights(a) = estimator(state, a);
-    // Argmax breaking ties arbitrarily
-    size_t a_star = xt::random::choice(
-        xt::ravel_indices(xt::argwhere(xt::equal(weights, xt::amax(weights))), weights.shape()), 1)(0);
+    size_t a_star = Agent::argmaxQs(weights);
     // Epsilon-greedy policy
     for (size_t a = 0; a < actions; a++) {
         if (a == a_star) {
@@ -29,12 +27,11 @@ inline size_t ApproximateAgent::select_action(TileCoding &estimator, State &stat
             weights(a) = epsilon / actions;
         }
     }
-    std::discrete_distribution<size_t> distribution(weights.cbegin(), weights.cend());
-    return distribution(generator);
+    return Agent::select_action(weights);
 }
 
 void ApproximateAgent::reset(size_t init_state) {
-    State vector_state = {(float)init_state};
+    Vector vector_state = {(float)init_state};
     reset(vector_state);
 }
 
@@ -42,7 +39,7 @@ void ApproximateAgent::reset(std::list<float> init_state) { reset(to_xtensor(ini
 
 void ApproximateAgent::reset(py::array init_state) {
     auto np = init_state.unchecked<float, 1>();
-    State vector_state = xt::zeros<float>({np.size()});
+    Vector vector_state = xt::zeros<float>({np.size()});
     for (long int i = 0; i < np.size(); i++) {
         vector_state[i] = np(i);
     }
@@ -50,7 +47,7 @@ void ApproximateAgent::reset(py::array init_state) {
 }
 
 void ApproximateAgent::update(size_t next_state, float reward, bool done, py::kwargs kwargs) {
-    State vector_state = {(float)next_state};
+    Vector vector_state = {(float)next_state};
     update(vector_state, reward, done, kwargs);
 }
 
@@ -60,7 +57,7 @@ void ApproximateAgent::update(std::list<float> next_state, float reward, bool do
 
 void ApproximateAgent::update(py::array next_state, float reward, bool done, py::kwargs kwargs) {
     auto np = next_state.unchecked<float, 1>();
-    State vector_state = xt::zeros<float>({np.size()});
+    Vector vector_state = xt::zeros<float>({np.size()});
     for (long int i = 0; i < np.size(); i++) {
         vector_state[i] = np(i);
     }

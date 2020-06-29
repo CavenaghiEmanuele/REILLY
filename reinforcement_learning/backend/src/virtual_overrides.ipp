@@ -83,8 +83,8 @@ class PyApproximateAgent : public ApproximateAgent {
    public:
     using ApproximateAgent::ApproximateAgent;
     
-    void reset(State init_state) override { PYBIND11_OVERLOAD_PURE(void, ApproximateAgent, reset, init_state); }
-    void update(State next_state, float reward, bool done, py::kwargs kwargs) override {
+    void reset(Vector init_state) override { PYBIND11_OVERLOAD_PURE(void, ApproximateAgent, reset, init_state); }
+    void update(Vector next_state, float reward, bool done, py::kwargs kwargs) override {
         PYBIND11_OVERLOAD_PURE(void, ApproximateAgent, update, next_state, reward, done, kwargs);
     }
     std::string __repr__() override {
@@ -96,8 +96,8 @@ class PyApproximateTemporalDifference : public ApproximateTemporalDifference {
    public:
     using ApproximateTemporalDifference::ApproximateTemporalDifference;
 
-    void reset(State init_state) override { PYBIND11_OVERLOAD(void, ApproximateTemporalDifference, reset, init_state); }
-    void update(State next_state, float reward, bool done, py::kwargs kwargs) override {
+    void reset(Vector init_state) override { PYBIND11_OVERLOAD(void, ApproximateTemporalDifference, reset, init_state); }
+    void update(Vector next_state, float reward, bool done, py::kwargs kwargs) override {
         PYBIND11_OVERLOAD_PURE(void, Agent, update, next_state, reward, done, kwargs);
     }
 };

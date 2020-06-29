@@ -6,7 +6,7 @@ namespace rl {
 
 namespace agents {
 
-size_t Tile(State &start_point, State &end_point, size_t &action) {
+size_t Tile(Vector &start_point, Vector &end_point, size_t &action) {
     std::stringstream hash;
     hash << start_point << ',';
     hash << end_point << ',';
@@ -14,7 +14,7 @@ size_t Tile(State &start_point, State &end_point, size_t &action) {
     return std::hash<std::string>()(hash.str());
 }
 
-Tiling::Tiling(State tile_size, State start_point) : tile_size(tile_size), start_point(start_point) {}
+Tiling::Tiling(Vector tile_size, Vector start_point) : tile_size(tile_size), start_point(start_point) {}
 
 Tiling::Tiling(const Tiling &other)
     : tile_size(other.tile_size), start_point(other.start_point), weights(other.weights) {}
@@ -31,10 +31,10 @@ Tiling &Tiling::operator=(const Tiling &other) {
 
 Tiling::~Tiling() {}
 
-size_t Tiling::operator()(State &features, size_t action) {
+size_t Tiling::operator()(Vector &features, size_t action) {
     auto copy_sign = xt::vectorize(std::copysign<float, float>);
-    State lower_bound = copy_sign(xt::floor(xt::abs(features - start_point) / tile_size), features);
-    State end_point = lower_bound + tile_size;
+    Vector lower_bound = copy_sign(xt::floor(xt::abs(features - start_point) / tile_size), features);
+    Vector end_point = lower_bound + tile_size;
     return Tile(lower_bound, end_point, action);
 }
 
@@ -48,7 +48,7 @@ void Tiling::update(size_t coordinate, float value) {
     weights[coordinate] = value;
 }
 
-TileCoding::TileCoding(float alpha, size_t tilings, State tile_size, State tilings_offset) : alpha(alpha / tilings) {
+TileCoding::TileCoding(float alpha, size_t tilings, Vector tile_size, Vector tilings_offset) : alpha(alpha / tilings) {
     for (size_t i = 0; i < tilings; i++) {
         this->tilings.push_back(Tiling(tile_size, (-i) * tilings_offset));
     }
@@ -66,8 +66,8 @@ TileCoding &TileCoding::operator=(const TileCoding &other) {
 
 TileCoding::~TileCoding() {}
 
-float TileCoding::operator()(State &state, size_t action) {
-    State features = xt::empty<float>({state.shape(0)});
+float TileCoding::operator()(Vector &state, size_t action) {
+    Vector features = xt::empty<float>({state.shape(0)});
     for (size_t i = 0; i < state.shape(0); i++) {
         size_t coordinate = tilings[i](state, action);
         features(i) = tilings[i](coordinate);
@@ -76,9 +76,9 @@ float TileCoding::operator()(State &state, size_t action) {
     return xt::sum(features)();
 }
 
-void TileCoding::update(State &state, size_t action, float target) {
+void TileCoding::update(Vector &state, size_t action, float target) {
     Coordinates coordinates = xt::empty<size_t>({state.shape(0)});
-    State features = xt::empty<float>({state.shape(0)});
+    Vector features = xt::empty<float>({state.shape(0)});
     for (size_t i = 0; i < state.shape(0); i++) {
         coordinates(i) = tilings[i](state, action);
         features(i) = tilings[i](coordinates(i));

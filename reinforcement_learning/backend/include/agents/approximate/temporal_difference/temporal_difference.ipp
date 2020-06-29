@@ -16,7 +16,7 @@ ApproximateTemporalDifference::ApproximateTemporalDifference(const ApproximateTe
 
 ApproximateTemporalDifference::~ApproximateTemporalDifference() {}
 
-void ApproximateTemporalDifference::reset(State init_state) {
+void ApproximateTemporalDifference::reset(Vector init_state) {
     state = init_state;
     action = select_action(estimator, init_state);
 }
