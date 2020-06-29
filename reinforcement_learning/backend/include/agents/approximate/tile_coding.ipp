@@ -50,8 +50,6 @@ void Tiling::update(size_t coordinate, float value) {
 
 TileCoding::TileCoding(size_t actions, float alpha, size_t features, size_t tilings, Vector tile_size, Vector tilings_offset)
     : actions(actions), alpha(alpha / tilings), features(features) {
-    _features = xt::empty<float>({features});
-    _coordinates = xt::empty<size_t>({features});
     for (size_t i = 0; i < tilings; i++) {
         this->tilings.push_back(Tiling(tile_size, (-i) * tilings_offset));
     }
@@ -66,8 +64,6 @@ TileCoding &TileCoding::operator=(const TileCoding &other) {
         std::swap(tmp.alpha, alpha);
         std::swap(tmp.features, features);
         std::swap(tmp.tilings, tilings);
-        std::swap(tmp._features, _features);
-        std::swap(tmp._coordinates, _coordinates);
     }
     return *this;
 }
@@ -75,24 +71,26 @@ TileCoding &TileCoding::operator=(const TileCoding &other) {
 TileCoding::~TileCoding() {}
 
 float TileCoding::operator()(Vector &state, size_t action) {
-    size_t _coordinate = 0;
-    for (size_t i = 0; i < features; i++) {
-        _coordinate = tilings[i](state, action);
-        _features(i) = tilings[i](_coordinate);
+    Vector features = xt::empty<float>({this->features});
+    for (size_t i = 0; i < this->features; i++) {
+        size_t coordinate = tilings[i](state, action);
+        features(i) = tilings[i](coordinate);
     }
     // Linear Function Approximation
-    return xt::sum(_features)();
+    return xt::sum(features)();
 }
 
 void TileCoding::update(Vector &state, size_t action, float target) {
-    for (size_t i = 0; i < features; i++) {
-        _coordinates(i) = tilings[i](state, action);
-        _features(i) = tilings[i](_coordinates(i));
+    Coordinates coordinates = xt::empty<size_t>({this->features});
+    Vector features = xt::empty<float>({this->features});
+    for (size_t i = 0; i < this->features; i++) {
+        coordinates(i) = tilings[i](state, action);
+        features(i) = tilings[i](coordinates(i));
     }
     // Linear Function Approximation
-    float delta = target - xt::sum(_features)();
-    for (size_t i = 0; i < features; i++) {
-        tilings[i].update(_coordinates(i), _features(i) + alpha * delta);
+    float delta = target - xt::sum(features)();
+    for (size_t i = 0; i < this->features; i++) {
+        tilings[i].update(coordinates(i), features(i) + alpha * delta);
     }
 }
 
