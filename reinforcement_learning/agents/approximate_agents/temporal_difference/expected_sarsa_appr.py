@@ -17,7 +17,7 @@ class ExpectedSarsaApproximateAgent(TemporalDiffernceAppr, object):
 
     def reset(self, env: Environment, *args, **kwargs) -> None:
         self._episode_ended = False
-        self._S = env.reset()
+        self._S = env.reset(*args, **kwargs)
         self._A = np.random.choice(
             range(env.actions), p=self._e_greedy_policy(self._S, env.actions))
 
