@@ -65,10 +65,10 @@
 
 ### Q Estimator
 
-| Name                |  Python  | C/C++ |
-| ------------------- | :------: | :---: |
-| Base implementation | &#x2705; |  :x:  |
-| With trace          |          |       |
+| Name                |  Python  |  C/C++   |
+| ------------------- | :------: | :------: |
+| Base implementation | &#x2705; | &#x2705; |
+| With trace          |          |          |
 
 
 ### Temporal difference
@@ -76,7 +76,7 @@
 | Name                         | On-Policy | Off-Policy | Differential |  Python  |  C/C++   |
 | ---------------------------- | :-------: | :--------: | :----------: | :------: | :------: |
 | Semi-gradient Sarsa          | &#x2705;  |            |              | &#x2705; | &#x2705; |
-| Semi-gradient Expected Sarsa | &#x2705;  |            |              | &#x2705; |          |
+| Semi-gradient Expected Sarsa | &#x2705;  |            |              | &#x2705; | &#x2705; |
 
 ### n-step Bootstrapping
 

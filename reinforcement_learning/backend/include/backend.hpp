@@ -26,3 +26,4 @@
 #include <agents/approximate/approximate_agent.ipp>
 #include <agents/approximate/temporal_difference/temporal_difference.ipp>
 #include <agents/approximate/temporal_difference/sarsa.ipp>
+#include <agents/approximate/temporal_difference/expected_sarsa.ipp>
