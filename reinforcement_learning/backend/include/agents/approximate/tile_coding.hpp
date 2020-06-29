@@ -4,7 +4,7 @@
 #include <cmath>
 #include <cstddef>
 #include <iostream>
-#include <unordered_map>
+#include <map>
 #include <vector>
 #include <xtensor/xio.hpp>
 #include <xtensor/xrandom.hpp>
@@ -24,7 +24,7 @@ class Tiling {
    private:
     State tile_size;
     State start_point;
-    std::unordered_map<size_t, float> weights;
+    std::map<size_t, float> weights;
 
    public:
     Tiling(State tile_size, State start_point);
