@@ -26,7 +26,7 @@ def T():
                 "#S                     S#\n" +
                 "#########################\n",
 
-        max_steps=100,
+        max_steps=250,
         neighbor=rl.TextNeighbor.MOORE,
         raw_state=True
     )

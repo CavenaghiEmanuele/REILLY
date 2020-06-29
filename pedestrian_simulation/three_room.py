@@ -44,7 +44,7 @@ def three_room():
                 " #           #           #           # \n" +
                 " #####XXX#########XXX#########XXX##### \n",
 
-        max_steps=100,
+        max_steps=250,
         neighbor=rl.TextNeighbor.MOORE,
         raw_state=True
     )
