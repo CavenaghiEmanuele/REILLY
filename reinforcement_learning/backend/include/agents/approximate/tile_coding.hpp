@@ -6,8 +6,6 @@ namespace rl {
 
 namespace agents {
 
-using Coordinates = xt::xtensor<size_t, 1>;
-
 size_t Tile(Vector &start_point, Vector &end_point, size_t &action);
 
 class Tiling {
@@ -34,6 +32,10 @@ class TileCoding {
     float alpha;
     size_t features;
     std::vector<Tiling> tilings;
+
+    // Pre-allocated temporary memory
+    Vector _features;
+    xt::xtensor<size_t, 1> _coordinates;
 
    public:
     TileCoding(size_t actions, float alpha, size_t features, size_t tilings, Vector tilings_offset, Vector tile_size);
