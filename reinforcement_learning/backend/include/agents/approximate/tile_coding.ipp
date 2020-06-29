@@ -70,6 +70,14 @@ TileCoding &TileCoding::operator=(const TileCoding &other) {
 
 TileCoding::~TileCoding() {}
 
+Vector TileCoding::operator()(Vector &state) {
+    Vector weights = xt::empty<float>({actions});
+    for (size_t a = 0; a < actions; a++) {
+        weights(a) = this->operator()(state, a);
+    }
+    return weights;
+}
+
 float TileCoding::operator()(Vector &state, size_t action) {
     Vector features = xt::empty<float>({this->features});
     for (size_t i = 0; i < this->features; i++) {

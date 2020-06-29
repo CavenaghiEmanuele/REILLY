@@ -41,6 +41,7 @@ class TileCoding {
     TileCoding &operator=(const TileCoding &other);
     ~TileCoding();
 
+    Vector operator()(Vector &state);
     float operator()(Vector &state, size_t action);
     void update(Vector &state, size_t action, float reward);
 };
