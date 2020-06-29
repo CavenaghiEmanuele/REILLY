@@ -25,6 +25,9 @@ class ApproximateAgent : public Agent {
 
     inline virtual size_t select_action(TileCoding &estimator, State &state);
 
+    virtual void reset(State init_state) = 0;
+    virtual void update(State next_state, float reward, bool done, py::kwargs kwargs) = 0;
+
    public:
     ApproximateAgent(size_t actions, float alpha, float epsilon, float gamma, float epsilon_decay,
                     size_t tilings, std::list<float> tiling_offset, std::list<float> tile_size);
@@ -38,9 +41,6 @@ class ApproximateAgent : public Agent {
     void update(size_t next_state, float reward, bool done, py::kwargs kwargs);
     void update(std::list<float> next_state, float reward, bool done, py::kwargs kwargs);
     void update(py::array next_state, float reward, bool done, py::kwargs kwargs);
-
-    virtual void reset(State init_state) = 0;
-    virtual void update(State next_state, float reward, bool done, py::kwargs kwargs) = 0;
 
     virtual std::string __repr__();
 };
