@@ -1,3 +1,6 @@
+from datetime import datetime
+import matplotlib
+import matplotlib.pyplot as plt; plt.style.use('seaborn-poster')
 import pandas as pd
 from copy import deepcopy
 import os
@@ -78,12 +81,36 @@ def travelling_time(results):
     arrival_time = groupby.max()
     travelling_time = arrival_time - groupby.min()
     scatter = pd.concat([arrival_time, travelling_time], axis=1, sort=False)
-    scatter.columns = ['arrival_time', 'travelling_time']
-    return [
+    points = [
         tuple(row)
         for _, row in scatter.iterrows()
     ]
-    
+    plt.scatter([p[0] for p in points], [p[1] for p in points])
+    plt.savefig(datetime.now().strftime("%Y%m%d_%H%M%S") + '_travelling_scatter.jpg')
+
+def density(results, area):
+    groupby = results.drop(['return_sum', 'wins', 'time', 'distance'], axis=1).groupby(['test', 'sample', 'step'])
+    count = groupby.count()
+    density = count / area
+    points = [
+        tuple(row)
+        for _, row in density.iterrows()
+    ]
+    plt.plot(list(range(len(points))), [p[0] for p in points])
+    plt.savefig(datetime.now().strftime("%Y%m%d_%H%M%S") + '_density_chart.jpg')
+
+def speed(results):
+    groupby = results.drop(['return_sum', 'wins', 'step'], axis=1).groupby(['test', 'sample', 'agent'])
+    speed = groupby.sum()
+    speed['speed'] = speed['distance'] / speed['time']
+    speed = speed.drop(['distance', 'time'], axis=1).round(decimals=1)
+    points = speed.loc[(10)]['speed'].value_counts().to_dict()
+    points = [
+        (key, value)
+        for key, value in points.items()
+    ]
+    plt.bar([p[0] for p in points], [p[1] for p in points], width=0.05, edgecolor="black")
+    plt.savefig(datetime.now().strftime("%Y%m%d_%H%M%S") + '_speed_bars.jpg')
     
 def load_csv(name: str) -> pd.DataFrame:
     return pd.read_csv(name)
