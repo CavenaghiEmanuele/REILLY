@@ -6,7 +6,7 @@ namespace rl {
 
 namespace agents {
 
-size_t Tile(Vector &start_point, Vector &end_point, size_t &action) {
+size_t Tile(const Vector &start_point, const Vector &end_point, size_t action) {
     std::stringstream hash;
     hash << start_point << ',';
     hash << end_point << ',';
@@ -31,9 +31,9 @@ Tiling &Tiling::operator=(const Tiling &other) {
 
 Tiling::~Tiling() {}
 
-size_t Tiling::operator()(Vector &features, size_t action) {
+size_t Tiling::operator()(const Vector &state, size_t action) {
     auto copy_sign = xt::vectorize(std::copysign<float, float>);
-    Vector lower_bound = copy_sign(xt::floor(xt::abs(features - start_point) / tile_size), features);
+    Vector lower_bound = copy_sign(xt::floor(xt::abs(state - start_point) / tile_size), state);
     Vector end_point = lower_bound + tile_size;
     return Tile(lower_bound, end_point, action);
 }
@@ -70,7 +70,7 @@ TileCoding &TileCoding::operator=(const TileCoding &other) {
 
 TileCoding::~TileCoding() {}
 
-Vector TileCoding::operator()(Vector &state) {
+Vector TileCoding::operator()(const Vector &state) {
     Vector weights = xt::empty<float>({actions});
     for (size_t a = 0; a < actions; a++) {
         weights(a) = this->operator()(state, a);
@@ -78,7 +78,7 @@ Vector TileCoding::operator()(Vector &state) {
     return weights;
 }
 
-float TileCoding::operator()(Vector &state, size_t action) {
+float TileCoding::operator()(const Vector &state, size_t action) {
     Vector features = xt::empty<float>({this->features});
     for (size_t i = 0; i < this->features; i++) {
         size_t coordinate = tilings[i](state, action);
@@ -88,7 +88,7 @@ float TileCoding::operator()(Vector &state, size_t action) {
     return xt::sum(features)();
 }
 
-void TileCoding::update(Vector &state, size_t action, float target) {
+void TileCoding::update(const Vector &state, size_t action, float target) {
     Coordinates coordinates = xt::empty<size_t>({this->features});
     Vector features = xt::empty<float>({this->features});
     for (size_t i = 0; i < this->features; i++) {

@@ -8,7 +8,7 @@ namespace agents {
 
 using Coordinates = xt::xtensor<size_t, 1>;
 
-size_t Tile(Vector &start_point, Vector &end_point, size_t &action);
+size_t Tile(const Vector &start_point, const Vector &end_point, size_t action);
 
 class Tiling {
    private:
@@ -22,7 +22,7 @@ class Tiling {
     Tiling &operator=(const Tiling &other);
     ~Tiling();
 
-    size_t operator()(Vector &features, size_t action);
+    size_t operator()(const Vector &state, size_t action);
     float operator()(size_t coordinate);
 
     void update(size_t coordinate, float weight);
@@ -41,9 +41,9 @@ class TileCoding {
     TileCoding &operator=(const TileCoding &other);
     ~TileCoding();
 
-    Vector operator()(Vector &state);
-    float operator()(Vector &state, size_t action);
-    void update(Vector &state, size_t action, float reward);
+    Vector operator()(const Vector &state);
+    float operator()(const Vector &state, size_t action);
+    void update(const Vector &state, size_t action, float reward);
 };
 
 }  // namespace agents
