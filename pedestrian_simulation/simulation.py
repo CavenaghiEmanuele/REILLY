@@ -90,24 +90,24 @@ def travelling_time(results):
     plt.savefig(datetime.now().strftime("%Y%m%d_%H%M%S") + '_travelling_scatter.jpg')
     plt.clf()
 
-def density(results, area):
+def density(results, area, sample):
     groupby = results.drop(['return_sum', 'wins', 'time', 'distance'], axis=1).groupby(['test', 'sample', 'step'])
     count = groupby.count()
     density = count / area
     points = [
         tuple(row)
-        for _, row in density.loc[(1,49)].iterrows()
+        for _, row in density.loc[(1,sample)].iterrows()
     ]
     plt.plot(list(range(len(points))), [p[0] for p in points])
     plt.savefig(datetime.now().strftime("%Y%m%d_%H%M%S") + '_density_chart.jpg')
     plt.clf()
 
-def speed(results):
+def speed(results, sample):
     groupby = results.drop(['return_sum', 'wins', 'step'], axis=1).groupby(['test', 'sample', 'agent'])
     speed = groupby.sum()
     speed['speed'] = speed['distance'] / speed['time']
     speed = speed.drop(['distance', 'time'], axis=1).round(decimals=1)
-    points = speed.loc[(1, 49)]['speed'].value_counts().to_dict()
+    points = speed.loc[(1, sample)]['speed'].value_counts().to_dict()
     points = [
         (key, value)
         for key, value in points.items()
@@ -116,24 +116,42 @@ def speed(results):
     plt.savefig(datetime.now().strftime("%Y%m%d_%H%M%S") + '_speed_bars.jpg')
     plt.clf()
 
-def wall_clock_time(results):
+def time(results, sample):
+    groupby = results.drop(['return_sum', 'wins', 'step', 'distance'], axis=1).groupby(['test', 'sample', 'agent'])
+    time = groupby.sum()
+    time = time.round(decimals=1)
+    points = time.loc[(1, sample)]['time'].value_counts().to_dict()
+    points = [
+        (key, value)
+        for key, value in points.items()
+    ]
+    plt.bar([p[0] for p in points], [p[1] for p in points], edgecolor="black")
+    plt.savefig(datetime.now().strftime("%Y%m%d_%H%M%S") + '_time_bars.jpg')
+    plt.clf()
+
+def wall_clock_time(results, sample):
     groupby = results.drop(['return_sum', 'wins', 'time', 'distance', 'agent'], axis=1).groupby(['test', 'sample'])
     wall_clock_time = groupby.max() * 0.25
     wall_clock_time.columns = ['wall_clock_time']
-    print(wall_clock_time.loc[(1, 49)])
+    print(wall_clock_time.loc[(1, sample)])
     
 def load_csv(name: str) -> pd.DataFrame:
     return pd.read_csv(name)
 
 
 if __name__ == "__main__":
-    env = ps.three_room()
-    simulate(env, n_agents=400, start_step=100)
-    #duplicated_simulation(env, n_train_agents=20, n_duplication=100, start_step=250)
-    
+    env = ps.japan()
+
+    simulate(env, n_agents=46, start_step=20)
     '''
-    results = load_csv("100 agents - 20 delay steps.csv")
-    travelling_time(results)
-    density(results, 204)
-    speed(results)
+    results = load_csv("46 agents - 20 delay steps.csv")
+    #sample = 1
+    #density(results, 77, sample)
+    #speed(results, sample)
+    #time(results, sample)
+    for sample in range(49):
+        try:
+            wall_clock_time(results, sample)
+        except:
+            pass
     '''
