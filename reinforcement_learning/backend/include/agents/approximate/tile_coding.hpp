@@ -18,25 +18,12 @@ namespace agents {
 using State = xt::xtensor<float, 1>;
 using Coordinates = xt::xtensor<size_t, 1>;
 
-class Tile {
-   private:
-    size_t id;
-
-   public:
-    Tile(State &start_point, State &end_point, size_t &action);
-    Tile(const Tile &other);
-    Tile &operator=(const Tile &other);
-    ~Tile();
-
-    bool operator==(const Tile &other) const;
-    bool operator!=(const Tile &other) const;
-};
+size_t Tile(State &start_point, State &end_point, size_t &action);
 
 class Tiling {
    private:
     State tile_size;
     State start_point;
-    std::vector<Tile> tiles;
     std::unordered_map<size_t, float> weights;
 
    public:
@@ -49,7 +36,6 @@ class Tiling {
     float operator()(size_t coordinate);
 
     void update(size_t coordinate, float weight);
-    void reset();
 };
 
 class TileCoding {
@@ -65,7 +51,6 @@ class TileCoding {
 
     float operator()(State &state, size_t action);
     void update(State &state, size_t action, float reward);
-    void reset();
 };
 
 }  // namespace agents

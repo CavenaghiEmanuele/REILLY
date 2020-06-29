@@ -6,41 +6,24 @@ namespace rl {
 
 namespace agents {
 
-Tile::Tile(State &start_point, State &end_point, size_t &action) {
+size_t Tile(State &start_point, State &end_point, size_t &action) {
     std::stringstream hash;
-    hash << start_point << ",";
-    hash << end_point << ",";
+    hash << start_point << ',';
+    hash << end_point << ',';
     hash << action;
-    id = std::hash<std::string>()(hash.str());
+    return std::hash<std::string>()(hash.str());
 }
-
-Tile::Tile(const Tile &other) : id(other.id) {}
-
-Tile &Tile::operator=(const Tile &other) {
-    if (this != &other) {
-        Tile tmp(other);
-        std::swap(tmp.id, id);
-    }
-    return *this;
-}
-
-Tile::~Tile() {}
-
-bool Tile::operator==(const Tile &other) const { return id == other.id; }
-
-bool Tile::operator!=(const Tile &other) const { return !(this == &other); }
 
 Tiling::Tiling(State tile_size, State start_point) : tile_size(tile_size), start_point(start_point) {}
 
 Tiling::Tiling(const Tiling &other)
-    : tile_size(other.tile_size), start_point(other.start_point), tiles(other.tiles), weights(other.weights) {}
+    : tile_size(other.tile_size), start_point(other.start_point), weights(other.weights) {}
 
 Tiling &Tiling::operator=(const Tiling &other) {
     if (this != &other) {
         Tiling tmp(other);
         std::swap(tmp.tile_size, tile_size);
         std::swap(tmp.start_point, start_point);
-        std::swap(tmp.tiles, tiles);
         std::swap(tmp.weights, weights);
     }
     return *this;
@@ -52,13 +35,7 @@ size_t Tiling::operator()(State &features, size_t action) {
     auto copy_sign = xt::vectorize(std::copysign<float, float>);
     State lower_bound = copy_sign(xt::floor(xt::abs(features - start_point) / tile_size), features);
     State end_point = lower_bound + tile_size;
-    Tile tile(lower_bound, end_point, action);
-    std::vector<Tile>::iterator it = std::find(tiles.begin(), tiles.end(), tile);
-    if (it == tiles.end()) {
-        tiles.push_back(tile);
-        return tiles.size();
-    }
-    return std::distance(tiles.begin(), it);
+    return Tile(lower_bound, end_point, action);
 }
 
 float Tiling::operator()(size_t coordinate) {
@@ -67,11 +44,8 @@ float Tiling::operator()(size_t coordinate) {
     return it->second;
 }
 
-void Tiling::update(size_t coordinate, float value) { weights[coordinate] = value; }
-
-void Tiling::reset() {
-    tiles.clear();
-    weights.clear();
+void Tiling::update(size_t coordinate, float value) {
+    weights[coordinate] = value;
 }
 
 TileCoding::TileCoding(float alpha, size_t tilings, State tile_size, State tilings_offset) : alpha(alpha / tilings) {
@@ -113,12 +87,6 @@ void TileCoding::update(State &state, size_t action, float target) {
     float delta = target - xt::sum(features)();
     for (size_t i = 0; i < state.shape(0); i++) {
         tilings[i].update(coordinates(i), features(i) + alpha * delta);
-    }
-}
-
-void TileCoding::reset() {
-    for (size_t i = 0; i < tilings.size(); i++) {
-        tilings[i].reset();
     }
 }
 
