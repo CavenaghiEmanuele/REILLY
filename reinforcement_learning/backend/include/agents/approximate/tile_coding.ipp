@@ -74,9 +74,9 @@ void Tiling::reset() {
     weights.clear();
 }
 
-TileCoding::TileCoding(float alpha, size_t tilings, State tile_size, State tiling_offset) : alpha(alpha / tilings) {
+TileCoding::TileCoding(float alpha, size_t tilings, State tile_size, State tilings_offset) : alpha(alpha / tilings) {
     for (size_t i = 0; i < tilings; i++) {
-        this->tilings.push_back(Tiling(tile_size, (-i) * tiling_offset));
+        this->tilings.push_back(Tiling(tile_size, (-i) * tilings_offset));
     }
 }
 
@@ -102,7 +102,7 @@ float TileCoding::operator()(State &state, size_t action) {
     return xt::sum(features)();
 }
 
-void TileCoding::update(State &state, size_t action, float reward) {
+void TileCoding::update(State &state, size_t action, float target) {
     Coordinates coordinates = xt::empty<size_t>({state.shape(0)});
     State features = xt::empty<float>({state.shape(0)});
     for (size_t i = 0; i < state.shape(0); i++) {
@@ -110,7 +110,7 @@ void TileCoding::update(State &state, size_t action, float reward) {
         features(i) = tilings[i](coordinates(i));
     }
     // Linear Function Approximation
-    float delta = reward - xt::sum(features)();
+    float delta = target - xt::sum(features)();
     for (size_t i = 0; i < state.shape(0); i++) {
         tilings[i].update(coordinates(i), features(i) + alpha * delta);
     }

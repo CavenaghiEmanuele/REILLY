@@ -58,7 +58,7 @@ class TileCoding {
     std::vector<Tiling> tilings;
 
    public:
-    TileCoding(float alpha, size_t tilings, State tiling_offset, State tile_size);
+    TileCoding(float alpha, size_t tilings, State tilings_offset, State tile_size);
     TileCoding(const TileCoding &other);
     TileCoding &operator=(const TileCoding &other);
     ~TileCoding();

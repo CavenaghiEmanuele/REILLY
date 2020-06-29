@@ -30,7 +30,7 @@ class ApproximateAgent : public Agent {
 
    public:
     ApproximateAgent(size_t actions, float alpha, float epsilon, float gamma, float epsilon_decay,
-                    size_t tilings, std::list<float> tiling_offset, std::list<float> tile_size);
+                    size_t tilings, std::list<float> tilings_offset, std::list<float> tile_size);
     ApproximateAgent(const ApproximateAgent &other);
     virtual ~ApproximateAgent();
 
