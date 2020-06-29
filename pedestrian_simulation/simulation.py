@@ -115,6 +115,12 @@ def speed(results):
     plt.bar([p[0] for p in points], [p[1] for p in points], width=0.05, edgecolor="black")
     plt.savefig(datetime.now().strftime("%Y%m%d_%H%M%S") + '_speed_bars.jpg')
     plt.clf()
+
+def wall_clock_time(results):
+    groupby = results.drop(['return_sum', 'wins', 'time', 'distance', 'agent'], axis=1).groupby(['test', 'sample'])
+    wall_clock_time = groupby.max() * 0.25
+    wall_clock_time.columns = ['wall_clock_time']
+    print(wall_clock_time.loc[(1, 49)])
     
 def load_csv(name: str) -> pd.DataFrame:
     return pd.read_csv(name)
