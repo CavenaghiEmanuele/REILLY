@@ -29,8 +29,8 @@ class ApproximateAgent : public Agent {
     virtual void update(Vector next_state, float reward, bool done, py::kwargs kwargs) = 0;
 
    public:
-    ApproximateAgent(size_t actions, float alpha, float epsilon, float gamma, float epsilon_decay,
-                    size_t tilings, std::list<float> tilings_offset, std::list<float> tile_size);
+    ApproximateAgent(size_t actions, float alpha, float epsilon, float gamma, float epsilon_decay, size_t features,
+                     size_t tilings, std::list<float> tilings_offset, std::list<float> tile_size);
     ApproximateAgent(const ApproximateAgent &other);
     virtual ~ApproximateAgent();
 

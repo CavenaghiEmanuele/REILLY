@@ -31,7 +31,7 @@ inline void TabularAgent::policy_update(const ActionValue &Q, Policy &pi, size_t
     // Select greedy action, ties broken arbitrarily
     size_t a_star = argmaxQs(Q, state);
     // Update policy
-    for (size_t a = 0; a < pi.shape(1); a++) {
+    for (size_t a = 0; a < actions; a++) {
         if (a == a_star)
             pi(state, a) = 1 - epsilon + epsilon / actions;
         else

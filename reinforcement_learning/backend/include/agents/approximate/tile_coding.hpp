@@ -30,11 +30,13 @@ class Tiling {
 
 class TileCoding {
    private:
+    size_t actions;
     float alpha;
+    size_t features;
     std::vector<Tiling> tilings;
 
    public:
-    TileCoding(float alpha, size_t tilings, Vector tilings_offset, Vector tile_size);
+    TileCoding(size_t actions, float alpha, size_t features, size_t tilings, Vector tilings_offset, Vector tile_size);
     TileCoding(const TileCoding &other);
     TileCoding &operator=(const TileCoding &other);
     ~TileCoding();

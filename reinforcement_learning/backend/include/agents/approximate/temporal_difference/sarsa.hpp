@@ -12,7 +12,7 @@ class SemiGradientSarsa : public ApproximateTemporalDifference {
 
    public:
     SemiGradientSarsa(size_t actions, float alpha, float epsilon, float gamma, float epsilon_decay, size_t tilings,
-                      std::list<float> tilings_offset, std::list<float> tile_size);
+                      size_t features, std::list<float> tilings_offset, std::list<float> tile_size);
     SemiGradientSarsa(const SemiGradientSarsa &other);
     SemiGradientSarsa &operator=(const SemiGradientSarsa &other);
     virtual ~SemiGradientSarsa();
