@@ -8,8 +8,8 @@ namespace agents {
 
 size_t Tile(const Vector &start_point, const Vector &end_point, size_t action) {
     std::stringstream hash;
-    hash << start_point << ',';
-    hash << end_point << ',';
+    hash << xt::print_options::precision(8) << start_point << ',';
+    hash << xt::print_options::precision(8) << end_point << ',';
     hash << action;
     return std::hash<std::string>()(hash.str());
 }
