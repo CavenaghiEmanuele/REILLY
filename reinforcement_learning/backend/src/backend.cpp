@@ -226,6 +226,20 @@ PYBIND11_MODULE(backend, m) {
             py::arg("done")
         );
     
+    py::class_<SemiGradientMonteCarlo, ApproximateAgent>(m, "SemiGradientMonteCarlo")
+        .def(
+            py::init<size_t, float, float, float, float, size_t, size_t, std::list<float>, std::list<float>>(),
+            py::arg("actions"),
+            py::arg("alpha"),
+            py::arg("epsilon"),
+            py::arg("gamma"),
+            py::arg("epsilon_decay") = 1,
+            py::arg("features"),
+            py::arg("tilings"),
+            py::arg("tilings_offset"),
+            py::arg("tile_size")
+        );
+
     py::class_<ApproximateTemporalDifference, PyApproximateTemporalDifference, ApproximateAgent>(m, "ApproximateTemporalDifference");
 
     py::class_<SemiGradientSarsa, ApproximateTemporalDifference>(m, "SemiGradientSarsa")

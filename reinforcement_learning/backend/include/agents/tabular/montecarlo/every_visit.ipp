@@ -37,7 +37,7 @@ void MonteCarloEveryVisit::control() {
     Trajectory::reverse_iterator t;
     // For each step of episode, t = T-1, T-2, ..., 0
     for (t = trajectory.rbegin(); t != trajectory.rend(); ++t) {
-        G = gamma * G + t->reward;
+        G = t->reward + gamma * G;
         // Append G to Returns(St, At)
         returns(t->state, t->action) += 1;
         // Incremental update of Average(Returns(St, At))

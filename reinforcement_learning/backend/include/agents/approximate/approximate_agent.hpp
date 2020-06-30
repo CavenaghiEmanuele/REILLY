@@ -20,13 +20,20 @@ Vector to_xtensor(std::list<float> in) {
 class ApproximateAgent : public Agent {
    protected:
     Vector state;
-
     TileCoding estimator;
 
     inline virtual size_t select_action(TileCoding &estimator, Vector &state);
 
     virtual void reset(Vector init_state) = 0;
     virtual void update(Vector next_state, float reward, bool done, py::kwargs kwargs) = 0;
+
+    struct Point {
+        Vector state;
+        size_t action;
+        float reward;
+    };
+
+    using Trajectory = std::vector<Point>;
 
    public:
     ApproximateAgent(size_t actions, float alpha, float epsilon, float gamma, float epsilon_decay, size_t features,

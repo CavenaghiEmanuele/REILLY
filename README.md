@@ -15,7 +15,6 @@
 | MonteCarlo (First Visit) | &#x2705;  |            | &#x2705; | &#x2705; |
 | MonteCarlo (Every Visit) | &#x2705;  |            | &#x2705; | &#x2705; |
 
-
 ### Temporal Difference
 
 | Name           | On-Policy | Off-Policy |  Python  |  C/C++   |
@@ -41,7 +40,6 @@
 | n-step Tree Backup    |    :x:    |  &#x2705;  |          | &#x2705; |
 | n-step Q$(\sigma)$    |           |            |          |          |
 
-
 ### Planning and learning with tabular
 
 | Name                                      | Python |  C/C++   |
@@ -62,7 +60,6 @@
 | Tiling offset               | &#x2705; | &#x2705; |
 | Different tiling dimensions | &#x2705; | &#x2705; |
 
-
 ### Q Estimator
 
 | Name                |  Python  |  C/C++   |
@@ -70,6 +67,11 @@
 | Base implementation | &#x2705; | &#x2705; |
 | With trace          |          |          |
 
+### MonteCarlo
+
+| Name                     | On-Policy | Off-Policy | Python |  C/C++   |
+| ------------------------ | :-------: | :--------: | :----: | :------: |
+| Semi-gradient MonteCarlo | &#x2705;  |            |        | &#x2705; |
 
 ### Temporal difference
 

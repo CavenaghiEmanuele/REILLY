@@ -24,13 +24,13 @@ void MonteCarlo::reset(size_t init_state) {
 void MonteCarlo::update(size_t next_state, float reward, bool done, py::kwargs kwargs) {
     trajectory.push_back({state, action, reward});
     
-    if (done) {
-        if (py::cast<bool>(kwargs["training"])) control();
-        epsilon *= epsilon_decay;
-    }
+    bool training = py::cast<bool>(kwargs["training"]);
+    if (done && training) control();
 
     state = next_state;
     action = select_action(pi, next_state);
+
+    if (done) epsilon *= epsilon_decay;
 }
 
 std::string MonteCarlo::__repr__() {
