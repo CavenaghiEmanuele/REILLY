@@ -4,7 +4,9 @@ from PIL import Image
 from datetime import datetime
 from enum import IntEnum, auto, unique
 from random import choice
+from functools import reduce
 from typing import Dict, List
+from math import sqrt
 
 from ..environment import Environment
 
@@ -95,16 +97,57 @@ class TextEnvironment(Environment):
     def actions(self) -> int:
         return self._neighbor
 
+    def heatmap(self) -> None:
+        if self._gui is not None:
+            # Cast from uint8 to float32
+            self._gui = [
+                data.astype(np.float32)
+                for data in self._gui
+            ]
+            # Build heatmap
+            heatmap = sum(self._gui)
+            _min = self._env_init.min()
+            _max = self._env_init.max()
+            background = np.interp(self._env_init, (_min, _max), (255, 0))
+            heatmap -= background * len(self._gui)
+            heatmap = Image.fromarray(
+                np.dstack([
+                    background,
+                    background,
+                    heatmap,
+                ]).astype(np.uint8),
+                mode='RGB'
+            )
+            heatmap.save(
+                datetime.now().strftime("%d-%b-%Y %H:%M:%S.%f") + '_heatmap.jpg',
+                format='JPEG',
+                subsampling=0,
+                quality=100
+            )
+        self._gui = []
+
     def _render(self) -> None:
         if self._gui is not None:
             data = self._env_exec
             data = np.interp(data, (data.min(), data.max()), (255, 0))
-            data = Image.fromarray(data.astype(np.uint8), mode='L').convert('RGBA')
-            data = data.resize(size=(data.size[0] * 7, data.size[1] * 7))
             self._gui.append(data)
 
     def render(self) -> None:
         if self._gui is not None:
+            # Cast from uint8 to float32
+            self._gui = [
+                data.astype(np.float32)
+                for data in self._gui
+            ]
+            # Build gif
+            self._gui = [
+                Image.fromarray(data.astype(np.uint8), mode='L').convert('RGBA')
+                for data in self._gui
+            ]
+            self._gui = [
+                data.resize(size=(data.size[0] * 7, data.size[1] * 7))
+                for data in self._gui
+            ]
             self._gui[0].save(
                 datetime.now().strftime("%d-%b-%Y %H:%M:%S.%f") + '.gif',
                 save_all=True,
@@ -138,7 +181,7 @@ class TextEnvironment(Environment):
         # Initialize reward as EMPTY, done as False and wins as 0
         reward = self._rewards[TextStates.EMPTY]
         done = False
-        info = {'return_sum': reward, 'wins': 0}
+        info = {'return_sum': reward, 'wins': 0, 'time': 0.25, 'distance': 0}
         # Update and check max_steps
         agent['counter'] += 1
         if agent['counter'] == self._max_steps:
@@ -174,9 +217,14 @@ class TextEnvironment(Environment):
                     # Set GOAL reward value and done flag
                     reward = self._rewards[TextStates.GOAL]
                     done = True
-                    info = {'return_sum': reward, 'wins': 1}
+                    info = {'return_sum': reward, 
+                            'wins': 1,
+                            'time': 0.25, 
+                            'distance': 0}
                 # Reset agent location
                 self._env_exec[tuple(agent['location'])] = TextStates.EMPTY
+                # Add distance info
+                info['distance'] = self._distance(agent['location'], next_state, action)
                 # Update agent loaction
                 agent['location'] = next_state
                 # Set agent on env if not reached GOAL
@@ -191,6 +239,13 @@ class TextEnvironment(Environment):
         if not self._raw_state:
             return self._location_to_state(agent['location']), reward, done, info
         return agent['location'], reward, done, info
+
+    def _distance(self, old_state, new_state, action):       
+        if old_state == new_state:
+            return 0
+        if self._neighbor == TextNeighbor.NEUMANN or action % 2 == 0:
+            return 0.4
+        return 0.4 * sqrt(2)
 
     @property
     def probability_distribution(self):

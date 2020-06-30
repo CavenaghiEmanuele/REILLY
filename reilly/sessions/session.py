@@ -29,7 +29,7 @@ class Session(ABC):
         self._agents[key] = agent
         self._labels[key] = 'ID: ' + str(key) + ', Params: ' + str(agent)
 
-    def run(self, episodes: int, test_offset: int, test_samples: int, render: bool = False) -> pd.DataFrame:
+    def run(self, episodes: int, test_offset: int, test_samples: int, render: bool = False, heatmap: bool = False) -> pd.DataFrame:
         self._reset_env()
         out = []
         for episode in tqdm(range(1, episodes + 1)):
@@ -37,7 +37,7 @@ class Session(ABC):
             if episode % test_offset == 0:
                 out.append(
                     self._run_test(episode // test_offset,
-                                   test_samples, render)
+                                   test_samples, render, heatmap)
                 )
         return pd.concat(out)
 
@@ -45,14 +45,16 @@ class Session(ABC):
     def _run_train(self) -> None:
         pass
 
-    def _run_test(self, test: int, test_samples: int, render: bool = False) -> pd.DataFrame:
+    def _run_test(self, test: int, test_samples: int, render: bool = False, heatmap: bool = False) -> pd.DataFrame:
         self._reset_env()
         if render:
             self._env.render()
+        if heatmap:
+            self._env.heatmap()
         out = []
         for sample in range(test_samples):
             step = 0
-            agents = self._random_start()
+            agents = self._random_start(step)
             while len(agents) > 0:
                 shuffle(agents)
                 for agent in agents[::]:
@@ -68,9 +70,8 @@ class Session(ABC):
                         **info
                     })
                 step += 1
-                if self._start_step > 0:
-                    self._start_step -= 1
-                    agents = list(set(agents) + set(self._random_start()))
+                if self._start_step - step >= 0:
+                    agents = list(set(agents) | set(self._random_start(step)))
             self._reset_env()
         return pd.DataFrame(out)
 
@@ -78,9 +79,9 @@ class Session(ABC):
         for key, agent in self._agents.items():
             agent.reset(self._env, id=key)
 
-    def _random_start(self) -> List:
+    def _random_start(self, step) -> List:
         return [
             agent
             for agent in self._agents.keys()
-            if randint(0, self._start_step) == 0
+            if randint(0, self._start_step - step) == 0
         ]

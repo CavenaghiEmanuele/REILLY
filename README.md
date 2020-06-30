@@ -1,6 +1,18 @@
+<pre><b>
+ ________  _______   ___  ___       ___           ___    ___ 
+|\   __  \|\  ___ \ |\  \|\  \     |\  \         |\  \  /  /|
+\ \  \|\  \ \   __/|\ \  \ \  \    \ \  \        \ \  \/  / /
+ \ \   _  _\ \  \_|/_\ \  \ \  \    \ \  \        \ \    / / 
+  \ \  \\  \\ \  \_|\ \ \  \ \  \____\ \  \____    \/  /  /  
+   \ \__\\ _\\ \_______\ \__\ \_______\ \_______\__/  / /    
+    \|__|\|__|\|_______|\|__|\|_______|\|_______|\___/ /     
+                                                \|___|/      
+                                                             
+</b></pre>
+
 # Reinforcement Learning Library
 
-## Legends
+Legends
 
 * *empty* - Not implemented
 * &#x2705; - Already implemented
@@ -93,19 +105,19 @@
 | ------------------ | :-------: | :--------: | :------: | :---: |
 | Accumulating Trace | &#x2705;  |            | &#x2705; |       |
 | Replacing Trace    | &#x2705;  |            | &#x2705; |       |
-| Dutch Trace        | &#x2705;  |            | &#x2705; |       |
+| Dutch Trace        |           |            |          |       |
 
 ### Eligibility Traces
 
-| Name                            | On-Policy | Off-Policy | Python | C/C++ |
-| :------------------------------ | :-------: | :--------- | :----: | :---: |
-| Temporal difference $(\lambda)$ |           |            |        |       |
-| True Online TD$(\lambda)$       |           |            |        |       |
-| Sarsa$(\lambda)$                |           |            |        |       |
-| True Online Sarsa$(\lambda)$    |           |            |        |       |
-| Forward Sarsa$(\lambda)$        |           |            |        |       |
-| Watkins’s Q$(\lambda)$          |           |            |        |       |
-| Tree-Backup Q$(\lambda)$        |           |            |        |       |
+| Name                            | On-Policy | Off-Policy |  Python  | C/C++ |
+| :------------------------------ | :-------: | :--------- | :------: | :---: |
+| Temporal difference (&lambda;) |           |            |          |       |
+| True Online TD(&lambda;)       |           |            |          |       |
+| Sarsa(&lambda;)                | &#x2705;  |            | &#x2705; |       |
+| True Online Sarsa(&lambda;)    |           |            |          |       |
+| Forward Sarsa(&lambda;)        |           |            |          |       |
+| Watkins’s Q(&lambda;)          |           |            |          |       |
+| Tree-Backup Q(&lambda;)        |           |            |          |       |
 
 ## Environments
 
@@ -119,6 +131,7 @@
 | MountainCar   |       No        |       Yes        |      No       |      No      |
 
 ### Custom Environments
+
 
 | Name | Discrete State? | Discrete Action? | Linear State? | Multi-Agent? |
 | ---- | :-------------: | :--------------: | :-----------: | :----------: |
