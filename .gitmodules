@@ -1,18 +1,18 @@
-[submodule "reinforcement_learning/backend/extern/xtl"]
-	path = reinforcement_learning/backend/extern/xtl
+[submodule "reilly/backend/extern/xtl"]
+	path = reilly/backend/extern/xtl
 	url = git@github.com:xtensor-stack/xtl.git
-[submodule "reinforcement_learning/backend/extern/xsimd"]
-	path = reinforcement_learning/backend/extern/xsimd
+[submodule "reilly/backend/extern/xsimd"]
+	path = reilly/backend/extern/xsimd
 	url = git@github.com:xtensor-stack/xsimd.git
-[submodule "reinforcement_learning/backend/extern/xtensor"]
-	path = reinforcement_learning/backend/extern/xtensor
+[submodule "reilly/backend/extern/xtensor"]
+	path = reilly/backend/extern/xtensor
 	url = git@github.com:xtensor-stack/xtensor.git
-[submodule "reinforcement_learning/backend/extern/googletest"]
-	path = reinforcement_learning/backend/extern/googletest
+[submodule "reilly/backend/extern/googletest"]
+	path = reilly/backend/extern/googletest
 	url = git@github.com:google/googletest.git
-[submodule "reinforcement_learning/backend/extern/pybind11"]
-	path = reinforcement_learning/backend/extern/pybind11
+[submodule "reilly/backend/extern/pybind11"]
+	path = reilly/backend/extern/pybind11
 	url = git@github.com:pybind/pybind11.git
-[submodule "reinforcement_learning/backend/extern/xtensor-python"]
-	path = reinforcement_learning/backend/extern/xtensor-python
+[submodule "reilly/backend/extern/xtensor-python"]
+	path = reilly/backend/extern/xtensor-python
 	url = git@github.com:xtensor-stack/xtensor-python.git
