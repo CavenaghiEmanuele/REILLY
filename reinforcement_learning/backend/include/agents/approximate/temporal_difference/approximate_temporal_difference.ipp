@@ -1,6 +1,6 @@
 #pragma once
 
-#include "temporal_difference.hpp"
+#include "approximate_temporal_difference.hpp"
 
 namespace rl {
 

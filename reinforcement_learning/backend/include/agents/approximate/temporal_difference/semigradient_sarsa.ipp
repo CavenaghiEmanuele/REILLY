@@ -1,6 +1,6 @@
 #pragma once
 
-#include "sarsa.hpp"
+#include "semigradient_sarsa.hpp"
 
 namespace rl {
 

@@ -24,6 +24,6 @@
 #include <agents/tabular/planning/prioritized_sweeping.ipp>
 
 #include <agents/approximate/approximate_agent.ipp>
-#include <agents/approximate/temporal_difference/temporal_difference.ipp>
-#include <agents/approximate/temporal_difference/sarsa.ipp>
-#include <agents/approximate/temporal_difference/expected_sarsa.ipp>
+#include <agents/approximate/temporal_difference/approximate_temporal_difference.ipp>
+#include <agents/approximate/temporal_difference/semigradient_sarsa.ipp>
+#include <agents/approximate/temporal_difference/semigradient_expected_sarsa.ipp>
