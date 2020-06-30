@@ -2,7 +2,7 @@ import os
 import matplotlib.pyplot as plt
 from multiprocessing import Pool
 
-import reinforcement_learning as rl
+import reilly as rl
 
 
 def run_agent(agent):

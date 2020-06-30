@@ -21,9 +21,9 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('../..'))
 
-import reinforcement_learning
+import reilly
 from mock import Mock
-sys.modules['reinforcement_learning'] = Mock()
+sys.modules['reilly'] = Mock()
 
 
 # -- General configuration ------------------------------------------------
