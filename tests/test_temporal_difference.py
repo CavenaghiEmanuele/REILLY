@@ -1,4 +1,4 @@
-import reinforcement_learning as rl
+import reilly as rl
 
 
 def test_QLearning_agent():

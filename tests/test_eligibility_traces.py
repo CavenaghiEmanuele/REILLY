@@ -1,4 +1,4 @@
-import reinforcement_learning as rl
+import reilly as rl
 
 
 def test_sarsa_lambda():
@@ -9,7 +9,6 @@ def test_sarsa_lambda():
             epsilon=0.03,
             gamma=0.99,
             lambd=0.98,
-            have_trace=True,
             trace_type="replacing",
             feature_dims=1,
             num_tilings=4,
