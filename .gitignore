@@ -3,4 +3,3 @@ __pycache__
 build
 main.py
 tmp_main.py
-*.csv
