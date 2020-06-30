@@ -102,6 +102,14 @@ void TileCoding::update(const Vector &state, size_t action, float target) {
     }
 }
 
+std::string TileCoding::__repr__() {
+    int status;
+    std::stringstream out;
+    char *demangled = abi::__cxa_demangle(typeid(*this).name(), 0, 0, &status);
+    out << "<" << demangled << "(features=" << features << ", tilings=" << tilings.size() << ")>";
+    return out.str();
+}
+
 }  // namespace agents
 
 }  // namespace rl

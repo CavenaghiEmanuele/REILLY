@@ -82,10 +82,10 @@
 
 ### n-step Bootstrapping
 
-| Name                                | On-Policy | Off-Policy | Differential |  Python  | C/C++ |
-| ----------------------------------- | :-------: | :--------: | :----------: | :------: | :---: |
-| Semi-gradient n-step Sarsa          | &#x2705;  |            |              | &#x2705; |       |
-| Semi-gradient n-step Expected Sarsa | &#x2705;  |            |              | &#x2705; |       |
+| Name                                | On-Policy | Off-Policy | Differential |  Python  |  C/C++   |
+| ----------------------------------- | :-------: | :--------: | :----------: | :------: | :------: |
+| Semi-gradient n-step Sarsa          | &#x2705;  |            |              | &#x2705; | &#x2705; |
+| Semi-gradient n-step Expected Sarsa | &#x2705;  |            |              | &#x2705; | &#x2705; |
 
 ### Traces
 

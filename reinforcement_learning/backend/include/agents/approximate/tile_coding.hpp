@@ -44,6 +44,8 @@ class TileCoding {
     Vector operator()(const Vector &state) const;
     float operator()(const Vector &state, size_t action) const;
     void update(const Vector &state, size_t action, float reward);
+
+    std::string __repr__();
 };
 
 }  // namespace agents

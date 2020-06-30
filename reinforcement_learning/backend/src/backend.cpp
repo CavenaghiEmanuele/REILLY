@@ -269,4 +269,36 @@ PYBIND11_MODULE(backend, m) {
             py::arg("tilings_offset"),
             py::arg("tile_size")
         );
+    
+    py::class_<ApproximateNStep, PyApproximateNStep, ApproximateAgent>(m, "ApproximateNStep");
+
+    py::class_<SemiGradientNStepSarsa, ApproximateNStep>(m, "SemiGradientNStepSarsa")
+        .def(
+            py::init<size_t, float, float, float, size_t, float, size_t, size_t, std::list<float>, std::list<float>>(),
+            py::arg("actions"),
+            py::arg("alpha"),
+            py::arg("epsilon"),
+            py::arg("gamma"),
+            py::arg("n_step"),
+            py::arg("epsilon_decay") = 1,
+            py::arg("features"),
+            py::arg("tilings"),
+            py::arg("tilings_offset"),
+            py::arg("tile_size")
+        );
+    
+    py::class_<SemiGradientNStepExpectedSarsa, ApproximateNStep>(m, "SemiGradientNStepExpectedSarsa")
+        .def(
+            py::init<size_t, float, float, float, size_t, float, size_t, size_t, std::list<float>, std::list<float>>(),
+            py::arg("actions"),
+            py::arg("alpha"),
+            py::arg("epsilon"),
+            py::arg("gamma"),
+            py::arg("n_step"),
+            py::arg("epsilon_decay") = 1,
+            py::arg("features"),
+            py::arg("tilings"),
+            py::arg("tilings_offset"),
+            py::arg("tile_size")
+        );
 }

@@ -28,3 +28,6 @@
 #include <agents/approximate/temporal_difference/approximate_temporal_difference.ipp>
 #include <agents/approximate/temporal_difference/semigradient_sarsa.ipp>
 #include <agents/approximate/temporal_difference/semigradient_expected_sarsa.ipp>
+#include <agents/approximate/n_step/approximate_n_step.ipp>
+#include <agents/approximate/n_step/semigradient_n_step_sarsa.ipp>
+#include <agents/approximate/n_step/semigradient_n_step_expected_sarsa.ipp>

@@ -59,8 +59,8 @@ std::string ApproximateAgent::__repr__() {
     int status;
     std::stringstream out;
     char *demangled = abi::__cxa_demangle(typeid(*this).name(), 0, 0, &status);
-    out << "<" << demangled << "(epsilon=" << epsilon << ", gamma=" << gamma;
-    out << ", epsilon_decay=" << epsilon_decay << ")>";
+    out << "<" << demangled << "(alpha= " << alpha << "epsilon=" << epsilon << ", gamma=" << gamma;
+    out << ", epsilon_decay=" << epsilon_decay << ", estimator=" << estimator.__repr__();
     return out.str();
 }
 

@@ -102,6 +102,16 @@ class PyApproximateTemporalDifference : public ApproximateTemporalDifference {
     }
 };
 
+class PyApproximateNStep : public ApproximateNStep {
+   public:
+    using ApproximateNStep::ApproximateNStep;
+
+    void reset(Vector init_state) override { PYBIND11_OVERLOAD(void, ApproximateNStep, reset, init_state); }
+    void update(Vector next_state, float reward, bool done, py::kwargs kwargs) override {
+        PYBIND11_OVERLOAD_PURE(void, Agent, update, next_state, reward, done, kwargs);
+    }
+};
+
 }  // namespace agents
 
 }  // namespace rl
