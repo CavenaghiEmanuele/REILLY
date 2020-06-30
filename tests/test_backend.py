@@ -188,6 +188,22 @@ def test_PrioritizedSweeping():
     session.add_agent(agent)
     session.run(100, 10, 10)
 
+def test_SemiGradientMonteCarlo():
+    env = rl.Frozen_Lake4x4()
+    session = rl.PyBindSession(env)
+    agent = rl.backend.SemiGradientMonteCarlo(
+        actions=env.actions,
+        alpha=0.1,
+        epsilon=0.01,
+        gamma=0.99,
+        features=1,
+        tilings=2,
+        tilings_offset=[4, 4],
+        tile_size=[4, 4]
+    )
+    session.add_agent(agent)
+    session.run(100, 10, 10)
+
 def test_SemiGradientSarsa():
     env = rl.Frozen_Lake4x4()
     session = rl.PyBindSession(env)
