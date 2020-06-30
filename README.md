@@ -1,9 +1,17 @@
+<pre><b>
+ ___      _____
+|    \   |       |  |       |     \   /
+|___ /   |___    |  |       |      \ /
+|    \   |       |  |       |       |
+|     \  |_____  |  |_____ ~~~~ |_____  |  
+</b></pre>
+
 # Reinforcement Learning Library
 
-## Legends
+Legends
 
 * *empty* - Not implemented
-* ✅ - Already implemented
+* ✅ - Already implemented~~~~
 * ❌ - Non existent
 
 ## Tabular Agents
@@ -71,7 +79,7 @@
 | Name | Python | C/C++ |
 | - | :-: | :-: |
 | Base implementation | ✅ |   |
-| With trace | ✅|   |
+| With trace | ✅ |   |
 
 ### Temporal difference
 
