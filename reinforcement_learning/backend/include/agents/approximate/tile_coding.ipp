@@ -31,14 +31,14 @@ Tiling &Tiling::operator=(const Tiling &other) {
 
 Tiling::~Tiling() {}
 
-size_t Tiling::operator()(const Vector &state, size_t action) {
+size_t Tiling::operator()(const Vector &state, size_t action) const {
     auto copy_sign = xt::vectorize(std::copysign<float, float>);
     Vector lower_bound = copy_sign(xt::floor(xt::abs(state - start_point) / tile_size), state);
     Vector end_point = lower_bound + tile_size;
     return Tile(lower_bound, end_point, action);
 }
 
-float Tiling::operator()(size_t coordinate) {
+float Tiling::operator()(size_t coordinate) const {
     auto it = weights.find(coordinate);
     if (it == weights.end()) return 0;
     return it->second;
@@ -70,35 +70,35 @@ TileCoding &TileCoding::operator=(const TileCoding &other) {
 
 TileCoding::~TileCoding() {}
 
-Vector TileCoding::operator()(const Vector &state) {
+Vector TileCoding::operator()(const Vector &state) const {
     Vector weights = xt::empty<float>({actions});
     for (size_t a = 0; a < actions; a++) {
-        weights(a) = this->operator()(state, a);
+        weights(a) = operator()(state, a);
     }
     return weights;
 }
 
-float TileCoding::operator()(const Vector &state, size_t action) {
-    Vector features = xt::empty<float>({this->features});
-    for (size_t i = 0; i < this->features; i++) {
+float TileCoding::operator()(const Vector &state, size_t action) const {
+    Vector _features = xt::empty<float>({features});
+    for (size_t i = 0; i < features; i++) {
         size_t coordinate = tilings[i](state, action);
-        features(i) = tilings[i](coordinate);
+        _features(i) = tilings[i](coordinate);
     }
     // Linear Function Approximation
-    return xt::sum(features)();
+    return xt::sum(_features)();
 }
 
 void TileCoding::update(const Vector &state, size_t action, float target) {
-    Coordinates coordinates = xt::empty<size_t>({this->features});
-    Vector features = xt::empty<float>({this->features});
-    for (size_t i = 0; i < this->features; i++) {
+    Coordinates coordinates = xt::empty<size_t>({features});
+    Vector _features = xt::empty<float>({features});
+    for (size_t i = 0; i < features; i++) {
         coordinates(i) = tilings[i](state, action);
-        features(i) = tilings[i](coordinates(i));
+        _features(i) = tilings[i](coordinates(i));
     }
     // Linear Function Approximation
-    float delta = target - xt::sum(features)();
-    for (size_t i = 0; i < this->features; i++) {
-        tilings[i].update(coordinates(i), features(i) + alpha * delta);
+    float delta = target - xt::sum(_features)();
+    for (size_t i = 0; i < features; i++) {
+        tilings[i].update(coordinates(i), _features(i) + alpha * delta);
     }
 }
 

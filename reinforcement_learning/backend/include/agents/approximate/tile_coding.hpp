@@ -22,8 +22,8 @@ class Tiling {
     Tiling &operator=(const Tiling &other);
     ~Tiling();
 
-    size_t operator()(const Vector &state, size_t action);
-    float operator()(size_t coordinate);
+    size_t operator()(const Vector &state, size_t action) const;
+    float operator()(size_t coordinate) const;
 
     void update(size_t coordinate, float weight);
 };
@@ -41,8 +41,8 @@ class TileCoding {
     TileCoding &operator=(const TileCoding &other);
     ~TileCoding();
 
-    Vector operator()(const Vector &state);
-    float operator()(const Vector &state, size_t action);
+    Vector operator()(const Vector &state) const;
+    float operator()(const Vector &state, size_t action) const;
     void update(const Vector &state, size_t action, float reward);
 };
 
