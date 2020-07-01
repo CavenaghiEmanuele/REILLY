@@ -10,6 +10,8 @@
                                                              
 </b></pre>
 
+[![Build Status](https://travis-ci.org/CavenaghiEmanuele/REILLY.svg?branch=master)](https://travis-ci.org/CavenaghiEmanuele/REILLY) [![CodeFactor](https://www.codefactor.io/repository/github/cavenaghiemanuele/reilly/badge)](https://www.codefactor.io/repository/github/cavenaghiemanuele/reilly) [![codecov](https://codecov.io/gh/CavenaghiEmanuele/REILLY/branch/master/graph/badge.svg)](https://codecov.io/gh/CavenaghiEmanuele/REILLY)
+
 # Reinforcement Learning Library
 
 ## How to Install
