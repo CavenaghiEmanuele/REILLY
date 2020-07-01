@@ -1,18 +1,18 @@
-[submodule "reilly/backend/extern/xtl"]
-	path = reilly/backend/extern/xtl
-	url = git@github.com:xtensor-stack/xtl.git
-[submodule "reilly/backend/extern/xsimd"]
-	path = reilly/backend/extern/xsimd
-	url = git@github.com:xtensor-stack/xsimd.git
-[submodule "reilly/backend/extern/xtensor"]
-	path = reilly/backend/extern/xtensor
-	url = git@github.com:xtensor-stack/xtensor.git
 [submodule "reilly/backend/extern/googletest"]
 	path = reilly/backend/extern/googletest
-	url = git@github.com:google/googletest.git
+	url = https://github.com/google/googletest.git
 [submodule "reilly/backend/extern/pybind11"]
 	path = reilly/backend/extern/pybind11
-	url = git@github.com:pybind/pybind11.git
+	url = https://github.com/pybind/pybind11.git
+[submodule "reilly/backend/extern/xtl"]
+	path = reilly/backend/extern/xtl
+	url = https://github.com/xtensor-stack/xtl.git
+[submodule "reilly/backend/extern/xsimd"]
+	path = reilly/backend/extern/xsimd
+	url = https://github.com/xtensor-stack/xsimd.git
+[submodule "reilly/backend/extern/xtensor"]
+	path = reilly/backend/extern/xtensor
+	url = https://github.com/xtensor-stack/xtensor.git
 [submodule "reilly/backend/extern/xtensor-python"]
 	path = reilly/backend/extern/xtensor-python
-	url = git@github.com:xtensor-stack/xtensor-python.git
+	url = https://github.com/xtensor-stack/xtensor-python.git

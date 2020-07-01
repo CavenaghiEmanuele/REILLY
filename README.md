@@ -16,7 +16,7 @@
 
 Clone the repository including submodules:
 
-    git clone --recurse-submodules -j8 git@github.com:CavenaghiEmanuele/REILLY.git
+    git clone --recurse-submodules -j8 https://github.com/CavenaghiEmanuele/REILLY.git
 
 Install requirements:
 
