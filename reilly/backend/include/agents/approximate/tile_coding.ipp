@@ -49,6 +49,19 @@ void Tiling::update(size_t coordinate, float value) {
 }
 
 TileCoding::TileCoding(size_t actions, float alpha, py::kwargs kwargs) : actions(actions) {
+    if (!kwargs.contains("features")) {
+        throw std::invalid_argument("Missing 'features' keyword argument.");
+    }
+    if (!kwargs.contains("tilings")) {
+        throw std::invalid_argument("Missing 'tilings' keyword argument.");
+    }
+    if (!kwargs.contains("tilings_offset")) {
+        throw std::invalid_argument("Missing 'tilings_offset' keyword argument.");
+    }
+    if (!kwargs.contains("tile_size")) {
+        throw std::invalid_argument("Missing 'tile_size' keyword argument.");
+    }
+
     size_t tilings = py::cast<size_t>(kwargs["tilings"]);
     this->alpha = alpha / tilings;
     this->features = py::cast<size_t>(kwargs["features"]);
