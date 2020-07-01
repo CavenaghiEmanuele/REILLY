@@ -2,7 +2,7 @@
 
 #include "../approximate_agent.ipp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 class SemiGradientMonteCarlo : public ApproximateAgent {
@@ -21,4 +21,4 @@ class SemiGradientMonteCarlo : public ApproximateAgent {
 };
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

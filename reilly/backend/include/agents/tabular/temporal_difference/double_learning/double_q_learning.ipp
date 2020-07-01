@@ -2,7 +2,7 @@
 
 #include "double_q_learning.hpp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -52,4 +52,4 @@ void DoubleQLearning::update(size_t next_state, float reward, bool done, py::kwa
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

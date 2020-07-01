@@ -4,7 +4,7 @@
 
 #include "../tabular_agent.ipp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -28,4 +28,4 @@ class MonteCarlo : public TabularAgent {
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

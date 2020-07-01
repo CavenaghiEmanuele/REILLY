@@ -2,7 +2,7 @@
 
 #include "semigradient_sarsa.hpp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -45,4 +45,4 @@ void SemiGradientSarsa::update(Vector next_state, float reward, bool done, py::k
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

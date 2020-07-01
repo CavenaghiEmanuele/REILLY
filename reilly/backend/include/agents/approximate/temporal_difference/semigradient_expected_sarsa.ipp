@@ -2,7 +2,7 @@
 
 #include "semigradient_expected_sarsa.hpp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -48,4 +48,4 @@ void SemiGradientExpectedSarsa::update(Vector next_state, float reward, bool don
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

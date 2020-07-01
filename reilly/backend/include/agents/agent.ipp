@@ -2,7 +2,7 @@
 
 #include "agent.hpp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -49,4 +49,4 @@ size_t Agent::get_action() { return action; }
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

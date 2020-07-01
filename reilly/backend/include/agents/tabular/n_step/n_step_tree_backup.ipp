@@ -2,7 +2,7 @@
 
 #include "n_step_tree_backup.hpp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -79,4 +79,4 @@ void NStepTreeBackup::update(size_t next_state, float reward, bool done, py::kwa
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

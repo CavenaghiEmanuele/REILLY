@@ -2,7 +2,7 @@
 
 #include "../approximate_agent.ipp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -26,4 +26,4 @@ class ApproximateNStep : public ApproximateAgent {
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

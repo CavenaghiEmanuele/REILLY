@@ -2,7 +2,7 @@
 
 #include "approximate_temporal_difference.ipp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -20,4 +20,4 @@ class SemiGradientExpectedSarsa : public ApproximateTemporalDifference {
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

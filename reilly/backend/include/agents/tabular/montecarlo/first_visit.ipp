@@ -2,7 +2,7 @@
 
 #include "first_visit.hpp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -53,4 +53,4 @@ void MonteCarloFirstVisit::control() {
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

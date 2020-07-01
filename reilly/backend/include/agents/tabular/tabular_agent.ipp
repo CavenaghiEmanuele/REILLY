@@ -2,7 +2,7 @@
 
 #include "tabular_agent.hpp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -38,4 +38,4 @@ std::string TabularAgent::__repr__() {
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

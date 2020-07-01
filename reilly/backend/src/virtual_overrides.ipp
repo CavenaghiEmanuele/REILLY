@@ -4,7 +4,7 @@
 
 #include <backend.hpp>
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -114,4 +114,4 @@ class PyApproximateNStep : public ApproximateNStep {
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

@@ -2,7 +2,7 @@
 
 #include "q_learning.hpp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -45,4 +45,4 @@ void QLearning::update(size_t next_state, float reward, bool done, py::kwargs kw
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

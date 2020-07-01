@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.1)
 
-project(Telegraph   VERSION 0.0.1
-                    DESCRIPTION "Reinforcement Learning Library Backend"
-                    LANGUAGES CXX)
+project(REILLY  VERSION 0.0.1
+                DESCRIPTION "A REInforcement Learning LibrarY - Backend"
+                LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 14)
 

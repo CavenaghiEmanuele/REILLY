@@ -2,7 +2,7 @@
 
 #include "n_step_sarsa.hpp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -73,4 +73,4 @@ void NStepSarsa::update(size_t next_state, float reward, bool done, py::kwargs k
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

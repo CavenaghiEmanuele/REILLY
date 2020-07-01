@@ -2,7 +2,7 @@
 
 #include "q_planning.hpp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -29,4 +29,4 @@ std::string QPlanning::__repr__() {
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

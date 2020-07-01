@@ -2,7 +2,7 @@
 
 #include "every_visit.hpp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -49,4 +49,4 @@ void MonteCarloEveryVisit::control() {
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

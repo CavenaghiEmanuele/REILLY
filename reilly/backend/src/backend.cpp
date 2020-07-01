@@ -18,7 +18,7 @@
 #include <backend.hpp>
 #include "virtual_overrides.ipp"
 
-using namespace rl::agents;
+using namespace reilly::agents;
 
 namespace py = pybind11;
 

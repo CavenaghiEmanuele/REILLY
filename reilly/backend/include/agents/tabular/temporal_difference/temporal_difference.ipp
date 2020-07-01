@@ -2,7 +2,7 @@
 
 #include "temporal_difference.hpp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -20,4 +20,4 @@ void TemporalDifference::reset(size_t init_state) {
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

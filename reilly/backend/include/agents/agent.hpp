@@ -24,7 +24,7 @@
 
 namespace py = pybind11;
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -72,4 +72,4 @@ class Agent {
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

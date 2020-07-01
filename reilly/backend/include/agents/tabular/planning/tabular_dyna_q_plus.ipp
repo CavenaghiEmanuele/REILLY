@@ -2,7 +2,7 @@
 
 #include "tabular_dyna_q_plus.hpp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -55,4 +55,4 @@ void TabularDynaQPlus::update(size_t next_state, float reward, bool done, py::kw
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

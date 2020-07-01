@@ -2,7 +2,7 @@
 
 #include "n_step.ipp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -18,4 +18,4 @@ class NStepTreeBackup : public NStep {
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

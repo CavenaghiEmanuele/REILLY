@@ -2,7 +2,7 @@
 
 #include "double_temporal_difference.ipp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -18,4 +18,4 @@ class DoubleQLearning : public DoubleTemporalDifference {
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

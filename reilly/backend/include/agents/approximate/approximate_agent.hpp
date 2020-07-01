@@ -3,7 +3,7 @@
 #include "../agent.ipp"
 #include "tile_coding.ipp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -43,4 +43,4 @@ class ApproximateAgent : public Agent {
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

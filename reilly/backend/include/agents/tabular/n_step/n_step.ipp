@@ -2,7 +2,7 @@
 
 #include "n_step.hpp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -34,4 +34,4 @@ std::string NStep::__repr__() {
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

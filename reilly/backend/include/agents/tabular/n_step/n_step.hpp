@@ -2,7 +2,7 @@
 
 #include "../tabular_agent.ipp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -25,4 +25,4 @@ class NStep : public TabularAgent {
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

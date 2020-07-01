@@ -2,7 +2,7 @@
 
 #include "approximate_n_step.hpp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -20,4 +20,4 @@ class SemiGradientNStepSarsa : public ApproximateNStep {
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

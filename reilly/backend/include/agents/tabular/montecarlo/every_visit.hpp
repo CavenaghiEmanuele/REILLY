@@ -2,7 +2,7 @@
 
 #include "montecarlo.ipp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -19,4 +19,4 @@ class MonteCarloEveryVisit : public MonteCarlo {
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

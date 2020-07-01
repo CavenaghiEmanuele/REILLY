@@ -2,7 +2,7 @@
 
 #include "approximate_temporal_difference.hpp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -22,4 +22,4 @@ void ApproximateTemporalDifference::reset(Vector init_state) {
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

@@ -2,7 +2,7 @@
 
 #include "q_planning.ipp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -25,4 +25,4 @@ class PrioritizedSweeping : public QPlanning {
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

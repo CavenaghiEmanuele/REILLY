@@ -2,7 +2,7 @@
 
 #include "prioritized_sweeping.hpp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -71,4 +71,4 @@ std::string PrioritizedSweeping::__repr__() {
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

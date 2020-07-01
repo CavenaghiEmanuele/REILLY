@@ -2,7 +2,7 @@
 
 #include "q_planning.ipp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -18,4 +18,4 @@ class TabularDynaQPlus : public QPlanning {
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

@@ -2,7 +2,7 @@
 
 #include "../approximate_agent.ipp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -19,4 +19,4 @@ class ApproximateTemporalDifference : public ApproximateAgent {
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

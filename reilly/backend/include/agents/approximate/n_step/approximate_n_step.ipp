@@ -2,7 +2,7 @@
 
 #include "approximate_n_step.hpp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -36,4 +36,4 @@ std::string ApproximateNStep::__repr__() {
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

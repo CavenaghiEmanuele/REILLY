@@ -2,7 +2,7 @@
 
 #include "temporal_difference.ipp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -18,4 +18,4 @@ class QLearning : public TemporalDifference {
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

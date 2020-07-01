@@ -2,7 +2,7 @@
 
 #include "semigradient_n_step_expected_sarsa.hpp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -74,4 +74,4 @@ void SemiGradientNStepExpectedSarsa::update(Vector next_state, float reward, boo
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

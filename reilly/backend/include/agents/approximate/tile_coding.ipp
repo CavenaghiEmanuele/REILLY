@@ -2,7 +2,7 @@
 
 #include "tile_coding.hpp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -129,4 +129,4 @@ std::string TileCoding::__repr__() {
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

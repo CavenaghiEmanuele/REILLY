@@ -2,7 +2,7 @@
 
 #include "sarsa.hpp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -47,4 +47,4 @@ void Sarsa::update(size_t next_state, float reward, bool done, py::kwargs kwargs
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

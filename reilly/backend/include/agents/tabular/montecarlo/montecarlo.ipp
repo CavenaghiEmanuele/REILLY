@@ -2,7 +2,7 @@
 
 #include "montecarlo.hpp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -44,4 +44,4 @@ std::string MonteCarlo::__repr__() {
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly

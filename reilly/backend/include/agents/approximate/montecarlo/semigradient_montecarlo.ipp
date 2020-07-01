@@ -2,7 +2,7 @@
 
 #include "semigradient_montecarlo.hpp"
 
-namespace rl {
+namespace reilly {
 
 namespace agents {
 
@@ -57,4 +57,4 @@ void SemiGradientMonteCarlo::update(Vector next_state, float reward, bool done, 
 
 }  // namespace agents
 
-}  // namespace rl
+}  // namespace reilly
