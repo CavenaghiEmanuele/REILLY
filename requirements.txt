@@ -4,6 +4,5 @@ pandas
 tqdm
 Pillow
 matplotlib
-opencv-python
 cmake
 pybind11
