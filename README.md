@@ -24,7 +24,7 @@ Install requirements:
 
 Build the package and C++ backend:
 
-    (sudo) python3 setup.py install
+    sudo python3 setup.py install
 
 ## Legends
 
