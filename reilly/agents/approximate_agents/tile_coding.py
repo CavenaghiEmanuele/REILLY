@@ -28,7 +28,7 @@ class Tiling:
     def add_tiles(self, start_point: List, action: int):
         end_point = [start_point[i] + self._tiles_size[i]
                      for i in range(self._feature_dims)]
-        if not str((start_point, end_point, action)) in self._tiles:
+        if str((start_point, end_point, action)) not in self._tiles:
             self._tiles.update(
                 {str((start_point, end_point, action)): len(self._tiles)})
 

@@ -32,7 +32,7 @@ class NStepExpectedSarsaApproximateAgent(NStepAppr, object):
             self._states.append(n_S)
             self._rewards.append(R)
 
-            if self._episode_ended == True:
+            if self._episode_ended:
                 self.T = t + 1
             else:
                 self._actions.append(np.random.choice(

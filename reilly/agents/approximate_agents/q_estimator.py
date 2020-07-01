@@ -47,7 +47,7 @@ class QEstimator():
         """
         if isinstance(state, np.ndarray):
             state.tolist()
-        if isinstance(state, np.int64) or isinstance(state, int):
+        if isinstance(state, (np.int64, int)):
             state = [state]
         if action is None and number_action is None:
             raise "ERROR: one of action and number_action must be set"
@@ -71,7 +71,7 @@ class QEstimator():
         """
         if isinstance(state, np.ndarray):
             state.tolist()
-        if isinstance(state, np.int64) or isinstance(state, int):
+        if isinstance(state, (np.int64, int)):
             state = [state]
 
         features = self._tile_coding.get_coordinates(state, action)
