@@ -64,7 +64,7 @@ Build the package and C++ backend:
 | n-step Sarsa          | &#x2705;  |            | &#x2705; | &#x2705; |
 | n-step Expected Sarsa | &#x2705;  |            | &#x2705; | &#x2705; |
 | n-step Tree Backup    |    :x:    |  &#x2705;  |          | &#x2705; |
-| n-step Q$(\sigma)$    |           |            |          |          |
+| n-step Q(&sigma;)     |           |            |          |          |
 
 ### Planning and learning with tabular
 
@@ -123,8 +123,8 @@ Build the package and C++ backend:
 
 ### Eligibility Traces
 
-| Name                            | On-Policy | Off-Policy |  Python  | C/C++ |
-| :------------------------------ | :-------: | :--------- | :------: | :---: |
+| Name                           | On-Policy | Off-Policy |  Python  | C/C++ |
+| :----------------------------- | :-------: | :--------- | :------: | :---: |
 | Temporal difference (&lambda;) |           |            |          |       |
 | True Online TD(&lambda;)       |           |            |          |       |
 | Sarsa(&lambda;)                | &#x2705;  |            | &#x2705; |       |
