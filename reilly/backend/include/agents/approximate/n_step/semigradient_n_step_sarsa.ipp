@@ -7,10 +7,8 @@ namespace rl {
 namespace agents {
 
 SemiGradientNStepSarsa::SemiGradientNStepSarsa(size_t actions, float alpha, float epsilon, float gamma, size_t n_step,
-                                               float epsilon_decay, size_t tilings, size_t features,
-                                               std::list<float> tilings_offset, std::list<float> tile_size)
-    : ApproximateNStep(actions, alpha, epsilon, gamma, n_step, epsilon_decay, tilings, features, tilings_offset,
-                       tile_size) {}
+                                               float epsilon_decay, py::kwargs kwargs)
+    : ApproximateNStep(actions, alpha, epsilon, gamma, n_step, epsilon_decay, kwargs) {}
 
 SemiGradientNStepSarsa::SemiGradientNStepSarsa(const SemiGradientNStepSarsa &other) : ApproximateNStep(other) {}
 
@@ -50,7 +48,7 @@ void SemiGradientNStepSarsa::update(Vector next_state, float reward, bool done, 
         if (t + 1 >= n_step) {  // Like tau >= 0, but for unsigned numbers
             Point *p;
             float G = 0;
-            
+
             for (size_t i = tau + 1; i < std::min(T, tau + n_step); i++) {
                 G += std::pow(gamma, i - tau - 1) * trajectory[i].reward;
             }

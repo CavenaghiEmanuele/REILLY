@@ -30,6 +30,16 @@ namespace agents {
 
 using Vector = xt::xtensor<float, 1>;
 
+Vector to_xtensor(std::list<float> in) {
+    size_t i = 0;
+    Vector out = xt::empty<float>({in.size()});
+    for (auto j = in.begin(); j != in.end(); j++) {
+        out[i] = (float)(*j);
+        i++;
+    }
+    return out;
+}
+
 class Agent {
    protected:
     size_t actions;

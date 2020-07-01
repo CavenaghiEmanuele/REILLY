@@ -7,11 +7,8 @@ namespace rl {
 namespace agents {
 
 SemiGradientNStepExpectedSarsa::SemiGradientNStepExpectedSarsa(size_t actions, float alpha, float epsilon, float gamma,
-                                                               size_t n_step, float epsilon_decay, size_t tilings,
-                                                               size_t features, std::list<float> tilings_offset,
-                                                               std::list<float> tile_size)
-    : ApproximateNStep(actions, alpha, epsilon, gamma, n_step, epsilon_decay, tilings, features, tilings_offset,
-                       tile_size) {}
+                                                               size_t n_step, float epsilon_decay, py::kwargs kwargs)
+    : ApproximateNStep(actions, alpha, epsilon, gamma, n_step, epsilon_decay, kwargs) {}
 
 SemiGradientNStepExpectedSarsa::SemiGradientNStepExpectedSarsa(const SemiGradientNStepExpectedSarsa &other)
     : ApproximateNStep(other) {}

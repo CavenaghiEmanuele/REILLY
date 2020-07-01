@@ -7,10 +7,8 @@ namespace rl {
 namespace agents {
 
 SemiGradientExpectedSarsa::SemiGradientExpectedSarsa(size_t actions, float alpha, float epsilon, float gamma,
-                                                     float epsilon_decay, size_t features, size_t tilings,
-                                                     std::list<float> tilings_offset, std::list<float> tile_size)
-    : ApproximateTemporalDifference(actions, alpha, epsilon, gamma, epsilon_decay, features, tilings, tilings_offset,
-                                    tile_size) {}
+                                                     float epsilon_decay, py::kwargs kwargs)
+    : ApproximateTemporalDifference(actions, alpha, epsilon, gamma, epsilon_decay, kwargs) {}
 
 SemiGradientExpectedSarsa::SemiGradientExpectedSarsa(const SemiGradientExpectedSarsa &other)
     : ApproximateTemporalDifference(other) {}

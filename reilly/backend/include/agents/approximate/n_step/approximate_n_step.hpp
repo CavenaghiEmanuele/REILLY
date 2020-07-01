@@ -17,7 +17,7 @@ class ApproximateNStep : public ApproximateAgent {
 
    public:
     ApproximateNStep(size_t actions, float alpha, float epsilon, float gamma, size_t n_step, float epsilon_decay,
-                     size_t features, size_t tilings, std::list<float> tilings_offset, std::list<float> tile_size);
+                     py::kwargs kwargs);
     ApproximateNStep(const ApproximateNStep &other);
     virtual ~ApproximateNStep();
 

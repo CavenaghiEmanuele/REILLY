@@ -48,8 +48,12 @@ void Tiling::update(size_t coordinate, float value) {
     weights[coordinate] = value;
 }
 
-TileCoding::TileCoding(size_t actions, float alpha, size_t features, size_t tilings, Vector tile_size, Vector tilings_offset)
-    : actions(actions), alpha(alpha / tilings), features(features) {
+TileCoding::TileCoding(size_t actions, float alpha, py::kwargs kwargs) : actions(actions) {
+    size_t tilings = py::cast<size_t>(kwargs["tilings"]);
+    this->alpha = alpha / tilings;
+    this->features = py::cast<size_t>(kwargs["features"]);
+    Vector tilings_offset = to_xtensor(py::cast<std::list<float>>(kwargs["tilings_offset"]));
+    Vector tile_size = to_xtensor(py::cast<std::list<float>>(kwargs["tile_size"]));
     for (size_t i = 0; i < tilings; i++) {
         this->tilings.push_back(Tiling(tile_size, (-i) * tilings_offset));
     }

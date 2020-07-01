@@ -6,10 +6,9 @@ namespace rl {
 
 namespace agents {
 
-ApproximateAgent::ApproximateAgent(size_t actions, float alpha, float epsilon, float gamma, float epsilon_decay, size_t features,
-                                   size_t tilings, std::list<float> tilings_offset, std::list<float> tile_size)
+ApproximateAgent::ApproximateAgent(size_t actions, float alpha, float epsilon, float gamma, float epsilon_decay, py::kwargs kwargs)
     : Agent(actions, alpha, epsilon, gamma, epsilon_decay),
-      estimator(actions, alpha, features, tilings, to_xtensor(tilings_offset), to_xtensor(tile_size)) {}
+      estimator(actions, alpha, kwargs) {}
 
 ApproximateAgent::ApproximateAgent(const ApproximateAgent &other) : Agent(other), estimator(other.estimator) {}
 

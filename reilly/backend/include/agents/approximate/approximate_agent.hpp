@@ -7,16 +7,6 @@ namespace rl {
 
 namespace agents {
 
-Vector to_xtensor(std::list<float> in) {
-    size_t i = 0;
-    Vector out = xt::empty<float>({in.size()});
-    for (auto j = in.begin(); j != in.end(); j++) {
-        out[i] = (float)(*j);
-        i++;
-    }
-    return out;
-}
-
 class ApproximateAgent : public Agent {
    protected:
     Vector state;
@@ -36,8 +26,7 @@ class ApproximateAgent : public Agent {
     using Trajectory = std::vector<Point>;
 
    public:
-    ApproximateAgent(size_t actions, float alpha, float epsilon, float gamma, float epsilon_decay, size_t features,
-                     size_t tilings, std::list<float> tilings_offset, std::list<float> tile_size);
+    ApproximateAgent(size_t actions, float alpha, float epsilon, float gamma, float epsilon_decay, py::kwargs kwargs);
     ApproximateAgent(const ApproximateAgent &other);
     virtual ~ApproximateAgent();
 

@@ -12,8 +12,7 @@ class SemiGradientNStepSarsa : public ApproximateNStep {
 
    public:
     SemiGradientNStepSarsa(size_t actions, float alpha, float epsilon, float gamma, size_t n_step, float epsilon_decay,
-                           size_t tilings, size_t features, std::list<float> tilings_offset,
-                           std::list<float> tile_size);
+                           py::kwargs kwargs);
     SemiGradientNStepSarsa(const SemiGradientNStepSarsa &other);
     SemiGradientNStepSarsa &operator=(const SemiGradientNStepSarsa &other);
     virtual ~SemiGradientNStepSarsa();
