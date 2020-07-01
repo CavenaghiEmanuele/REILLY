@@ -60,7 +60,7 @@ class CMakeBuild(build_ext):
         subprocess.check_call(['cmake', ext.sourcedir] + cmake_args, cwd=self.build_temp, env=env)
         subprocess.check_call(['cmake', '--build', '.'] + build_args, cwd=self.build_temp)
 
-with open("README.md", "r") as fh:
+with open('README.md', 'r') as fh:
     long_description = fh.read()
 
 setup(
@@ -71,9 +71,20 @@ setup(
     license='GNU GENERAL PUBLIC LICENSE - Version 3, 29 June 2007',
     description='A REInforcement Learning LibrarY',
     long_description=long_description,
-    long_description_content_type="text/markdown",
+    long_description_content_type='text/markdown',
     packages=find_packages(),
     ext_modules=[CMakeExtension('reilly.backend')],
     cmdclass=dict(build_ext=CMakeBuild),
     zip_safe=False,
+    url='https://github.com/CavenaghiEmanuele/REILLY',
+    install_requires=[
+        'gym',
+        'numpy',
+        'pandas',
+        'tqdm',
+        'Pillow',
+        'matplotlib',
+        'cmake',
+        'pybind11',
+    ]
 )
