@@ -67,7 +67,7 @@ setup(
     name='REILLY',
     version='0.5.0',
     author='Emanuele Cavenaghi, Alessio Zanga',
-    author_email=', alessio.zanga@outlook.it',
+    author_email='cavenaghi.emanuele@gmail.com, alessio.zanga@outlook.it',
     license='GNU GENERAL PUBLIC LICENSE - Version 3, 29 June 2007',
     description='A REInforcement Learning LibrarY',
     long_description=long_description,
