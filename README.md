@@ -18,13 +18,9 @@ Clone the repository including submodules:
 
     git clone --recurse-submodules -j8 https://github.com/CavenaghiEmanuele/REILLY.git
 
-Install requirements:
+Build the package with C++ backend and install:
 
-    cd REILLY && pip3 install -r requirements.txt
-
-Build the package with C++ backend:
-
-    python3 setup.py install
+    cd REILLY && sudo python3 setup.py install
 
 ## Legends
 
