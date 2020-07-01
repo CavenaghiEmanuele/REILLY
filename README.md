@@ -20,17 +20,17 @@ Clone the repository including submodules:
 
 Install requirements:
 
-    pip3 install -r requirements.txt
+    cd REILLY && pip3 install -r requirements.txt
 
-Build the package and C++ backend:
+Build the package with C++ backend:
 
-    sudo python3 setup.py install
+    python3 setup.py install
 
 ## Legends
 
 * *empty* - Not implemented
 * :heavy_check_mark: - Already implemented
-* :x: - Non existent
+* :x: - Non-existent
 
 ## Tabular Agents
 
