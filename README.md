@@ -12,7 +12,21 @@
 
 # Reinforcement Learning Library
 
-Legends
+## How to Install
+
+Clone the repository including submodules:
+
+    git clone --recurse-submodules -j8 git@github.com:CavenaghiEmanuele/REILLY.git
+
+Install requirements:
+
+    pip3 install -r requirements.txt
+
+Build the package and C++ backend:
+
+    (sudo) python3 setup.py install
+
+## Legends
 
 * *empty* - Not implemented
 * &#x2705; - Already implemented

@@ -1,5 +1,8 @@
+*.so
 .vscode
+*.egg-info
 __pycache__
 build
+dist
 main.py
 tmp_main.py
