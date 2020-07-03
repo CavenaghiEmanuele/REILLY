@@ -1,10 +1,10 @@
 import reilly as rl
 
 
-def test_n_step_sarsa_agent():
-    env = rl.Frozen_Lake4x4()
-    session = rl.JointTrainSession(env)
-    agent = rl.NStepSarsaAgent(
+def test_n_step_sarsa():
+    env = rl.Taxi()
+    session = rl.PyBindSession(env)
+    agent = rl.NStepSarsa(
         states=env.states,
         actions=env.actions,
         alpha=0.1,
@@ -16,10 +16,10 @@ def test_n_step_sarsa_agent():
     session.run(100, 10, 10)
 
 
-def test_n_step_expected_sarsa_agent():
-    env = rl.Frozen_Lake4x4()
-    session = rl.JointTrainSession(env)
-    agent = rl.NStepExpectedSarsaAgent(
+def test_n_step_expected_sarsa():
+    env = rl.Taxi()
+    session = rl.PyBindSession(env)
+    agent = rl.NStepExpectedSarsa(
         states=env.states,
         actions=env.actions,
         alpha=0.1,

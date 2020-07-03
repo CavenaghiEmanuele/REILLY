@@ -1,11 +1,12 @@
 import numpy as np
-from typing import List, Dict
 
-from ...agent import Agent
+from ..tabular_agent import TabularAgent
 from ....structures import ActionValue, Policy
 
 
-class NStep(Agent, object):
+class NStep(TabularAgent, object):
+    
+    __slots__ = ['_states', '_action_list', '_rewards', 'T']
 
     def __init__(self, 
                 states:int,
@@ -22,16 +23,13 @@ class NStep(Agent, object):
         self._gamma = gamma
         self._n_step = n_step
         self._e_decay = epsilon_decay
+        self._actions = actions
 
-    def _update_policy(self, S:int) -> None:
-        # Avoid choosing always the first move in case policy has the same value
-        indices = [i for i, x in enumerate(self._Q[S]) if x == max(self._Q[S])]
-        A_star = np.random.choice(indices)
-
-        n_actions = self._policy.get_n_actions(S)
-        for A in range(n_actions):
-            if A == A_star:
-                self._policy[S, A] = 1 - self._epsilon + \
-                    (self._epsilon / n_actions)
-            else:
-                self._policy[S, A] = self._epsilon / n_actions
+    def reset(self, init_state: int, *args, **kwargs) -> None:
+        self._states = [init_state]
+        self._action_list = [self._select_action(self._policy[init_state])]
+        self._rewards = [0.0]
+        self.T = float('inf')
+        
+    def get_action(self):
+        return self._action_list[-1]

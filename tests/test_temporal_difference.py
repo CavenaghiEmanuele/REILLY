@@ -1,10 +1,10 @@
 import reilly as rl
 
 
-def test_QLearning_agent():
+def test_QLearning():
     env = rl.Frozen_Lake4x4()
-    session = rl.JointTrainSession(env)
-    agent = rl.QLearningAgent(
+    session = rl.PyBindSession(env)
+    agent = rl.QLearning(
         states=env.states,
         actions=env.actions,
         alpha=0.1,
@@ -15,12 +15,12 @@ def test_QLearning_agent():
     session.run(100, 10, 10)
 
 
-def test_Sarsa_agent():
+def test_Sarsa():
     for E in rl.ENVIRONMENTS():
         env = E()
         env = rl.Frozen_Lake4x4()
-        session = rl.JointTrainSession(env)
-        agent = rl.SarsaAgent(
+        session = rl.PyBindSession(env)
+        agent = rl.Sarsa(
             states=env.states,
             actions=env.actions,
             alpha=0.1,
@@ -31,10 +31,10 @@ def test_Sarsa_agent():
         session.run(100, 10, 10)
 
 
-def test_Expected_Sarsa_agent():
+def test_Expected_Sarsa():
     env = rl.Frozen_Lake4x4()
-    session = rl.JointTrainSession(env)
-    agent = rl.ExpectedSarsaAgent(
+    session = rl.PyBindSession(env)
+    agent = rl.ExpectedSarsa(
         states=env.states,
         actions=env.actions,
         alpha=0.1,
