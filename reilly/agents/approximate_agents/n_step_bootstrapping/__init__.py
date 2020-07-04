@@ -1,3 +1,3 @@
-from .n_step_appr import NStepAppr
-from .n_step_sarsa_appr import NStepSarsaApproximateAgent
-from .n_step_expected_sarsa_appr import NStepExpectedSarsaApproximateAgent
+from .approximate_n_step import ApproximateNStep
+from .semigradient_n_step_sarsa import SemiGradientNStepSarsa
+from .semigradient_n_step_expected_sarsa import SemiGradientNStepExpectedSarsa

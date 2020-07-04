@@ -1,3 +1,3 @@
-from .temporal_difference_appr import TemporalDiffernceAppr
-from .sarsa_appr import SarsaApproximateAgent
-from .expected_sarsa_appr import ExpectedSarsaApproximateAgent
+from .approximate_temporal_difference import ApproximateTemporalDifference
+from .semigradient_sarsa import SemiGradientSarsa
+from .semigradient_expected_sarsa import SemiGradientExpectedSarsa

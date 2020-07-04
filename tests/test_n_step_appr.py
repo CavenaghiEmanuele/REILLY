@@ -1,14 +1,15 @@
 import reilly as rl
 
 
-def test_sarsa_appr():
+def test_semigradient_n_step_sarsa():
     env = rl.Taxi()
     session = rl.PyBindSession(env)
-    agent = rl.SemiGradientSarsa(
+    agent = rl.SemiGradientNStepSarsa(
         actions=env.actions,
         alpha=0.1,
         epsilon=0.03,
         gamma=0.99,
+        n_step=5,
         features=1,
         tilings=2,
         tilings_offset=[1],
@@ -16,16 +17,16 @@ def test_sarsa_appr():
     )
     session.add_agent(agent)
     session.run(100, 10, 10)
-
-
-def test_expected_sarsa_appr():
+    
+def test_semigradient_n_step_expected_sarsa():
     env = rl.Taxi()
     session = rl.PyBindSession(env)
-    agent = rl.SemiGradientExpectedSarsa(
+    agent = rl.SemiGradientNStepExpectedSarsa(
         actions=env.actions,
         alpha=0.1,
         epsilon=0.03,
         gamma=0.99,
+        n_step=5,
         features=1,
         tilings=2,
         tilings_offset=[1],
@@ -33,3 +34,4 @@ def test_expected_sarsa_appr():
     )
     session.add_agent(agent)
     session.run(100, 10, 10)
+    

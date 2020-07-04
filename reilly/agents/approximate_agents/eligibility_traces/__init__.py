@@ -1,1 +1,1 @@
-from .sarsa_lambda import SarsaLambdaAgent
+from .sarsa_lambda import SarsaLambda
