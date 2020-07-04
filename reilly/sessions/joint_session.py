@@ -9,7 +9,7 @@ from ..agents import Agent
 from ..environments import Environment
 
 
-class PyBindSession:
+class JointSession(ABC):
 
     __slots__ = ['_env', '_agents', '_labels', '_start_step']
 
@@ -17,12 +17,14 @@ class PyBindSession:
     _agents: Dict[int, Agent]
     _labels: Dict[int, str]
     _start_step: int
+    _joint_train: bool
 
-    def __init__(self, env: Environment, start_step: int = 1):
+    def __init__(self, env: Environment, start_step: int = 1, joint_train=False):
         self._env = env
         self._agents = {}
         self._labels = {}
         self._start_step = start_step - 1
+        self._joint_train = joint_train
 
     def add_agent(self, agent: Agent):
         key = id(agent)
@@ -42,22 +44,61 @@ class PyBindSession:
         return pd.concat(out)
 
     def _run_train(self) -> None:
+        if not self._joint_train:
+            self._run_train_single()
+        if self._joint_train:
+            self._run_train_joint()
+
+    def _run_train_single(self) -> None:
         self._reset_env()
         step = 0
-        agents = self._random_start()
-                
+        agents = self._random_start(step)
+
         while len(agents) > 0:
             shuffle(agents)
             for agent in agents[::]:
                 action = self._agents[agent].get_action()
-                next_state, reward, done, info = self._env.run_step(action, id=agent, mode="train")
-                self._agents[agent].update(next_state, reward, done, training=True, t=step)
+                next_state, reward, done, _ = self._env.run_step(
+                    action,
+                    id=agent,
+                    mode='test',
+                    t=step
+                )
+                self._agents[agent].update(
+                    next_state,
+                    reward,
+                    done,
+                    training=True,
+                    t=step
+                )
                 if done:
                     agents.remove(agent)
             step += 1
-            if self._start_step > 0:
-                self._start_step -= 1
-                agents = list(set(agents) + set(self._random_start()))
+            if self._start_step - step >= 0:
+                agents = list(set(agents) | set(self._random_start(step)))
+
+    def _run_train_joint(self):
+        for key, agent in self._agents.items():
+            step = 0
+            done = False
+
+            agent.reset(self._env, id=key)
+            while not done:
+                action = agent.get_action()
+                next_state, reward, done, _ = self._env.run_step(
+                    action,
+                    id=key,
+                    mode='test',
+                    t=step
+                )
+                agent.update(
+                    next_state,
+                    reward,
+                    done,
+                    training=True,
+                    t=step
+                )
+                step += 1
 
     def _run_test(self, test: int, test_samples: int, render: bool = False) -> pd.DataFrame:
         self._reset_env()
@@ -66,13 +107,24 @@ class PyBindSession:
         out = []
         for sample in range(test_samples):
             step = 0
-            agents = self._random_start()
+            agents = self._random_start(step)
             while len(agents) > 0:
                 shuffle(agents)
                 for agent in agents[::]:
                     action = self._agents[agent].get_action()
-                    next_state, reward, done, info = self._env.run_step(action, id=agent, mode="test")
-                    self._agents[agent].update(next_state, reward, done, training=False, t=step)
+                    next_state, reward, done, info = self._env.run_step(
+                        action,
+                        id=agent,
+                        mode='test',
+                        t=step
+                    )
+                    self._agents[agent].update(
+                        next_state,
+                        reward,
+                        done,
+                        training=True,
+                        t=step
+                    )
                     if done:
                         agents.remove(agent)
                     out.append({
@@ -83,20 +135,18 @@ class PyBindSession:
                         **info
                     })
                 step += 1
-                if self._start_step > 0:
-                    self._start_step -= 1
-                    agents = list(set(agents) + set(self._random_start()))
+                if self._start_step - step >= 0:
+                    agents = list(set(agents) | set(self._random_start(step)))
             self._reset_env()
         return pd.DataFrame(out)
 
     def _reset_env(self) -> None:
         for key, agent in self._agents.items():
-            init_state = self._env.reset(id=key)
-            agent.reset(init_state)
+            agent.reset(self._env, id=key)
 
-    def _random_start(self) -> List:
+    def _random_start(self, step) -> List:
         return [
             agent
             for agent in self._agents.keys()
-            if randint(0, self._start_step) == 0
+            if randint(0, self._start_step - step) == 0
         ]

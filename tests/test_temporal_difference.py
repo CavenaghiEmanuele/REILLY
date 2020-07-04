@@ -3,7 +3,6 @@ import reilly as rl
 
 def test_QLearning():
     env = rl.Taxi()
-    session = rl.PyBindSession(env)
     agent = rl.QLearning(
         states=env.states,
         actions=env.actions,
@@ -11,13 +10,12 @@ def test_QLearning():
         epsilon=0.03,
         gamma=0.99
     )
-    session.add_agent(agent)
+    session = rl.Session(env, agent)
     session.run(100, 10, 10)
 
 
 def test_Sarsa():
     env = rl.Taxi()
-    session = rl.PyBindSession(env)
     agent = rl.Sarsa(
         states=env.states,
         actions=env.actions,
@@ -25,13 +23,12 @@ def test_Sarsa():
         epsilon=0.03,
         gamma=0.99
     )
-    session.add_agent(agent)
+    session = rl.Session(env, agent)
     session.run(100, 10, 10)
 
 
 def test_Expected_Sarsa():
     env = rl.Taxi()
-    session = rl.PyBindSession(env)
     agent = rl.ExpectedSarsa(
         states=env.states,
         actions=env.actions,
@@ -39,5 +36,5 @@ def test_Expected_Sarsa():
         epsilon=0.03,
         gamma=0.99
     )
-    session.add_agent(agent)
+    session = rl.Session(env, agent)
     session.run(100, 10, 10)

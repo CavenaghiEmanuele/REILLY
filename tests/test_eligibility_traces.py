@@ -3,7 +3,6 @@ import reilly as rl
 
 def test_sarsa_lambda():
     env = rl.Taxi()
-    session = rl.PyBindSession(env)
     agent = rl.SarsaLambda(
             actions=env.actions,
             alpha=0.1,
@@ -14,5 +13,5 @@ def test_sarsa_lambda():
             features=1,
             tilings=4,
         )
-    session.add_agent(agent)
+    session = rl.Session(env, agent)
     session.run(100, 10, 10)

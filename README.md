@@ -148,3 +148,10 @@ Build the package with C++ backend and install:
 | Name | Discrete State? | Discrete Action? | Linear State? | Multi-Agent? |
 | ---- | :-------------: | :--------------: | :-----------: | :----------: |
 | Text |       Yes       |       Yes        |      No       |     Yes      |
+
+## Sessions
+
+| Name         | Multi-Agent? | Joint Train? | Joint Test? |
+| ------------ | :----------: | :----------: | :---------: |
+| Session      |      No      |      No      |     No      |
+| JointSession |     Yes      |   Optional   |     Yes     |

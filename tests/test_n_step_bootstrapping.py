@@ -3,7 +3,6 @@ import reilly as rl
 
 def test_n_step_sarsa():
     env = rl.Taxi()
-    session = rl.PyBindSession(env)
     agent = rl.NStepSarsa(
         states=env.states,
         actions=env.actions,
@@ -12,13 +11,12 @@ def test_n_step_sarsa():
         gamma=0.99,
         n_step=5
     )
-    session.add_agent(agent)
+    session = rl.Session(env, agent)
     session.run(100, 10, 10)
 
 
 def test_n_step_expected_sarsa():
     env = rl.Taxi()
-    session = rl.PyBindSession(env)
     agent = rl.NStepExpectedSarsa(
         states=env.states,
         actions=env.actions,
@@ -27,5 +25,5 @@ def test_n_step_expected_sarsa():
         gamma=0.99,
         n_step=5
     )
-    session.add_agent(agent)
+    session = rl.Session(env, agent)
     session.run(100, 10, 10)
