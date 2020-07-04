@@ -2,7 +2,7 @@ import reilly as rl
 
 
 def test_MonteCarloFirstVisit():
-    env = rl.Frozen_Lake4x4()
+    env = rl.Taxi()
     session = rl.PyBindSession(env)
     agent = rl.backend.MonteCarloFirstVisit(
         states=env.states,
@@ -14,7 +14,7 @@ def test_MonteCarloFirstVisit():
     session.run(100, 10, 10)
 
 def test_MonteCarloEveryVisit():
-    env = rl.Frozen_Lake4x4()
+    env = rl.Taxi()
     session = rl.PyBindSession(env)
     agent = rl.backend.MonteCarloEveryVisit(
         states=env.states,
@@ -26,7 +26,7 @@ def test_MonteCarloEveryVisit():
     session.run(100, 10, 10)
 
 def test_Sarsa():
-    env = rl.Frozen_Lake4x4()
+    env = rl.Taxi()
     session = rl.PyBindSession(env)
     agent = rl.backend.Sarsa(
         states=env.states,
@@ -39,7 +39,7 @@ def test_Sarsa():
     session.run(100, 10, 10)
 
 def test_QLearning():
-    env = rl.Frozen_Lake4x4()
+    env = rl.Taxi()
     session = rl.PyBindSession(env)
     agent = rl.backend.QLearning(
         states=env.states,
@@ -52,7 +52,7 @@ def test_QLearning():
     session.run(100, 10, 10)
 
 def test_ExpectedSarsa():
-    env = rl.Frozen_Lake4x4()
+    env = rl.Taxi()
     session = rl.PyBindSession(env)
     agent = rl.backend.ExpectedSarsa(
         states=env.states,
@@ -65,7 +65,7 @@ def test_ExpectedSarsa():
     session.run(100, 10, 10)
 
 def test_DoubleSarsa():
-    env = rl.Frozen_Lake4x4()
+    env = rl.Taxi()
     session = rl.PyBindSession(env)
     agent = rl.backend.DoubleSarsa(
         states=env.states,
@@ -78,7 +78,7 @@ def test_DoubleSarsa():
     session.run(100, 10, 10)
 
 def test_DoubleQLearning():
-    env = rl.Frozen_Lake4x4()
+    env = rl.Taxi()
     session = rl.PyBindSession(env)
     agent = rl.backend.DoubleQLearning(
         states=env.states,
@@ -91,7 +91,7 @@ def test_DoubleQLearning():
     session.run(100, 10, 10)
 
 def test_DoubleExpectedSarsa():
-    env = rl.Frozen_Lake4x4()
+    env = rl.Taxi()
     session = rl.PyBindSession(env)
     agent = rl.backend.DoubleExpectedSarsa(
         states=env.states,
@@ -104,7 +104,7 @@ def test_DoubleExpectedSarsa():
     session.run(100, 10, 10)
 
 def test_NStepSarsa():
-    env = rl.Frozen_Lake4x4()
+    env = rl.Taxi()
     session = rl.PyBindSession(env)
     agent = rl.backend.NStepSarsa(
         states=env.states,
@@ -118,7 +118,7 @@ def test_NStepSarsa():
     session.run(100, 10, 10)
 
 def test_NStepExpectedSarsa():
-    env = rl.Frozen_Lake4x4()
+    env = rl.Taxi()
     session = rl.PyBindSession(env)
     agent = rl.backend.NStepExpectedSarsa(
         states=env.states,
@@ -132,7 +132,7 @@ def test_NStepExpectedSarsa():
     session.run(100, 10, 10)
 
 def test_NStepTreeBackup():
-    env = rl.Frozen_Lake4x4()
+    env = rl.Taxi()
     session = rl.PyBindSession(env)
     agent = rl.backend.NStepTreeBackup(
         states=env.states,
@@ -146,7 +146,7 @@ def test_NStepTreeBackup():
     session.run(100, 10, 10)
 
 def test_TabularDynaQ():
-    env = rl.Frozen_Lake4x4()
+    env = rl.Taxi()
     session = rl.PyBindSession(env)
     agent = rl.backend.TabularDynaQ(
         states=env.states,
@@ -160,7 +160,7 @@ def test_TabularDynaQ():
     session.run(100, 10, 10)
 
 def test_TabularDynaQPlus():
-    env = rl.Frozen_Lake4x4()
+    env = rl.Taxi()
     session = rl.PyBindSession(env)
     agent = rl.backend.TabularDynaQPlus(
         states=env.states,
@@ -174,7 +174,7 @@ def test_TabularDynaQPlus():
     session.run(100, 10, 10)
 
 def test_PrioritizedSweeping():
-    env = rl.Frozen_Lake4x4()
+    env = rl.Taxi()
     session = rl.PyBindSession(env)
     agent = rl.backend.PrioritizedSweeping(
         states=env.states,
@@ -189,7 +189,7 @@ def test_PrioritizedSweeping():
     session.run(100, 10, 10)
 
 def test_SemiGradientMonteCarlo():
-    env = rl.Frozen_Lake4x4()
+    env = rl.Taxi()
     session = rl.PyBindSession(env)
     agent = rl.backend.SemiGradientMonteCarlo(
         actions=env.actions,
@@ -205,7 +205,7 @@ def test_SemiGradientMonteCarlo():
     session.run(100, 10, 10)
 
 def test_SemiGradientSarsa():
-    env = rl.Frozen_Lake4x4()
+    env = rl.Taxi()
     session = rl.PyBindSession(env)
     agent = rl.backend.SemiGradientSarsa(
         actions=env.actions,
@@ -221,7 +221,7 @@ def test_SemiGradientSarsa():
     session.run(100, 10, 10)
 
 def test_SemiGradientExpectedSarsa():
-    env = rl.Frozen_Lake4x4()
+    env = rl.Taxi()
     session = rl.PyBindSession(env)
     agent = rl.backend.SemiGradientExpectedSarsa(
         actions=env.actions,
@@ -237,7 +237,7 @@ def test_SemiGradientExpectedSarsa():
     session.run(100, 10, 10)
 
 def test_SemiGradientNStepSarsa():
-    env = rl.Frozen_Lake4x4()
+    env = rl.Taxi()
     session = rl.PyBindSession(env)
     agent = rl.backend.SemiGradientNStepSarsa(
         actions=env.actions,
@@ -254,7 +254,7 @@ def test_SemiGradientNStepSarsa():
     session.run(100, 10, 10)
 
 def test_SemiGradientNStepExpectedSarsa():
-    env = rl.Frozen_Lake4x4()
+    env = rl.Taxi()
     session = rl.PyBindSession(env)
     agent = rl.backend.SemiGradientNStepExpectedSarsa(
         actions=env.actions,
