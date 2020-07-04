@@ -6,6 +6,8 @@ from ...structures import ActionValue, Policy
 
 
 class TabularAgent(Agent, ABC, object):
+    
+    __slots__ = ['_Q', '_policy']
 
     def __init__(self, 
             states:int, 
