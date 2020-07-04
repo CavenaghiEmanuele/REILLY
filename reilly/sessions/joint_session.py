@@ -19,17 +19,20 @@ class JointSession(ABC):
     _start_step: int
     _joint_train: bool
 
-    def __init__(self, env: Environment, start_step: int = 1, joint_train=False):
+    def __init__(self, env: Environment, agents: List[Agent], start_step: int = 1, joint_train=False):
         self._env = env
-        self._agents = {}
-        self._labels = {}
+        self._agents = {id(agent): agent for agent in agents}
+        self._labels = {
+            id(agent): "ID: {}, Params: {}".format(id(agent), agent)
+            for agent in agents
+        }
         self._start_step = start_step - 1
         self._joint_train = joint_train
 
     def add_agent(self, agent: Agent):
         key = id(agent)
         self._agents[key] = agent
-        self._labels[key] = 'ID: ' + str(key) + ', Params: ' + str(agent)
+        self._labels[key] = "ID: {}, Params: {}".format(key, agent)
 
     def run(self, episodes: int, test_offset: int, test_samples: int, render: bool = False) -> pd.DataFrame:
         self._reset_env()

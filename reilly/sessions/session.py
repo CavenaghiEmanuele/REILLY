@@ -1,5 +1,5 @@
 from typing import Dict, List
-from tqdm import tqdm
+from tqdm import trange
 
 import pandas as pd
 
@@ -9,21 +9,23 @@ from ..environments import Environment
 
 class Session(object):
 
-    __slots__ = ['_env', '_agent', '_label']
+    __slots__ = ['_env', '_agent', '_label', '_position']
 
     _env: Environment
     _agent: Agent
     _label: str
+    _position: int
 
-    def __init__(self, env: Environment, agent: Agent):
+    def __init__(self, env: Environment, agent: Agent, position: int = 0):
         self._env = env
         self._agent = agent
-        self._label = "ID: {}, Params: {}".format(id(agent), str(agent))
+        self._label = "ID: {}, Params: {}".format(id(agent), agent)
+        self._position = position
 
     def run(self, episodes: int, test_offset: int, test_samples: int, render: bool = False) -> pd.DataFrame:
         out = []
         self._reset_env()
-        for episode in tqdm(range(1, episodes + 1)):
+        for episode in trange(1, episodes + 1, position=self._position, leave=True):
             self._run_train()
             if episode % test_offset == 0:
                 out.append(
