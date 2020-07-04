@@ -28,4 +28,5 @@ class DoubleQLearning(DoubleTemporalDifference, object):
         self._S = n_S
         self._A = n_A = self._select_action((self._policy[self._S] + self._policy2[self._S]) / 2)
         
-        if done: self._epsilon *= self._e_decay
+        if done: 
+            self._epsilon *= self._e_decay

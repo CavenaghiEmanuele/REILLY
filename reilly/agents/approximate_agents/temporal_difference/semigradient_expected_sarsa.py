@@ -26,7 +26,8 @@ class SemiGradientExpectedSarsa(ApproximateTemporalDifference, object):
         self._S = n_S
         self._A = n_A
         
-        if done: self._epsilon *= self._e_decay
+        if done: 
+            self._epsilon *= self._e_decay
 
 
     def _compute_expected_value(self, state: List) -> float:

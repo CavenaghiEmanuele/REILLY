@@ -20,4 +20,5 @@ class QLearning(TemporalDifference, object):
         self._S = n_S
         self._A = self._select_action(self._policy[n_S])
 
-        if done: self._epsilon *= self._e_decay
+        if done: 
+            self._epsilon *= self._e_decay

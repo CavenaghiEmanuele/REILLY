@@ -26,4 +26,5 @@ class SemiGradientSarsa(ApproximateTemporalDifference, object):
         self._S = n_S
         self._A = n_A
         
-        if done: self._epsilon *= self._e_decay
+        if done: 
+            self._epsilon *= self._e_decay
