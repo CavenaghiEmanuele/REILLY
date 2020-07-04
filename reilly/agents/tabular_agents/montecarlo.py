@@ -60,11 +60,9 @@ class MonteCarlo(TabularAgent):
         self._A = self._select_action(self._policy[init_state])
         self._episode_trajectory = []
 
-    def update(self, n_S: int, R: float, done: bool, *args, **kwargs) -> None:
-        # Select action according to policy distribution probability
-        A = self._select_action(self._policy[n_S])
+    def update(self, n_S: int, R: float, done: bool, *args, **kwargs) -> None:    
+        self._episode_trajectory.append((self._S, self._A, R))
 
-        self._episode_trajectory.append((self._S, A, R))
         if kwargs['training'] and done:
             self._epsilon *= self._e_decay
             G = 0
@@ -72,10 +70,9 @@ class MonteCarlo(TabularAgent):
                 S, A, R = self._episode_trajectory[i]
                 G = (G * self._gamma) + R  # Update expected return
                 if self._visit_update == "first":
-                    self._first_visit_update(
-                        self._episode_trajectory[0:i], G, S, A)
+                    self._first_visit_update(self._episode_trajectory[0:i], G, S, A)
                 elif self._visit_update == "every":
                     self._every_visit_update(G, S, A)
 
         self._S = n_S
-        self._A = A
+        self._A  = self._select_action(self._policy[n_S])
