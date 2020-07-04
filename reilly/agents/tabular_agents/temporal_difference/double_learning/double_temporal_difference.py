@@ -18,4 +18,3 @@ class DoubleTemporalDifference(TemporalDifference, ABC, object):
         super().__init__(states, actions, alpha, epsilon, gamma, epsilon_decay)
         self._Q2 = ActionValue(states, actions)
         self._policy2 = Policy(states, actions)
-
