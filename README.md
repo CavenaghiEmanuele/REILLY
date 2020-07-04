@@ -89,7 +89,7 @@ Build the package with C++ backend and install:
 | Name                |       Python       |       C/C++        |
 | ------------------- | :----------------: | :----------------: |
 | Base implementation | :heavy_check_mark: | :heavy_check_mark: |
-| With trace          |                    |                    |
+| With trace          | :heavy_check_mark: |                    |
 
 ### MonteCarlo
 
