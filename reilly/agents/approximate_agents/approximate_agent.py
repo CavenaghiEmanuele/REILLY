@@ -5,21 +5,25 @@ from typing import List
 from ..agent import Agent
 from .q_estimator import QEstimator
 
+
 class ApproximateAgent(Agent, ABC, object):
 
     __slots__ = ["_Q_estimator"]
 
-    def __init__(self,
-                 actions: int,
-                 alpha: float,
-                 epsilon: float,
-                 gamma: float,
-                 features: int,
-                 tilings: int,
-                 epsilon_decay: float = 1,
-                 tilings_offset: List = None,
-                 tile_size: List = None):
-
+    def __init__(
+        self,
+        actions: int,
+        alpha: float,
+        epsilon: float,
+        gamma: float,
+        features: int,
+        tilings: int,
+        epsilon_decay: float = 1,
+        tilings_offset: List = None,
+        tile_size: List = None,
+        *args,
+        **kwargs
+    ):
         self._actions = actions
         self._alpha = alpha
         self._epsilon = epsilon
@@ -31,10 +35,10 @@ class ApproximateAgent(Agent, ABC, object):
                                        tiling_offset=tilings_offset,
                                        tiles_size=tile_size
                                        )
-    
+
     def _select_action(self, state: List) -> None:
         return np.random.choice(range(self._actions), p=self._e_greedy_policy(state))
-        
+
     def _e_greedy_policy(self, state: List) -> List:
         action_probs = np.zeros(self._actions)
         q_values = [self._Q_estimator.predict(state, action)
