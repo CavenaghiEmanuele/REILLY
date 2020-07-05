@@ -9,23 +9,21 @@ from ..environments import Environment
 
 class Session(object):
 
-    __slots__ = ['_env', '_agent', '_label', '_position']
+    __slots__ = ['_env', '_agent', '_label']
 
     _env: Environment
     _agent: Agent
     _label: str
-    _position: int
 
     def __init__(self, env: Environment, agent: Agent, *args, **kwargs):
         self._env = env
         self._agent = agent
         self._label = "ID: {}, Params: {}".format(id(agent), agent)
-        self._position = kwargs.get('position', 0)
 
-    def run(self, episodes: int, test_offset: int, test_samples: int, render: bool = False) -> pd.DataFrame:
+    def run(self, episodes: int, test_offset: int, test_samples: int, render: bool = False, *args, **kwargs) -> pd.DataFrame:
         out = []
         self._reset_env()
-        for episode in trange(episodes, position=self._position):
+        for episode in trange(episodes, position=kwargs.get('position', 0)):
             self._run_train()
             if (episode + 1) % test_offset == 0:
                 out.append(
