@@ -1,9 +1,9 @@
 import gym
 
-from ..environment import Environment
+from .abstract_gym import GymEnvironment
 
 
-class MountainCar(Environment):
+class MountainCar(GymEnvironment):
 
     def __init__(self):
         self._env = gym.make("MountainCar-v0")
@@ -19,23 +19,6 @@ class MountainCar(Environment):
         '''
         return 285
 
-    @property
-    def actions(self):
-        return self._env.action_space.n
-
-    def render(self):
-        return self._env.render()
-
-    def reset(self, *args, **kwargs) -> int:
-        return self._env.reset()
-
-    # If mod flag is "test" return additional dict with environment tests result
     def run_step(self, action, *args, **kwargs):
         next_state, reward, done, _ = self._env.step(action)
-        if kwargs['mode'] == "test":
-            return next_state, reward, done, {"return_sum": reward}
         return next_state, reward, done, _
-
-    @property
-    def probability_distribution(self):
-        return self._env.env.P

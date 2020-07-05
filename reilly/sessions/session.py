@@ -84,6 +84,7 @@ class Session(object):
                     'sample': sample,
                     'step': step,
                     'agent': self._label,
+                    'reward': reward,
                     **info
                 })
                 step += 1

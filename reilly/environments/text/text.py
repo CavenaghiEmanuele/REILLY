@@ -97,35 +97,6 @@ class TextEnvironment(Environment):
     def actions(self) -> int:
         return self._neighbor
 
-    def heatmap(self) -> None:
-        if self._gui is not None:
-            # Cast from uint8 to float32
-            self._gui = [
-                data.astype(np.float32)
-                for data in self._gui
-            ]
-            # Build heatmap
-            heatmap = sum(self._gui)
-            _min = self._env_init.min()
-            _max = self._env_init.max()
-            background = np.interp(self._env_init, (_min, _max), (255, 0))
-            heatmap -= background * len(self._gui)
-            heatmap = Image.fromarray(
-                np.dstack([
-                    background,
-                    background,
-                    heatmap,
-                ]).astype(np.uint8),
-                mode='RGB'
-            )
-            heatmap.save(
-                datetime.now().strftime("%d-%b-%Y %H:%M:%S.%f") + '_heatmap.jpg',
-                format='JPEG',
-                subsampling=0,
-                quality=100
-            )
-        self._gui = []
-
     def _render(self) -> None:
         if self._gui is not None:
             data = self._env_exec
@@ -134,12 +105,6 @@ class TextEnvironment(Environment):
 
     def render(self) -> None:
         if self._gui is not None:
-            # Cast from uint8 to float32
-            self._gui = [
-                data.astype(np.float32)
-                for data in self._gui
-            ]
-            # Build gif
             self._gui = [
                 Image.fromarray(data.astype(np.uint8), mode='L').convert('RGBA')
                 for data in self._gui
@@ -181,7 +146,7 @@ class TextEnvironment(Environment):
         # Initialize reward as EMPTY, done as False and wins as 0
         reward = self._rewards[TextStates.EMPTY]
         done = False
-        info = {'return_sum': reward, 'wins': 0, 'time': 0.25, 'distance': 0}
+        info = {'wins': 0, 'time': 0.25, 'distance': 0}
         # Update and check max_steps
         agent['counter'] += 1
         if agent['counter'] == self._max_steps:
@@ -217,10 +182,7 @@ class TextEnvironment(Environment):
                     # Set GOAL reward value and done flag
                     reward = self._rewards[TextStates.GOAL]
                     done = True
-                    info = {'return_sum': reward, 
-                            'wins': 1,
-                            'time': 0.25, 
-                            'distance': 0}
+                    info = {'wins': 1, 'time': 0.25, 'distance': 0}
                 # Reset agent location
                 self._env_exec[tuple(agent['location'])] = TextStates.EMPTY
                 # Add distance info

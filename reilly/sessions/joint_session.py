@@ -135,6 +135,7 @@ class JointSession(ABC):
                         'sample': sample,
                         'step': step,
                         'agent': self._labels[agent],
+                        'reward': reward,
                         **info
                     })
                 step += 1

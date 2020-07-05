@@ -3,7 +3,7 @@ import gym
 from .abstract_gym import GymEnvironment
 
 
-class Frozen_Lake4x4(GymEnvironment):
+class FrozenLake4x4(GymEnvironment):
 
     def __init__(self, slippery=True):
         if slippery:
@@ -18,20 +18,15 @@ class Frozen_Lake4x4(GymEnvironment):
             self._env = gym.make('FrozenLakeNotSlippery4x4-v0')
         self.reset()
 
-    # If mod flag is 'test' return additional dict with environment tests result
     def run_step(self, action, *args, **kwargs):
         next_state, reward, done, _ = self._env.step(action)
-
-        if kwargs['mode'] == 'test':
-            info = {'wins': 0}
-            if done and reward == 1:
-                info['wins'] = 1
-            return next_state, reward, done, info
-
-        return next_state, reward, done, _
+        info = {'wins': 0}
+        if done and reward == 1:
+            info['wins'] = 1
+        return next_state, reward, done, info
 
 
-class Frozen_Lake8x8(GymEnvironment):
+class FrozenLake8x8(GymEnvironment):
 
     def __init__(self, slippery=True):
         if slippery:
@@ -46,14 +41,9 @@ class Frozen_Lake8x8(GymEnvironment):
             self._env = gym.make('FrozenLakeNotSlippery8x8-v0')
         self.reset()
 
-    # If mod flag is 'test' return additional dict with environment tests result
     def run_step(self, action, *args, **kwargs):
         next_state, reward, done, _ = self._env.step(action)
-
-        if kwargs['mode'] == 'test':
-            info = {'wins': 0}
-            if done and reward == 1:
-                info['wins'] = 1
-            return next_state, reward, done, info
-
-        return next_state, reward, done, _
+        info = {'wins': 0}
+        if done and reward == 1:
+            info['wins'] = 1
+        return next_state, reward, done, info
