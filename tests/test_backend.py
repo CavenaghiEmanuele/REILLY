@@ -25,158 +25,170 @@ def test_MonteCarloEveryVisit():
 
 def test_Sarsa():
     env = rl.Taxi()
-    agent = rl.backend.Sarsa(
+    agent = rl.Sarsa(
         states=env.states,
         actions=env.actions,
         alpha=0.1,
         epsilon=0.03,
-        gamma=0.99
+        gamma=0.99,
+        backend='cpp'
     )
     session = rl.Session(env, agent)
     session.run(100, 10, 10)
 
 def test_QLearning():
     env = rl.Taxi()
-    agent = rl.backend.QLearning(
+    agent = rl.QLearning(
         states=env.states,
         actions=env.actions,
         alpha=0.1,
         epsilon=0.03,
-        gamma=0.99
+        gamma=0.99,
+        backend='cpp'
     )
     session = rl.Session(env, agent)
     session.run(100, 10, 10)
 
 def test_ExpectedSarsa():
     env = rl.Taxi()
-    agent = rl.backend.ExpectedSarsa(
+    agent = rl.ExpectedSarsa(
         states=env.states,
         actions=env.actions,
         alpha=0.1,
         epsilon=0.03,
-        gamma=0.99
+        gamma=0.99,
+        backend='cpp'
     )
     session = rl.Session(env, agent)
     session.run(100, 10, 10)
 
 def test_DoubleSarsa():
     env = rl.Taxi()
-    agent = rl.backend.DoubleSarsa(
+    agent = rl.DoubleSarsa(
         states=env.states,
         actions=env.actions,
         alpha=0.1,
         epsilon=0.03,
-        gamma=0.99
+        gamma=0.99,
+        backend='cpp'
     )
     session = rl.Session(env, agent)
     session.run(100, 10, 10)
 
 def test_DoubleQLearning():
     env = rl.Taxi()
-    agent = rl.backend.DoubleQLearning(
+    agent = rl.DoubleQLearning(
         states=env.states,
         actions=env.actions,
         alpha=0.1,
         epsilon=0.03,
-        gamma=0.99
+        gamma=0.99,
+        backend='cpp'
     )
     session = rl.Session(env, agent)
     session.run(100, 10, 10)
 
 def test_DoubleExpectedSarsa():
     env = rl.Taxi()
-    agent = rl.backend.DoubleExpectedSarsa(
+    agent = rl.DoubleExpectedSarsa(
         states=env.states,
         actions=env.actions,
         alpha=0.1,
         epsilon=0.03,
-        gamma=0.99
+        gamma=0.99,
+        backend='cpp'
     )
     session = rl.Session(env, agent)
     session.run(100, 10, 10)
 
 def test_NStepSarsa():
     env = rl.Taxi()
-    agent = rl.backend.NStepSarsa(
+    agent = rl.NStepSarsa(
         states=env.states,
         actions=env.actions,
         alpha=0.1,
         epsilon=0.03,
         gamma=0.99,
-        n_step=5
+        n_step=5,
+        backend='cpp'
     )
     session = rl.Session(env, agent)
     session.run(100, 10, 10)
 
 def test_NStepExpectedSarsa():
     env = rl.Taxi()
-    agent = rl.backend.NStepExpectedSarsa(
+    agent = rl.NStepExpectedSarsa(
         states=env.states,
         actions=env.actions,
         alpha=0.1,
         epsilon=0.03,
         gamma=0.99,
-        n_step=5
+        n_step=5,
+        backend='cpp'
     )
     session = rl.Session(env, agent)
     session.run(100, 10, 10)
 
 def test_NStepTreeBackup():
     env = rl.Taxi()
-    agent = rl.backend.NStepTreeBackup(
+    agent = rl.NStepTreeBackup(
         states=env.states,
         actions=env.actions,
         alpha=0.1,
         epsilon=0.03,
         gamma=0.99,
-        n_step=5
+        n_step=5,
+        backend='cpp'
     )
     session = rl.Session(env, agent)
     session.run(100, 10, 10)
 
 def test_TabularDynaQ():
     env = rl.Taxi()
-    agent = rl.backend.TabularDynaQ(
-        states=env.states,
-        actions=env.actions,
-        alpha=0.1,
-        epsilon=0.03,
-        gamma=0.99,
-        n_plan=5
-    )
-    session = rl.Session(env, agent)
-    session.run(100, 10, 10)
-
-def test_TabularDynaQPlus():
-    env = rl.Taxi()
-    agent = rl.backend.TabularDynaQPlus(
-        states=env.states,
-        actions=env.actions,
-        alpha=0.1,
-        epsilon=0.03,
-        gamma=0.99,
-        n_plan=5
-    )
-    session = rl.Session(env, agent)
-    session.run(100, 10, 10)
-
-def test_PrioritizedSweeping():
-    env = rl.Taxi()
-    agent = rl.backend.PrioritizedSweeping(
+    agent = rl.TabularDynaQ(
         states=env.states,
         actions=env.actions,
         alpha=0.1,
         epsilon=0.03,
         gamma=0.99,
         n_plan=5,
-        theta=0.5
+        backend='cpp'
+    )
+    session = rl.Session(env, agent)
+    session.run(100, 10, 10)
+
+def test_TabularDynaQPlus():
+    env = rl.Taxi()
+    agent = rl.TabularDynaQPlus(
+        states=env.states,
+        actions=env.actions,
+        alpha=0.1,
+        epsilon=0.03,
+        gamma=0.99,
+        n_plan=5,
+        backend='cpp'
+    )
+    session = rl.Session(env, agent)
+    session.run(100, 10, 10)
+
+def test_PrioritizedSweeping():
+    env = rl.Taxi()
+    agent = rl.PrioritizedSweeping(
+        states=env.states,
+        actions=env.actions,
+        alpha=0.1,
+        epsilon=0.03,
+        gamma=0.99,
+        n_plan=5,
+        theta=0.5,
+        backend='cpp'
     )
     session = rl.Session(env, agent)
     session.run(100, 10, 10)
 
 def test_SemiGradientMonteCarlo():
     env = rl.Taxi()
-    agent = rl.backend.SemiGradientMonteCarlo(
+    agent = rl.SemiGradientMonteCarlo(
         actions=env.actions,
         alpha=0.1,
         epsilon=0.01,
@@ -184,14 +196,15 @@ def test_SemiGradientMonteCarlo():
         features=1,
         tilings=2,
         tilings_offset=[4, 4],
-        tile_size=[4, 4]
+        tile_size=[4, 4],
+        backend='cpp'
     )
     session = rl.Session(env, agent)
     session.run(100, 10, 10)
 
 def test_SemiGradientSarsa():
     env = rl.Taxi()
-    agent = rl.backend.SemiGradientSarsa(
+    agent = rl.SemiGradientSarsa(
         actions=env.actions,
         alpha=0.1,
         epsilon=0.01,
@@ -199,14 +212,15 @@ def test_SemiGradientSarsa():
         features=1,
         tilings=2,
         tilings_offset=[4, 4],
-        tile_size=[4, 4]
+        tile_size=[4, 4],
+        backend='cpp'
     )
     session = rl.Session(env, agent)
     session.run(100, 10, 10)
 
 def test_SemiGradientExpectedSarsa():
     env = rl.Taxi()
-    agent = rl.backend.SemiGradientExpectedSarsa(
+    agent = rl.SemiGradientExpectedSarsa(
         actions=env.actions,
         alpha=0.1,
         epsilon=0.01,
@@ -214,14 +228,15 @@ def test_SemiGradientExpectedSarsa():
         features=1,
         tilings=2,
         tilings_offset=[4, 4],
-        tile_size=[4, 4]
+        tile_size=[4, 4],
+        backend='cpp'
     )
     session = rl.Session(env, agent)
     session.run(100, 10, 10)
 
 def test_SemiGradientNStepSarsa():
     env = rl.Taxi()
-    agent = rl.backend.SemiGradientNStepSarsa(
+    agent = rl.SemiGradientNStepSarsa(
         actions=env.actions,
         alpha=0.1,
         epsilon=0.01,
@@ -230,14 +245,15 @@ def test_SemiGradientNStepSarsa():
         features=1,
         tilings=2,
         tilings_offset=[4, 4],
-        tile_size=[4, 4]
+        tile_size=[4, 4],
+        backend='cpp'
     )
     session = rl.Session(env, agent)
     session.run(100, 10, 10)
 
 def test_SemiGradientNStepExpectedSarsa():
     env = rl.Taxi()
-    agent = rl.backend.SemiGradientNStepExpectedSarsa(
+    agent = rl.SemiGradientNStepExpectedSarsa(
         actions=env.actions,
         alpha=0.1,
         epsilon=0.01,
@@ -246,7 +262,8 @@ def test_SemiGradientNStepExpectedSarsa():
         features=1,
         tilings=2,
         tilings_offset=[4, 4],
-        tile_size=[4, 4]
+        tile_size=[4, 4],
+        backend='cpp'
     )
     session = rl.Session(env, agent)
     session.run(100, 10, 10)
