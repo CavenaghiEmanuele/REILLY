@@ -16,21 +16,24 @@ class Session(object):
     _label: str
     _position: int
 
-    def __init__(self, env: Environment, agent: Agent, position: int = 0):
+    def __init__(self, env: Environment, agent: Agent, *args, **kwargs):
         self._env = env
         self._agent = agent
         self._label = "ID: {}, Params: {}".format(id(agent), agent)
-        self._position = position
+        self._position = kwargs.get('position', 0)
 
     def run(self, episodes: int, test_offset: int, test_samples: int, render: bool = False) -> pd.DataFrame:
         out = []
         self._reset_env()
-        for episode in trange(1, episodes + 1, position=self._position, leave=True):
+        for episode in trange(episodes, position=self._position):
             self._run_train()
-            if episode % test_offset == 0:
+            if (episode + 1) % test_offset == 0:
                 out.append(
-                    self._run_test(episode // test_offset,
-                                   test_samples, render)
+                    self._run_test(
+                        episode // test_offset,
+                        test_samples, 
+                        render
+                    )
                 )
         return pd.concat(out)
 
