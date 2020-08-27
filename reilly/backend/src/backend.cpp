@@ -47,7 +47,7 @@ PYBIND11_MODULE(backend, m) {
         .def(py::init<size_t, float>(), py::arg("arms"), py::arg("decay") = 1)
         .def_readonly("arms", &GreedyBandit<BernoulliArm>::arms);
     
-        py::class_<GaussianArm>(m, "GaussianArm")
+    py::class_<GaussianArm>(m, "GaussianArm")
         .def_readonly("mu", &GaussianArm::mu)
         .def_readonly("std_dev", &GaussianArm::std_dev)
         .def_readonly("taken", &GaussianArm::taken)
