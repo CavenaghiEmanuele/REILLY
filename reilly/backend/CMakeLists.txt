@@ -14,25 +14,24 @@ add_definitions(-DXTENSOR_USE_XSIMD)
 
 include_directories(include)
 
-set(xtl extern/xtl CACHE STRING "" FORCE)
-set(xsimd extern/xsimd CACHE STRING "" FORCE)
-set(xtensor extern/xtensor CACHE STRING "" FORCE)
-
-add_subdirectory(extern/xtl)
 include_directories(extern/xtl/include)
+add_subdirectory(extern/xtl)
+set(xtl_DIR "${CMAKE_CURRENT_BINARY_DIR}/extern/xtl" CACHE STRING "" FORCE)
 
-add_subdirectory(extern/xsimd)
 include_directories(extern/xsimd/include)
+add_subdirectory(extern/xsimd)
+set(xsimd_DIR "${CMAKE_CURRENT_BINARY_DIR}/extern/xsimd" CACHE STRING "" FORCE)
 
-add_subdirectory(extern/xtensor)
 include_directories(extern/xtensor/include)
+add_subdirectory(extern/xtensor)
+set(xtensor_DIR "${CMAKE_CURRENT_BINARY_DIR}/extern/xtensor" CACHE STRING "" FORCE)
 
 set(PYBIND11_CPP_STANDARD -std=c++14)
-add_subdirectory(extern/pybind11)
 include_directories(extern/pybind11/include)
+add_subdirectory(extern/pybind11)
 
-# add_subdirectory(extern/xtensor-python)
 include_directories(extern/xtensor-python/include)
+add_subdirectory(extern/xtensor-python)
 
 add_library(xtensor::use_xsimd INTERFACE IMPORTED)
 target_link_libraries(xtensor::use_xsimd INTERFACE xsimd)
@@ -42,7 +41,7 @@ add_library(xtensor::optimize INTERFACE IMPORTED)
 target_link_libraries(xtensor::optimize INTERFACE xtensor)
 target_compile_definitions(xtensor::optimize INTERFACE XTENSOR_OPTIMIZE)
 
-add_subdirectory(src)
+add_subdirectory(src)                
 
 enable_testing()
 include(GoogleTest)
