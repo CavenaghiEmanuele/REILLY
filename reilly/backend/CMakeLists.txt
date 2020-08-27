@@ -9,6 +9,7 @@ set(CMAKE_CXX_STANDARD 14)
 add_compile_options(-Wall -Wextra -pedantic)
 add_compile_options(-O3 -march=native -shared -std=c++14 -fPIC)
 add_compile_options(-Wno-unused-but-set-parameter -Wno-deprecated-copy)
+add_compile_options(-Wno-unused-parameter)
 
 add_definitions(-DXTENSOR_USE_XSIMD)
 
