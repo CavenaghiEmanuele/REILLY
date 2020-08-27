@@ -208,14 +208,14 @@ PYBIND11_MODULE(backend, m) {
     
     py::class_<ApproximateAgent, PyApproximateAgent, Agent>(m, "ApproximateAgent")
         .def("reset", py::overload_cast<size_t>(&Agent::reset), py::arg("init_state"))
-        .def("reset", py::overload_cast<std::list<float>>(&ApproximateAgent::reset), py::arg("init_state"))
+        .def("reset", py::overload_cast<std::vector<float>>(&ApproximateAgent::reset), py::arg("init_state"))
         .def("reset", py::overload_cast<py::array>(&ApproximateAgent::reset), py::arg("init_state"))
         .def("update", py::overload_cast<size_t, float, bool, py::kwargs>(&Agent::update),
             py::arg("next_state"),
             py::arg("reward"),
             py::arg("done")
         )
-        .def("update", py::overload_cast<std::list<float>, float, bool, py::kwargs>(&ApproximateAgent::update),
+        .def("update", py::overload_cast<std::vector<float>, float, bool, py::kwargs>(&ApproximateAgent::update),
             py::arg("next_state"),
             py::arg("reward"),
             py::arg("done")

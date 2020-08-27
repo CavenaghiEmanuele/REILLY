@@ -25,7 +25,7 @@ void ApproximateAgent::reset(size_t init_state) {
     reset(vector_state);
 }
 
-void ApproximateAgent::reset(std::list<float> init_state) { reset(to_xtensor(init_state)); }
+void ApproximateAgent::reset(std::vector<float> init_state) { reset(to_xtensor(init_state)); }
 
 void ApproximateAgent::reset(py::array init_state) {
     auto np = init_state.unchecked<float, 1>();
@@ -41,7 +41,7 @@ void ApproximateAgent::update(size_t next_state, float reward, bool done, py::kw
     update(vector_state, reward, done, kwargs);
 }
 
-void ApproximateAgent::update(std::list<float> next_state, float reward, bool done, py::kwargs kwargs) {
+void ApproximateAgent::update(std::vector<float> next_state, float reward, bool done, py::kwargs kwargs) {
     update(to_xtensor(next_state), reward, done, kwargs);
 }
 

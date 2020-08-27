@@ -26,7 +26,7 @@ class PyTabularAgent : public TabularAgent {
    public:
     using TabularAgent::TabularAgent;
     
-    void reset(size_t init_state) override { PYBIND11_OVERLOAD(void, Agent, reset, init_state); }
+    void reset(size_t init_state) override { PYBIND11_OVERLOAD(void, TabularAgent, reset, init_state); }
     void update(size_t next_state, float reward, bool done, py::kwargs kwargs) override {
         PYBIND11_OVERLOAD(void, Agent, update, next_state, reward, done, kwargs);
     }

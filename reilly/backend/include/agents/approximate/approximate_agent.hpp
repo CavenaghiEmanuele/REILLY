@@ -31,11 +31,11 @@ class ApproximateAgent : public Agent {
     virtual ~ApproximateAgent();
 
     void reset(size_t init_state);
-    void reset(std::list<float> init_state);
+    void reset(std::vector<float> init_state);
     void reset(py::array init_state);
 
     void update(size_t next_state, float reward, bool done, py::kwargs kwargs);
-    void update(std::list<float> next_state, float reward, bool done, py::kwargs kwargs);
+    void update(std::vector<float> next_state, float reward, bool done, py::kwargs kwargs);
     void update(py::array next_state, float reward, bool done, py::kwargs kwargs);
 
     virtual std::string __repr__();

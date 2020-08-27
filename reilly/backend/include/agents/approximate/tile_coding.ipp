@@ -65,8 +65,8 @@ TileCoding::TileCoding(size_t actions, float alpha, py::kwargs kwargs) : actions
     size_t tilings = py::cast<size_t>(kwargs["tilings"]);
     this->alpha = alpha / tilings;
     this->features = py::cast<size_t>(kwargs["features"]);
-    Vector tilings_offset = to_xtensor(py::cast<std::list<float>>(kwargs["tilings_offset"]));
-    Vector tile_size = to_xtensor(py::cast<std::list<float>>(kwargs["tile_size"]));
+    Vector tilings_offset = to_xtensor(py::cast<std::vector<float>>(kwargs["tilings_offset"]));
+    Vector tile_size = to_xtensor(py::cast<std::vector<float>>(kwargs["tile_size"]));
     for (size_t i = 0; i < tilings; i++) {
         this->tilings.push_back(Tiling(tile_size, (-i) * tilings_offset));
     }

@@ -15,6 +15,7 @@
 #include <random>
 #include <string>
 #include <vector>
+#include <xtensor/xadapt.hpp>
 #include <xtensor/xindex_view.hpp>
 #include <xtensor/xio.hpp>
 #include <xtensor/xrandom.hpp>
@@ -30,13 +31,8 @@ namespace agents {
 
 using Vector = xt::xtensor<float, 1>;
 
-Vector to_xtensor(std::list<float> in) {
-    size_t i = 0;
-    Vector out = xt::empty<float>({in.size()});
-    for (auto j = in.begin(); j != in.end(); j++) {
-        out[i] = (float)(*j);
-        i++;
-    }
+Vector to_xtensor(std::vector<float> other) {
+    Vector out = xt::adapt(other, {other.size()});
     return out;
 }
 
