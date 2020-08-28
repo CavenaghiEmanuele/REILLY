@@ -20,8 +20,6 @@ struct BernoulliArm {
     }
 
     operator float() const { return (float)alpha / (float)(alpha + beta); }
-
-    std::string __repr__() { return "Bernoulli"; }
 };
 
 struct GaussianArm {
@@ -38,8 +36,6 @@ struct GaussianArm {
     }
 
     operator float() const { return mu; }
-
-    std::string __repr__() { return "Gaussian"; }
 };
 
 template <typename Arm>

@@ -34,8 +34,7 @@ std::string MultiArmedBandit<Arm>::__repr__() {
     int status;
     std::stringstream out;
     char *demangled = abi::__cxa_demangle(typeid(*this).name(), 0, 0, &status);
-    out << "<" << arms[0].__repr__() << demangled << "(arms= " << actions;
-    out << ", decay=" << epsilon_decay << ")";
+    out << "<" << demangled << "(arms= " << actions << ", decay=" << epsilon_decay << ")";
     return out.str();
 }
 
