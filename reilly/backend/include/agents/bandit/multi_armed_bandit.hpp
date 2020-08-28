@@ -13,15 +13,14 @@ struct BernoulliArm {
 
     size_t taken = 0;
 
-    std::minstd_rand generator;
-
     void update(float reward, float decay) {
         taken++;
         alpha += 1 * (reward > 0);
         beta += 1 * (reward <= 0);
     }
 
-    float sample() {
+    template<class Generator>
+    float sample(Generator &generator) {
         // X = Gamma(alpha, 1), Y = Gamma(beta, 1) ->
         // Z = X / X+Y = Beta(alpha, beta)
         std::gamma_distribution<> X(alpha, 1);
@@ -40,15 +39,14 @@ struct GaussianArm {
 
     size_t taken = 0;
 
-    std::minstd_rand generator;
-
     void update(float reward, float decay) {
         taken++;
         stddev *= decay;
         mu += (1 / (float) taken) * (reward - mu);
     }
 
-    float sample() {
+    template<class Generator>
+    float sample(Generator &generator) {
         std::normal_distribution<> normal(mu, stddev);
         return normal(generator);
     }

@@ -29,7 +29,7 @@ ThompsonSamplingBandit<Arm>::~ThompsonSamplingBandit() {}
 template <typename Arm>
 size_t ThompsonSamplingBandit<Arm>::select_action() {
     std::vector<float> weights;
-    for (Arm arm : this->arms) weights.push_back(arm.sample());
+    for (Arm arm : this->arms) weights.push_back(arm.sample(this->generator));
     Vector out = to_xtensor(weights);
     return this->argmaxQs(out);
 }
