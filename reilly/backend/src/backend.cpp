@@ -51,9 +51,13 @@ PYBIND11_MODULE(backend, m) {
         .def(py::init<size_t, float>(), py::arg("arms"), py::arg("decay") = 1)
         .def_readonly("arms", &UCBBandit<BernoulliArm>::arms);
     
+    py::class_<ThompsonSamplingBandit<BernoulliArm>, MultiArmedBandit<BernoulliArm>>(m, "BernoulliThompsonSamplingBandit")
+        .def(py::init<size_t, float>(), py::arg("arms"), py::arg("decay") = 1)
+        .def_readonly("arms", &ThompsonSamplingBandit<BernoulliArm>::arms);
+    
     py::class_<GaussianArm>(m, "GaussianArm")
         .def_readonly("mu", &GaussianArm::mu)
-        .def_readonly("std_dev", &GaussianArm::std_dev)
+        .def_readonly("stddev", &GaussianArm::stddev)
         .def_readonly("taken", &GaussianArm::taken)
         .def_readonly("trace", &GaussianArm::trace);
     
@@ -66,6 +70,10 @@ PYBIND11_MODULE(backend, m) {
     py::class_<UCBBandit<GaussianArm>, MultiArmedBandit<GaussianArm>>(m, "GaussianUCBBandit")
         .def(py::init<size_t, float>(), py::arg("arms"), py::arg("decay") = 1)
         .def_readonly("arms", &UCBBandit<GaussianArm>::arms);
+    
+    py::class_<ThompsonSamplingBandit<GaussianArm>, MultiArmedBandit<GaussianArm>>(m, "GaussianThompsonSamplingBandit")
+        .def(py::init<size_t, float>(), py::arg("arms"), py::arg("decay") = 1)
+        .def_readonly("arms", &ThompsonSamplingBandit<GaussianArm>::arms);
     
     py::class_<TabularAgent, PyTabularAgent, Agent>(m, "TabularAgent");
     

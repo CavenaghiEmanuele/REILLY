@@ -29,6 +29,16 @@ Build the package with C++ backend and install:
 * *empty* - Not implemented
 * :heavy_check_mark: - Already implemented
 * :x: - Non-existent
+  
+## Multi-Armed Bandits
+
+### Bernoulli and Gaussian
+
+| Name             |     Bernoulli      |      Gaussian      | Python |       C/C++        |
+| ---------------- | :----------------: | :----------------: | :----: | :----------------: |
+| Greedy           | :heavy_check_mark: | :heavy_check_mark: |        | :heavy_check_mark: |
+| UCB              | :heavy_check_mark: | :heavy_check_mark: |        | :heavy_check_mark: |
+| Thompson Samplig | :heavy_check_mark: | :heavy_check_mark: |        |                    |
 
 ## Tabular Agents
 

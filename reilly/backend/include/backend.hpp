@@ -5,6 +5,7 @@
 #include <agents/bandit/multi_armed_bandit.ipp>
 #include <agents/bandit/greedy_bandit.ipp>
 #include <agents/bandit/ucb_bandit.ipp>
+#include <agents/bandit/thompson_sampling_bandit.ipp>
 
 #include <agents/tabular/tabular_agent.ipp>
 #include <agents/tabular/montecarlo/montecarlo.ipp>
