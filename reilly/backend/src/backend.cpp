@@ -68,7 +68,7 @@ PYBIND11_MODULE(backend, m) {
     
     py::class_<MultiArmedBandit<DiscountedBernoulliArm>, PyDiscountedBernoulliBandit, Agent>(m, "DiscountedBernoulliBandit");
 
-    py::class_<ThompsonSamplingBandit<DiscountedBernoulliArm>, MultiArmedBandit<DiscountedBernoulliArm>>(m, "DiscountedBernoulliThompsonSamplingBandit", py::dynamic_attr())
+    py::class_<ThompsonSamplingBandit<DiscountedBernoulliArm>, MultiArmedBandit<DiscountedBernoulliArm>>(m, "DiscountedBernoulliThompsonSamplingBandit")
         .def(py::init<size_t, float>(), py::arg("arms"), py::arg("gamma") = 1)
         .def_readonly("arms", &ThompsonSamplingBandit<DiscountedBernoulliArm>::arms);
     
