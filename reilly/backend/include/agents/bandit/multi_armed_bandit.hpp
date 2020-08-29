@@ -11,12 +11,18 @@ struct BernoulliArm {
     size_t beta = 1;
     std::vector<float> trace{0.5};
 
-    size_t taken = 0;
+    size_t count = 0;
 
     void update(float reward, float decay) {
-        taken++;
+        count++;
         alpha += 1 * (reward > 0);
         beta += 1 * (reward <= 0);
+    }
+
+    // Upper Confident Bound
+    float UCB(float T) {
+        if (T == 0 || count == 0) return std::numeric_limits<float>::infinity();
+        return std::sqrt(2 * std::log(T) / (float) count);
     }
 
     template<class Generator>
@@ -37,12 +43,21 @@ struct GaussianArm {
     float stddev = 1;
     std::vector<float> trace{0.5};
 
-    size_t taken = 0;
+    size_t count = 0;
+
+    float qi = 0; float ri = 0;
 
     void update(float reward, float decay) {
-        taken++;
+        count++;
         stddev *= decay;
-        mu += (1 / (float) taken) * (reward - mu);
+        mu += (1 / (float) count) * (reward - mu);
+        ri = reward;
+        qi += std::pow(reward, 2);
+    }
+
+    float UCB(float T) {
+        if (T <= 1 || count <= 1) return std::numeric_limits<float>::infinity();
+        return std::sqrt(16 * (std::abs(qi - count * std::pow(ri, 2)) / (float) (count - 1)) * (std::log(T - 1) / (float) count));
     }
 
     template<class Generator>

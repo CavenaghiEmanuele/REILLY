@@ -28,14 +28,10 @@ UCBBandit<Arm>::~UCBBandit() {}
 
 template <typename Arm>
 size_t UCBBandit<Arm>::select_action() {
-    float taken = 0;
+    float count = 0;
     std::vector<float> weights;
-    for (Arm arm : this->arms) taken += arm.taken;
-    for (Arm arm : this->arms) {
-        float ucb = std::numeric_limits<float>::infinity();
-        if (taken != 0 && arm.taken != 0) ucb = sqrt(2 * log(taken) / (float) arm.taken);
-        weights.push_back((float) arm + ucb);
-    }
+    for (Arm arm : this->arms) count += arm.count;
+    for (Arm arm : this->arms) weights.push_back((float) arm + arm.UCB(count));
     Vector out = to_xtensor(weights);
     return this->argmaxQs(out);
 }
