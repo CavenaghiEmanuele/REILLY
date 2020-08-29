@@ -33,7 +33,7 @@ size_t UCBBandit<Arm>::select_action() {
     for (Arm arm : this->arms) taken += arm.taken;
     for (Arm arm : this->arms) {
         float ucb = std::numeric_limits<float>::infinity();
-        if (taken != 0 && arm.taken != 0) ucb = 2 * sqrt(log(taken) / (float) arm.taken);
+        if (taken != 0 && arm.taken != 0) ucb = sqrt(2 * log(taken) / (float) arm.taken);
         weights.push_back((float) arm + ucb);
     }
     Vector out = to_xtensor(weights);
