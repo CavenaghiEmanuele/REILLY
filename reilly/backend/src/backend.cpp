@@ -38,7 +38,7 @@ PYBIND11_MODULE(backend, m) {
     py::class_<BernoulliArm>(m, "BernoulliArm")
         .def_readonly("alpha", &BernoulliArm::alpha)
         .def_readonly("beta", &BernoulliArm::beta)
-        .def_readonly("taken", &BernoulliArm::taken)
+        .def_readonly("taken", &BernoulliArm::count)
         .def_readonly("trace", &BernoulliArm::trace);
     
     py::class_<MultiArmedBandit<BernoulliArm>, PyBernoulliBandit, Agent>(m, "BernoulliBandit");
@@ -58,7 +58,7 @@ PYBIND11_MODULE(backend, m) {
     py::class_<GaussianArm>(m, "GaussianArm")
         .def_readonly("mu", &GaussianArm::mu)
         .def_readonly("stddev", &GaussianArm::stddev)
-        .def_readonly("taken", &GaussianArm::taken)
+        .def_readonly("taken", &GaussianArm::count)
         .def_readonly("trace", &GaussianArm::trace);
     
     py::class_<MultiArmedBandit<GaussianArm>, PyGaussianBandit, Agent>(m, "GaussianBandit");
