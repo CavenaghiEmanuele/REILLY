@@ -30,7 +30,7 @@ BernoulliArm &BernoulliArm::operator=(const BernoulliArm &other) {
 
 BernoulliArm::~BernoulliArm() {}
 
-double BernoulliArm::operator()(std::minstd_rand &generator) const {
+double BernoulliArm::operator()(std::minstd_rand &generator) {
     // X = Gamma(alpha, 1), Y = Gamma(beta, 1) ->
     // Z = X / X+Y = Beta(alpha, beta)
     std::gamma_distribution<> X(alpha, 1);
@@ -51,7 +51,7 @@ float BernoulliArm::UCB(float T) const {
     return std::sqrt(2 * std::log(T) / (float)count);
 }
 
-BernoulliArm::operator float() const { return (float)alpha / (float)(alpha + beta); }
+BernoulliArm::operator float() { return (float)alpha / (float)(alpha + beta); }
 
 // Dynamic Bernuolli Arm
 
@@ -81,6 +81,48 @@ void DynamicBernoulliArm::update(float reward, float gamma, float decay) {
     }
 }
 
+// Discounted Bernoulli Arm
+
+DiscountedBernoulliArm::DiscountedBernoulliArm(float alpha, float beta) : BernoulliArm(alpha, beta), gamma(1), S(0), F(0) {}
+
+DiscountedBernoulliArm::DiscountedBernoulliArm(const DiscountedBernoulliArm &other) : BernoulliArm(other), gamma(other.gamma), S(other.S), F(other.F) {}
+
+DiscountedBernoulliArm &DiscountedBernoulliArm::operator=(const DiscountedBernoulliArm &other) {
+    if (this != &other) {
+        DiscountedBernoulliArm tmp(other);
+        std::swap(tmp.count, count);
+        std::swap(tmp.alpha, alpha);
+        std::swap(tmp.beta, beta);
+        std::swap(tmp.gamma, gamma);
+        std::swap(tmp.S, S);
+        std::swap(tmp.F, F);
+    }
+    return *this;
+}
+
+DiscountedBernoulliArm::~DiscountedBernoulliArm() {}
+
+double DiscountedBernoulliArm::operator()(std::minstd_rand &generator) {
+    S *= gamma; F *= gamma;  // Delayed discount
+    std::gamma_distribution<> X(S + alpha, 1);
+    std::gamma_distribution<> Y(F + beta, 1);
+    float x = X(generator);
+    float y = Y(generator);
+    return x / (x + y);
+}
+
+void DiscountedBernoulliArm::update(float reward, float gamma, float decay) {
+    count++;
+    S += reward;
+    F += (1 - reward);
+    this->gamma = gamma;
+}
+
+DiscountedBernoulliArm::operator float() {
+    S *= gamma; F *= gamma; // Delayed discount
+    return (S + alpha) / ((S + alpha) + (F + beta));
+}
+
 // Gaussian Arm
 
 GaussianArm::GaussianArm(float mu, float stddev) : ri(0), qi(0), mu(mu), stddev(stddev) {}
@@ -102,7 +144,7 @@ GaussianArm &GaussianArm::operator=(const GaussianArm &other) {
 
 GaussianArm::~GaussianArm() {}
 
-double GaussianArm::operator()(std::minstd_rand &generator) const {
+double GaussianArm::operator()(std::minstd_rand &generator) {
     std::normal_distribution<> normal(mu, stddev);
     return normal(generator);
 }
@@ -120,7 +162,7 @@ float GaussianArm::UCB(float T) const {
     return std::sqrt(16 * (std::abs(qi - count * std::pow(ri, 2)) / (float)(count - 1)) * (std::log(T - 1) / (float)count));
 }
 
-GaussianArm::operator float() const { return mu; }
+GaussianArm::operator float() { return mu; }
 
 }  // namespace agents
 

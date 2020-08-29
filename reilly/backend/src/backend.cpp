@@ -61,6 +61,17 @@ PYBIND11_MODULE(backend, m) {
         .def(py::init<size_t, float>(), py::arg("arms"), py::arg("gamma") = 1)
         .def_readonly("arms", &ThompsonSamplingBandit<DynamicBernoulliArm>::arms);
     
+    py::class_<DiscountedBernoulliArm>(m, "DiscountedBernoulliArm")
+        .def_readonly("alpha", &DiscountedBernoulliArm::alpha)
+        .def_readonly("beta", &DiscountedBernoulliArm::beta)
+        .def_readonly("count", &DiscountedBernoulliArm::count);
+    
+    py::class_<MultiArmedBandit<DiscountedBernoulliArm>, PyDiscountedBernoulliBandit, Agent>(m, "DiscountedBernoulliBandit");
+
+    py::class_<ThompsonSamplingBandit<DiscountedBernoulliArm>, MultiArmedBandit<DiscountedBernoulliArm>>(m, "DiscountedBernoulliThompsonSamplingBandit", py::dynamic_attr())
+        .def(py::init<size_t, float>(), py::arg("arms"), py::arg("gamma") = 1)
+        .def_readonly("arms", &ThompsonSamplingBandit<DiscountedBernoulliArm>::arms);
+    
     py::class_<GaussianArm>(m, "GaussianArm")
         .def_readonly("mu", &GaussianArm::mu)
         .def_readonly("stddev", &GaussianArm::stddev)

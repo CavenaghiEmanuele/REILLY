@@ -12,10 +12,10 @@ class BanditArm {
     BanditArm(const BanditArm &other);
     virtual ~BanditArm();
 
-    virtual double operator()(std::minstd_rand &generator) const = 0;
+    virtual double operator()(std::minstd_rand &generator) = 0;
     virtual void update(float reward, float gamma, float decay) = 0;
     virtual float UCB(float T) const = 0;  // Upper Confident Bound
-    virtual operator float() const = 0;
+    virtual operator float() = 0;
 };
 
 class BernoulliArm : public BanditArm {
@@ -28,10 +28,10 @@ class BernoulliArm : public BanditArm {
     BernoulliArm &operator=(const BernoulliArm &other);
     ~BernoulliArm();
 
-    virtual double operator()(std::minstd_rand &generator) const;
+    virtual double operator()(std::minstd_rand &generator);
     virtual void update(float reward, float gamma, float decay);
     virtual float UCB(float T) const;
-    virtual operator float() const;
+    virtual operator float();
 };
 
 class DynamicBernoulliArm : public BernoulliArm {
@@ -42,6 +42,23 @@ class DynamicBernoulliArm : public BernoulliArm {
     ~DynamicBernoulliArm();
 
     virtual void update(float reward, float gamma, float decay);
+};
+
+class DiscountedBernoulliArm : public BernoulliArm {
+   private:
+    float gamma;
+    float S;
+    float F;
+
+   public:
+    DiscountedBernoulliArm(float alpha = 1, float beta = 1);
+    DiscountedBernoulliArm(const DiscountedBernoulliArm &other);
+    DiscountedBernoulliArm &operator=(const DiscountedBernoulliArm &other);
+    ~DiscountedBernoulliArm();
+
+    virtual double operator()(std::minstd_rand &generator);
+    virtual void update(float reward, float gamma, float decay);
+    virtual operator float();
 };
 
 class GaussianArm : public BanditArm {
@@ -58,10 +75,10 @@ class GaussianArm : public BanditArm {
     GaussianArm &operator=(const GaussianArm &other);
     ~GaussianArm();
 
-    virtual double operator()(std::minstd_rand &generator) const;
+    virtual double operator()(std::minstd_rand &generator);
     virtual void update(float reward, float gamma, float decay);
     virtual float UCB(float T) const;
-    virtual operator float() const;
+    virtual operator float();
 };
 
 }  // namespace agents

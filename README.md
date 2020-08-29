@@ -34,11 +34,14 @@ Build the package with C++ backend and install:
 
 ### Bernoulli and Gaussian
 
-| Name             |     Bernoulli      |      Gaussian      | Python |       C/C++        |
-| ---------------- | :----------------: | :----------------: | :----: | :----------------: |
-| Greedy           | :heavy_check_mark: | :heavy_check_mark: |        | :heavy_check_mark: |
-| UCB              | :heavy_check_mark: | :heavy_check_mark: |        | :heavy_check_mark: |
-| Thompson Samplig | :heavy_check_mark: | :heavy_check_mark: |        |                    |
+| Name                       |     Bernoulli      |      Gaussian      |       Dynamic       |     Discounted     | Python |       C/C++        |
+| -------------------------- | :----------------: | :----------------: | :-----------------: | :----------------: | :----: | :----------------: |
+| Greedy                     | :heavy_check_mark: | :heavy_check_mark: |                     |                    |        | :heavy_check_mark: |
+| UCB                        | :heavy_check_mark: | :heavy_check_mark: |                     |                    |        | :heavy_check_mark: |
+| Thompson Samplig [^1] [^2] | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark:] | :heavy_check_mark: |        | :heavy_check_mark: |
+
+[^1]: From https://ieeexplore.ieee.org/abstract/document/6147024.  
+[^2]: From https://arxiv.org/abs/1707.09727.
 
 ## Tabular Agents
 
