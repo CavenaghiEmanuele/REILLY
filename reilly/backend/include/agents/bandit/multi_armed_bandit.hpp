@@ -12,7 +12,7 @@ class MultiArmedBandit : public Agent {
     virtual size_t select_action() = 0;
 
    public:
-    MultiArmedBandit(size_t actions, float epsilon_decay = 1);
+    MultiArmedBandit(size_t actions, float gamma = 1, float epsilon_decay = 1);
     MultiArmedBandit(const MultiArmedBandit &other);
     virtual ~MultiArmedBandit();
 

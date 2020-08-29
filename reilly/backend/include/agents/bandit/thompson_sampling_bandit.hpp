@@ -12,7 +12,7 @@ class ThompsonSamplingBandit : public MultiArmedBandit<Arm> {
     size_t select_action();
 
    public:
-    ThompsonSamplingBandit(size_t actions, float epsilon_decay = 1);
+    ThompsonSamplingBandit(size_t actions, float gamma = 1, float epsilon_decay = 1);
     ThompsonSamplingBandit(const ThompsonSamplingBandit &other);
     ThompsonSamplingBandit &operator=(const ThompsonSamplingBandit &other);
     virtual ~ThompsonSamplingBandit();

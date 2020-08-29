@@ -7,7 +7,7 @@ namespace reilly {
 namespace agents {
 
 template <typename Arm>
-GreedyBandit<Arm>::GreedyBandit(size_t actions, float epsilon_decay) : MultiArmedBandit<Arm>(actions, epsilon_decay) {}
+GreedyBandit<Arm>::GreedyBandit(size_t actions, float gamma, float epsilon_decay) : MultiArmedBandit<Arm>(actions, gamma, epsilon_decay) {}
 
 template <typename Arm>
 GreedyBandit<Arm>::GreedyBandit(const GreedyBandit &other) : MultiArmedBandit<Arm>(other) {}
@@ -17,6 +17,7 @@ GreedyBandit<Arm> &GreedyBandit<Arm>::operator=(const GreedyBandit &other) {
     if (this != &other) {
         GreedyBandit tmp(other);
         std::swap(tmp.actions, this->actions);
+        std::swap(tmp.gamma, this->gamma);
         std::swap(tmp.epsilon_decay, this->epsilon_decay);
         std::swap(tmp.arms, this->arms);
     }

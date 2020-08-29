@@ -7,7 +7,7 @@ namespace reilly {
 namespace agents {
 
 template <typename Arm>
-MultiArmedBandit<Arm>::MultiArmedBandit(size_t actions, float epsilon_decay) : Agent(actions, 0, 0, 0, epsilon_decay) {}
+MultiArmedBandit<Arm>::MultiArmedBandit(size_t actions, float gamma, float epsilon_decay) : Agent(actions, 0, 0, gamma, epsilon_decay) {}
 
 template <typename Arm>
 MultiArmedBandit<Arm>::MultiArmedBandit(const MultiArmedBandit &other) : Agent(other), arms(other.arms) {}

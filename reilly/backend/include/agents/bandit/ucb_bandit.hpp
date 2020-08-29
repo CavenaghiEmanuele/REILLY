@@ -12,7 +12,7 @@ class UCBBandit : public MultiArmedBandit<Arm> {
     size_t select_action();
 
    public:
-    UCBBandit(size_t actions, float epsilon_decay = 1);
+    UCBBandit(size_t actions, float gamma = 1, float epsilon_decay = 1);
     UCBBandit(const UCBBandit &other);
     UCBBandit &operator=(const UCBBandit &other);
     virtual ~UCBBandit();
