@@ -43,16 +43,13 @@ PYBIND11_MODULE(backend, m) {
     
     py::class_<MultiArmedBandit<BernoulliArm>, PyBernoulliBandit, Agent>(m, "BernoulliBandit");
 
-    py::class_<GreedyBandit<BernoulliArm>, MultiArmedBandit<BernoulliArm>>(m, "BernoulliGreedyBandit")
-        .def(py::init<size_t, float>(), py::arg("arms"), py::arg("decay") = 1)
+        .def(py::init<size_t>(), py::arg("arms"))
         .def_readonly("arms", &GreedyBandit<BernoulliArm>::arms);
     
-    py::class_<UCBBandit<BernoulliArm>, MultiArmedBandit<BernoulliArm>>(m, "BernoulliUCBBandit")
-        .def(py::init<size_t, float>(), py::arg("arms"), py::arg("decay") = 1)
+        .def(py::init<size_t>(), py::arg("arms"))
         .def_readonly("arms", &UCBBandit<BernoulliArm>::arms);
     
-    py::class_<ThompsonSamplingBandit<BernoulliArm>, MultiArmedBandit<BernoulliArm>>(m, "BernoulliThompsonSamplingBandit")
-        .def(py::init<size_t, float>(), py::arg("arms"), py::arg("decay") = 1)
+        .def(py::init<size_t>(), py::arg("arms"))
         .def_readonly("arms", &ThompsonSamplingBandit<BernoulliArm>::arms);
     
     py::class_<GaussianArm>(m, "GaussianArm")

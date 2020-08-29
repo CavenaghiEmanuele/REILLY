@@ -16,9 +16,9 @@ template <typename Arm>
 GreedyBandit<Arm> &GreedyBandit<Arm>::operator=(const GreedyBandit &other) {
     if (this != &other) {
         GreedyBandit tmp(other);
-        std::swap(other.actions, this->actions);
-        std::swap(other.epsilon_decay, this->epsilon_decay);
-        std::swap(other.arms, this->arms);
+        std::swap(tmp.actions, this->actions);
+        std::swap(tmp.epsilon_decay, this->epsilon_decay);
+        std::swap(tmp.arms, this->arms);
     }
     return *this;
 }

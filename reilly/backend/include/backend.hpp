@@ -2,6 +2,7 @@
 
 #include <agents/agent.ipp>
 
+#include <agents/bandit/bandit_arms.ipp>
 #include <agents/bandit/multi_armed_bandit.ipp>
 #include <agents/bandit/greedy_bandit.ipp>
 #include <agents/bandit/ucb_bandit.ipp>

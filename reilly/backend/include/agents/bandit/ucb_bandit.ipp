@@ -16,9 +16,9 @@ template <typename Arm>
 UCBBandit<Arm> &UCBBandit<Arm>::operator=(const UCBBandit &other) {
     if (this != &other) {
         UCBBandit tmp(other);
-        std::swap(other.actions, this->actions);
-        std::swap(other.epsilon_decay, this->epsilon_decay);
-        std::swap(other.arms, this->arms);
+        std::swap(tmp.actions, this->actions);
+        std::swap(tmp.epsilon_decay, this->epsilon_decay);
+        std::swap(tmp.arms, this->arms);
     }
     return *this;
 }

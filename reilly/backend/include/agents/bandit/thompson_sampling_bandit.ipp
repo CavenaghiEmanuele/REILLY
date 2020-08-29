@@ -16,9 +16,9 @@ template <typename Arm>
 ThompsonSamplingBandit<Arm> &ThompsonSamplingBandit<Arm>::operator=(const ThompsonSamplingBandit &other) {
     if (this != &other) {
         ThompsonSamplingBandit tmp(other);
-        std::swap(other.actions, this->actions);
-        std::swap(other.epsilon_decay, this->epsilon_decay);
-        std::swap(other.arms, this->arms);
+        std::swap(tmp.actions, this->actions);
+        std::swap(tmp.epsilon_decay, this->epsilon_decay);
+        std::swap(tmp.arms, this->arms);
     }
     return *this;
 }
@@ -29,7 +29,7 @@ ThompsonSamplingBandit<Arm>::~ThompsonSamplingBandit() {}
 template <typename Arm>
 size_t ThompsonSamplingBandit<Arm>::select_action() {
     std::vector<float> weights;
-    for (Arm arm : this->arms) weights.push_back(arm.sample(this->generator));
+    for (Arm arm : this->arms) weights.push_back(arm(this->generator));
     Vector out = to_xtensor(weights);
     return this->argmaxQs(out);
 }
