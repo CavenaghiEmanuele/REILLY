@@ -6,9 +6,9 @@ namespace agents {
 
 // Generic Bandit Arm
 
-BanditArm::BanditArm() : count(0), trace({0.5}) {}
+BanditArm::BanditArm() : count(0) {}
 
-BanditArm::BanditArm(const BanditArm &other) : count(other.count), trace(other.trace) {}
+BanditArm::BanditArm(const BanditArm &other) : count(other.count) {}
 
 BanditArm::~BanditArm() {}
 
@@ -22,7 +22,6 @@ BernoulliArm &BernoulliArm::operator=(const BernoulliArm &other) {
     if (this != &other) {
         BernoulliArm tmp(other);
         std::swap(tmp.count, count);
-        std::swap(tmp.trace, trace);
         std::swap(tmp.alpha, alpha);
         std::swap(tmp.beta, beta);
     }
@@ -64,7 +63,6 @@ DynamicBernoulliArm &DynamicBernoulliArm::operator=(const DynamicBernoulliArm &o
     if (this != &other) {
         DynamicBernoulliArm tmp(other);
         std::swap(tmp.count, count);
-        std::swap(tmp.trace, trace);
         std::swap(tmp.alpha, alpha);
         std::swap(tmp.beta, beta);
     }
@@ -93,12 +91,11 @@ GaussianArm &GaussianArm::operator=(const GaussianArm &other) {
     if (this != &other) {
         GaussianArm tmp(other);
         std::swap(tmp.count, count);
-        std::swap(tmp.trace, trace);
         std::swap(tmp.mu, mu);
         std::swap(tmp.stddev, stddev);
 
-        // std::swap(tmp.ri, ri);
-        // std::swap(tmp.qi, qi);
+        std::swap(tmp.ri, ri);
+        std::swap(tmp.qi, qi);
     }
     return *this;
 }

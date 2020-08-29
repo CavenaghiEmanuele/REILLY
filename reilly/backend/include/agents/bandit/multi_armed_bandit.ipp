@@ -25,7 +25,6 @@ void MultiArmedBandit<Arm>::reset(size_t init_state) {
 template <typename Arm>
 void MultiArmedBandit<Arm>::update(size_t next_state, float reward, bool done, py::kwargs kwargs) {
     arms[action].update(reward, gamma, epsilon_decay);
-    for (Arm arm : arms) arm.trace.push_back((float) arm);
     action = select_action();
 }
 

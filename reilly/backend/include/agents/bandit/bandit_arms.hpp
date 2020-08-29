@@ -7,7 +7,6 @@ namespace agents {
 class BanditArm {
    public:
     size_t count;
-    std::vector<float> trace;
 
     BanditArm();
     BanditArm(const BanditArm &other);
