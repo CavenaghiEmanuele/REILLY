@@ -42,8 +42,8 @@ double BernoulliArm::operator()(std::minstd_rand &generator) const {
 
 void BernoulliArm::update(float reward, float gamma, float decay) {
     count++;
-    alpha += 1 * (reward > 0);
-    beta += 1 * (reward <= 0);
+    alpha += reward;
+    beta += (1 - reward);
 }
 
 float BernoulliArm::UCB(float T) const {
@@ -73,8 +73,8 @@ DynamicBernoulliArm::~DynamicBernoulliArm() {}
 
 void DynamicBernoulliArm::update(float reward, float gamma, float decay) {
     count++;
-    alpha += 1 * (reward > 0);
-    beta += 1 * (reward <= 0);
+    alpha += reward;
+    beta += (1 - reward);
     if (alpha + beta >= gamma) {
         alpha *= (gamma / (gamma + 1));
         beta *= (gamma / (gamma + 1));
