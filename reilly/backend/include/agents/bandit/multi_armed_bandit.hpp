@@ -7,8 +7,8 @@ namespace reilly {
 namespace agents {
 
 struct BernoulliArm {
-    size_t alpha = 1;
-    size_t beta = 1;
+    size_t alpha = 2;
+    size_t beta = 2;
     std::vector<float> trace{0.5};
 
     size_t count = 0;
