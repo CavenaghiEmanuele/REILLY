@@ -35,6 +35,19 @@ class PyBernoulliBandit : public MultiArmedBandit<BernoulliArm> {
     }
 };
 
+class PyDynamicBernoulliBandit : public MultiArmedBandit<DynamicBernoulliArm> {
+    public:
+     using MultiArmedBandit<DynamicBernoulliArm>::MultiArmedBandit;
+
+    void reset(size_t init_state) override { PYBIND11_OVERLOAD(void, MultiArmedBandit, reset, init_state); }
+    void update(size_t next_state, float reward, bool done, py::kwargs kwargs) override {
+        PYBIND11_OVERLOAD(void, Agent, update, next_state, reward, done, kwargs);
+    }
+    std::string __repr__() override {
+        PYBIND11_OVERLOAD(std::string, Agent, __repr__, );
+    }
+};
+
 class PyGaussianBandit : public MultiArmedBandit<GaussianArm> {
     public:
      using MultiArmedBandit<GaussianArm>::MultiArmedBandit;

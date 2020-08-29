@@ -38,7 +38,7 @@ PYBIND11_MODULE(backend, m) {
     py::class_<BernoulliArm>(m, "BernoulliArm")
         .def_readonly("alpha", &BernoulliArm::alpha)
         .def_readonly("beta", &BernoulliArm::beta)
-        .def_readonly("taken", &BernoulliArm::count)
+        .def_readonly("count", &BernoulliArm::count)
         .def_readonly("trace", &BernoulliArm::trace);
     
     py::class_<MultiArmedBandit<BernoulliArm>, PyBernoulliBandit, Agent>(m, "BernoulliBandit");
@@ -52,10 +52,21 @@ PYBIND11_MODULE(backend, m) {
         .def(py::init<size_t>(), py::arg("arms"))
         .def_readonly("arms", &ThompsonSamplingBandit<BernoulliArm>::arms);
     
+    py::class_<DynamicBernoulliArm>(m, "DynamicBernoulliArm")
+        .def_readonly("alpha", &DynamicBernoulliArm::alpha)
+        .def_readonly("beta", &DynamicBernoulliArm::beta)
+        .def_readonly("count", &DynamicBernoulliArm::count)
+        .def_readonly("trace", &DynamicBernoulliArm::trace);
+    
+    py::class_<MultiArmedBandit<DynamicBernoulliArm>, PyDynamicBernoulliBandit, Agent>(m, "DynamicBernoulliBandit");
+    
+        .def(py::init<size_t, float>(), py::arg("arms"), py::arg("gamma") = 1)
+        .def_readonly("arms", &ThompsonSamplingBandit<DynamicBernoulliArm>::arms);
+    
     py::class_<GaussianArm>(m, "GaussianArm")
         .def_readonly("mu", &GaussianArm::mu)
         .def_readonly("stddev", &GaussianArm::stddev)
-        .def_readonly("taken", &GaussianArm::count)
+        .def_readonly("count", &GaussianArm::count)
         .def_readonly("trace", &GaussianArm::trace);
     
     py::class_<MultiArmedBandit<GaussianArm>, PyGaussianBandit, Agent>(m, "GaussianBandit");

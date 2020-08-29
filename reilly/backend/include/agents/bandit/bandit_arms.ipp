@@ -54,6 +54,35 @@ float BernoulliArm::UCB(float T) const {
 
 BernoulliArm::operator float() const { return (float)alpha / (float)(alpha + beta); }
 
+// Dynamic Bernuolli Arm
+
+DynamicBernoulliArm::DynamicBernoulliArm(float alpha, float beta) : BernoulliArm(alpha, beta) {}
+
+DynamicBernoulliArm::DynamicBernoulliArm(const DynamicBernoulliArm &other) : BernoulliArm(other) {}
+
+DynamicBernoulliArm &DynamicBernoulliArm::operator=(const DynamicBernoulliArm &other) {
+    if (this != &other) {
+        DynamicBernoulliArm tmp(other);
+        std::swap(tmp.count, count);
+        std::swap(tmp.trace, trace);
+        std::swap(tmp.alpha, alpha);
+        std::swap(tmp.beta, beta);
+    }
+    return *this;
+}
+
+DynamicBernoulliArm::~DynamicBernoulliArm() {}
+
+void DynamicBernoulliArm::update(float reward, float gamma, float decay) {
+    count++;
+    alpha += 1 * (reward > 0);
+    beta += 1 * (reward <= 0);
+    if (alpha + beta >= gamma) {
+        alpha *= (gamma / (gamma + 1));
+        beta *= (gamma / (gamma + 1));
+    }
+}
+
 // Gaussian Arm
 
 GaussianArm::GaussianArm(float mu, float stddev) : ri(0), qi(0), mu(mu), stddev(stddev) {}

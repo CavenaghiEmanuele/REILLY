@@ -29,10 +29,20 @@ class BernoulliArm : public BanditArm {
     BernoulliArm &operator=(const BernoulliArm &other);
     ~BernoulliArm();
 
-    double operator()(std::minstd_rand &generator) const;
-    void update(float reward, float gamma, float decay);
-    float UCB(float T) const;
-    operator float() const;
+    virtual double operator()(std::minstd_rand &generator) const;
+    virtual void update(float reward, float gamma, float decay);
+    virtual float UCB(float T) const;
+    virtual operator float() const;
+};
+
+class DynamicBernoulliArm : public BernoulliArm {
+   public:
+    DynamicBernoulliArm(float alpha = 2, float beta = 2);
+    DynamicBernoulliArm(const DynamicBernoulliArm &other);
+    DynamicBernoulliArm &operator=(const DynamicBernoulliArm &other);
+    ~DynamicBernoulliArm();
+
+    virtual void update(float reward, float gamma, float decay);
 };
 
 class GaussianArm : public BanditArm {
@@ -49,10 +59,10 @@ class GaussianArm : public BanditArm {
     GaussianArm &operator=(const GaussianArm &other);
     ~GaussianArm();
 
-    double operator()(std::minstd_rand &generator) const;
-    void update(float reward, float gamma, float decay);
-    float UCB(float T) const;
-    operator float() const;
+    virtual double operator()(std::minstd_rand &generator) const;
+    virtual void update(float reward, float gamma, float decay);
+    virtual float UCB(float T) const;
+    virtual operator float() const;
 };
 
 }  // namespace agents
