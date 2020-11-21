@@ -42,12 +42,15 @@ PYBIND11_MODULE(backend, m) {
     
     py::class_<MultiArmedBandit<BernoulliArm>, PyBernoulliBandit, Agent>(m, "BernoulliBandit");
 
+    py::class_<GreedyBandit<BernoulliArm>, MultiArmedBandit<BernoulliArm>>(m, "BernoulliGreedyBandit", py::dynamic_attr())
         .def(py::init<size_t>(), py::arg("arms"))
         .def_readonly("arms", &GreedyBandit<BernoulliArm>::arms);
     
+    py::class_<UCBBandit<BernoulliArm>, MultiArmedBandit<BernoulliArm>>(m, "BernoulliUCBBandit", py::dynamic_attr())
         .def(py::init<size_t>(), py::arg("arms"))
         .def_readonly("arms", &UCBBandit<BernoulliArm>::arms);
     
+    py::class_<ThompsonSamplingBandit<BernoulliArm>, MultiArmedBandit<BernoulliArm>>(m, "BernoulliThompsonSamplingBandit", py::dynamic_attr())
         .def(py::init<size_t>(), py::arg("arms"))
         .def_readonly("arms", &ThompsonSamplingBandit<BernoulliArm>::arms);
     
@@ -58,6 +61,7 @@ PYBIND11_MODULE(backend, m) {
     
     py::class_<MultiArmedBandit<DynamicBernoulliArm>, PyDynamicBernoulliBandit, Agent>(m, "DynamicBernoulliBandit");
     
+    py::class_<ThompsonSamplingBandit<DynamicBernoulliArm>, MultiArmedBandit<DynamicBernoulliArm>>(m, "DynamicBernoulliThompsonSamplingBandit", py::dynamic_attr())
         .def(py::init<size_t, float>(), py::arg("arms"), py::arg("gamma") = 1)
         .def_readonly("arms", &ThompsonSamplingBandit<DynamicBernoulliArm>::arms);
     
@@ -79,12 +83,15 @@ PYBIND11_MODULE(backend, m) {
     
     py::class_<MultiArmedBandit<GaussianArm>, PyGaussianBandit, Agent>(m, "GaussianBandit");
 
+    py::class_<GreedyBandit<GaussianArm>, MultiArmedBandit<GaussianArm>>(m, "GaussianGreedyBandit", py::dynamic_attr())
         .def(py::init<size_t, float, float>(), py::arg("arms"), py::arg("gamma") = 1, py::arg("decay") = 1)
         .def_readonly("arms", &GreedyBandit<GaussianArm>::arms);
     
+    py::class_<UCBBandit<GaussianArm>, MultiArmedBandit<GaussianArm>>(m, "GaussianUCBBandit", py::dynamic_attr())
         .def(py::init<size_t, float, float>(), py::arg("arms"), py::arg("gamma") = 1, py::arg("decay") = 1)
         .def_readonly("arms", &UCBBandit<GaussianArm>::arms);
     
+    py::class_<ThompsonSamplingBandit<GaussianArm>, MultiArmedBandit<GaussianArm>>(m, "GaussianThompsonSamplingBandit", py::dynamic_attr())
         .def(py::init<size_t, float, float>(), py::arg("arms"), py::arg("gamma") = 1, py::arg("decay") = 1)
         .def_readonly("arms", &ThompsonSamplingBandit<GaussianArm>::arms);
     
